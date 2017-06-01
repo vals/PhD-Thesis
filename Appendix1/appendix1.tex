@@ -1,0 +1,25 @@
+% ******************************* Thesis Appendix A ********************************
+\chapter{Additional Material for Chapter 2} 
+
+\graphicspath{{Appendix1/Figs/}}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"Supp Figure 1"}
+    \caption[Comparison and overview of spike-in sets]{\textbf{Comparison and overview of spike-in sets.} ERCC spike-ins consist of 92 very distinct sequences based on bacterial genes logarithmically distributed across 22 abundance levels (in Mix 1), with poly-A tails ranging from 20 to 26 base pairs. SIRV spike-ins are 69 sequences, modeled after sequences and splicing patterns in 7 human genes. In Mix 2, which we used, the SIRV molecules are present at 4 abundance levels, with virtual alternative isoforms from each gene present at each abundance level. All SIRV molecules have 30 base pair long poly-A tails.}
+    \label{fig:spikeins}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"Supp Figure 2"}
+    \caption[UMI efficiency as an alternative metric of sensitivity]{\textbf{UMI efficiency as an alternative metric of sensitivity.} (A) Assuming that UMI counts correspond to a count of the fraction of molecules successfully captured by the RNA-sequencing process, in log-log space the efficiency corresponds to the offset from perfect correspondence between input molecules and counted UMIs. (B) With the exception of data from the MARS-Seq protocol, spike-in detection limits correspond well with UMI efficiency measures. The spike-in detection limit can however also be used for coverage based data quantified by TPM. (C) The assumption with UMI counting as a quantitative measurement is that efficiency is the only factor determining differences between real counts and observed counts. However, fitting a model with a non-one exponent on the number of input molecules shows this is almost in all cases < 1. This means UMI counts underestimate expression of highly expressed genes. (D) The saturation of UMI counts can be partially explained by short UMIs. If an experiment uses too short UMIs, eventually the number of possible observable UMIs plateau. However, even for very long UMIs, such as 10 base pairs, the mean molecule exponent is 0.8, indicating some additional unexplained factor is causing a saturation of UMI counts. (E) Averaged efficiency comparison of endogenous genes and ERCC spike-ins. The data by Grun et al had smFISH measurements for 9 genes in the same experimental conditions as the single-cell RNA-seq data. Assuming 100\% capture rate for smFISH, we can compare average smFISH counts with average UMI counts. Round markers correspond to median value across cells, and bars correspond to 95\% confidence interval across cells. The smFISH counts suggest UMI counts for endogenous transcripts are on the order of 5-10\% on average, while ERCC spike-in UMI counts correspond to 0.5-1\% efficiency on average.}
+    \label{fig:umi-efficiency}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"Supp Figure 3"}
+    \caption[Trace plots from Bayesian models of degradation]{\textbf{Trace plots from Bayesian models of degradation.} The posterior samples from the model parameters in Stan \cite{Carpenter2016-pa} for both the ERCC and SIRV analysis show very narrow confidence intervals and good correspondence between the different sampling chains. The SIRV based model is slightly noisier, which can be expected, as isoform-level expression when multiple isoforms are present is a harder quantification problem than quantifying expression of the unique ERCC sequences. For the ERCC model, the mode of the degradation rate parameter p is 19\%, and for the SIRV model it is 18.5\%.}
+    \label{fig:traceplot}
+\end{figure}

@@ -1,0 +1,54 @@
+% ******************************* Thesis Appendix B ********************************
+
+\chapter{Additional Material for Chapter 3}
+
+\graphicspath{{Appendix2/Figs/}}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SF1"}
+    \caption[The gating strategy for sorting cd41-EGFP cells by flow cytometry]{\textbf{The gating strategy for sorting cd41-EGFP cells by flow cytometry.} First, debris was excluded by forward and side-scatter (A, D). Next, singlets were selected (B, E) and dead, PI positive cells, were excluded (C, F). Finally, autofluorescent cells were excluded from the analysis (G, H). The GFP positive population was split into GFPlow and GFPhigh based on the level of GFP fluorescence (I).}
+    \label{fig:gating}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SF2"}
+    \caption[Quality control assessment]{\textbf{Quality control assessment.} Quality control was assessed by analysing the number of detected genes compared to the number of input reads (A) or ERCC content (B). In each plate we sorted 94 cells, leaving two wells per plate without cells. Blue dots represent wells with cells and orange dots show wells without cells. Following sequencing and quality control, 13 cells were removed from further analysis. We excluded data points (cells) with few reads (less than 50,000) and few genes or with high ERCC content. As expected, wells without cells (orange) have ERCC content equivalent to 100\%.}
+    \label{fig:qc}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SF3"}
+    \caption[Pairwise plots of the four independent components used to represent the data]{\textbf{Pairwise plots of the four independent components used to represent the data.} A) The initial names of the components (“difference\_component”, “outlier\_component”, “within\_large\_component”, “within\_small\_component”) were given based on visual features. The dots, representing cells, are colored white for EGFPlow sorted cells and green for EGFPhigh sorted cells. B) Ward clustering of the cells in ICA space. The clusters (here colored) were used to associate cells to progression along a component where the cluster varies the most.}
+    \label{fig:ica}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SF4"}
+    \caption[The gating strategy for sorting cells from clusters 1a/1b/2, 3 and 4 by flow cytometry]{\textbf{The gating strategy for sorting cells from clusters 1a/1b/2, 3 and 4 by flow cytometry.} A-B) Plots of viable, single cells based on their GFP and PERCP fluorescence from either a non transgenic (A) or Tg(cd41:EGFP) (B) kidney single cell suspension. The GFPlow cells (C) can be further split into two groups based on SSC values: GFPlowSSChigh or GFPlowSSClow (D). GFP fluorescence (E) and light scatter (F) properties of each cell coloured based on the cluster it belongs to. G) Stacked column graph showing the proportion of cells from each of the clusters in three different gates named here: GFPhigh, GFPlowSSClow and GFPlowSSChigh.}
+    \label{fig:newgate}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SF5"}
+    \caption[May-Grunwald Giemsa staining of cells from clusters 1a/1b/2, 3 and 4]{\textbf{May-Grunwald Giemsa staining of cells from clusters 1a/1b/2, 3 and 4.} Cd41:EGFP cells were sorted based on GFP and SSC values to GFPlowSSChigh,GFPlowSSClow and GFPhigh. Cytospin slides were prepared from sorted cells and stained with May-Grunwald Giemsa. The GFPlowSSChigh cells are enriched for cells from clusters 1a/1b/2, GFPlowSSClow and GFPhigh cells are enriched for cells from cluster 3 and 4 respectively.}
+    \label{fig:cytospin}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SF6"}
+    \caption[Follow-up experiment]{\textbf{Follow-up experiment.} A) Quality control of cells from the follow-up experiment. Out of 288 single cells, 19 were removed from further analysis due to having less than 200,000 sequenced reads, less than 150 detected genes or more than 99.5\% ERCC spike-in content in the well. Thresholds were guided by control wells which were either empty or contained 50 cells. B) The data follow a similar pattern as in the original experiment (for comparison please see Figure S3A-B). Pairwise plots of three independent components representing the data from the follow-up experiment. The EarlyEnriched population is confined to the early progression along component 0 (corresponding to within\_small\_component in Figure S3B) before the switch in component 2 (corresponding to difference\_component in Figure S3B). This corresponds to cluster 1a/1b/2 in the original data as expected. GFPhigh cells from both the kidney and circulation completely overlap, indicating no further differentiation happens after the cells leave the kidney, and vary over component 1 (corresponding to within\_large\_component in Figure S3B).}
+    \label{fig:rep-qc}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SF7"}
+    \caption[The total mRNA content and number of expressed genes per cell are correlated with its differentiation state, not technical properties of the cells]{\textbf{The total mRNA content and number of expressed genes per cell are correlated with its differentiation state, not technical properties of the cells.} Light scatter properties FSC and SSC, total mRNA content, number of reads and the number of expressed genes in pseudotime. The dots, representing cells, are coloured based on the cluster the cells belong to.}
+    \label{fig:technical}
+\end{figure}

@@ -1,0 +1,62 @@
+% ******************************* Thesis Appendix D ********************************
+
+\chapter{Additional Material for Chapter 5}
+
+\graphicspath{{Appendix4/Figs/}}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SuppFig1"}
+    \caption[Expanded example of Breast Cancer tissue genes]{\textbf{Expanded example of Breast Cancer tissue genes.} Spatial expression pattern for 37 additional SV genes (out of 115), selected to represent patterns from different function periods and length scales to illustrate different spatial patterns.}
+    \label{fig:ss1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SuppFig2"}
+    \caption[Comparison to differential expression analysis using clustering]{\textbf{Comparison to differential expression analysis using clustering.} (A)  Principal Component Analysis of individual “spots”, color coded by cluster membership for N=4 clusters (identified by Bayesian Gaussian Mixture Modelling). (B) Bayesian Gaussian Mixture Model cluster probabilities, the 250 spatial breast cancer “spots” can be clustered into four groups when ignoring spatial structure. (C) Visualization of cluster membership in the original tissue context. (D) Comparison of P-values from an ANOVA test between clusters (x-axis) with significance from SpatialDE (y-axis). 83 genes are identified as significantly variable by both approaches; 32 genes are significant only in the SpatialDE test, among them immune genes. (E)  Histogram of the fitted length scales for SV genes detected by both approaches (blue) and SV genes detected only by SpatialDE (orange). Genes detected only by SpatialDE have smaller length scales, indicating more localized expression patterns.}
+    \label{fig:ss2}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{"SuppFig3"}
+    \caption[Comparison of SpatialDE to other measures of expression heterogeneity]{\textbf{Comparison of SpatialDE to other measures of expression heterogeneity.} (A) Comparison of P-values from SpatialDE to other commonly used summary statistics - Upper left: Mean, Upper right: Variance, Lower left: CV2 (squared coefficient of variation), Lower right: Dropout rate (fraction of samples a gene is not detected in). Random selection of significant SV genes highlighted in red for context. (B) Comparison with common strategies to define highly variable genes, which are based on regression models between summary statistics: Relation with CV2 (Upper) or Variance (Middle), or with dropout fraction (Bottom). Model residuals are compared with the SpatialDE significance to the right of the relation. Polynomial regression for CV2 and Variance, logistic regression for dropout rate. Significant SV genes as identified by SpatialDE are shown in grey. Other, non-significant genes are shown in solid black.}
+    \label{fig:ss3}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SuppFig4"}
+    \caption[Statistical calibration of SpatialDE]{\textbf{Statistical calibration of SpatialDE.} (A) QQ-plot of expected P-values (Chi2 distribution with 1 degree of freedom) compared to observed P-values derived using the log likelihood ratio test in SpatialDE. (B) To simulate data from an empirical null, without spatial structure, expression values were shuffled among the sampled coordinates. Shown is  COL3A1 expression as an example. (C) Adj. P-values for genes on shuffled data, which are generally below the FDR = 0.05 threshold. (D) Analogous QQ-plot as in A on shuffled expression values. P-values follows the null distribution, indicating that the model is calibrated.}
+    \label{fig:ss4}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SuppFig5"}
+    \caption[Application to Mouse Olfactory Bulb tissue]{\textbf{Application to Mouse Olfactory Bulb tissue.} (A) The corresponding image for mouse olfactory bulb data from Stahl et al. (B) SpatialDE identified 67 spatially variable genes (SV genes, FDR < 0.05). Of these, 19 were assigned to periodic functions. Genes highlighted in Stahl et al are displayed in red, representative examples of SV genes are annotated with black text (Colors and sizes as in Figure 2). (C) Representative examples of SV gene with different periods and length scales (indicated in orange and blue bars, respectively, relative to scale bar). Black scale bar correspond to 1 mm. Colors and significance levels as described in Figure 2.}
+    \label{fig:ss5}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{"SuppFig6"}
+    \caption[Expanded examples of significant spatially variable genes for the mouse hippocampus dataset]{\textbf{Expanded examples of significant spatially variable genes for the mouse hippocampus dataset.} Visualization of 24 SV genes with from the mouse hippocampus SeqFISH data, showing selected genes with periodic, linear, and general spatial dependencies with different estimated length scales. Black scale bar correspond to 50 \( \mu \)m.}
+    \label{fig:ss6}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{"SuppFig7"}
+    \caption[Application to MERFISH data]{\textbf{Application to MERFISH data.} (A) In MERFISH study of an osteosarcoma cell culture from Moffitt et al9  the majority of genes are found spatially variable. 21 of 92 significant SV genes were assigned to a periodic function by the model, and 9 genes had linear functions. Negative control probes are indicated with red labels. Genes indicated as enriched in proliferating cells in the original study marked in green, and depleted genes in blue. (B) Visualization of the MERFISH data by plotting general RNA probes in pink and MALAT1 probes in blue on two 512 x 512 virtual pixel grids at different scales. The original imaged region was 5.2 mm wide and 8.2 mm high totalling 38,594 cells (upper). We analysed a region of 1 mm x 1 mm in the middle of the cell culture with 1,056 cells (lower). (C) Expression levels in the cell culture region visualised for selected SV genes with various fitted periods and length scales (Significance levels and colors as in Figure 2). Black scale bar correspond to 200 \( \mu \)m. (D) Fraction of gene probes and control probes detected as significant SV genes as a function of the family-wise error rate (FWER). The number of significant control probes was in line with the FWER.}
+    \label{fig:ss7}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{"SuppFig8"}
+    \caption[Application to expression time-course data]{\textbf{Application to expression time-course data.} (A  ) When applying SpatialDE to developmental time 27 course data from Owens et al , the majority of genes were found differentially expressed (21,009 out of 22,256 genes, FDR < 0.05). Of these, 241 were assigned to periodic patterns, and 269 were detected with linear trends. Colors and point sizes as in Figure 2. The X marks indicates result of running test on ERCC content and number of detected genes. (B) Examples of temporally DE genes of various periods and length scales. Black scale bar corresponds to 12 hours in the time-course, periods and length scales of functions are indicated relative to this. Collection time in units of hours post fertilization (hpf) (C) The expression patterns of the top 400 significantly SV genes are visualised, ordered by the time they reach their highest expression value. Example genes from B are annotated.}
+    \label{fig:ss8}
+\end{figure}
+

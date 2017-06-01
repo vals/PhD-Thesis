@@ -1,0 +1,14 @@
+% ************************** Thesis Abstract *****************************
+% Use `abstract' as an option in the document class to print only the titlepage and the abstract.
+\begin{abstract}
+The recent technology of single-cell RNA sequencing can be used to investigate molecular, transcriptional, changes in cells as they develop. I reviewed the literature on the technology, and made a large scale quantitative comparison of the different implementations of single cell RNA sequencing to identify their technical limitations.
+
+I investigate how to model transcriptional changes during cellular development. The general forms of expression changes with respect to development leads to nonparametric regression models, in the forms of Gaussian Processes. I used Gaussian process models to investigate expression patterns in early embryonic development, and compared the development of mice and humans.
+When using in vivo systems, ground truth time for each cell cannot be known. Only a snapshot of cells, all being in different stages of development can be obtained. In an experiment measuring the transcriptome of zebrafish blood precursor cells undergoing the development from hematopoietic stem cells to thrombocytes, I used a Gaussian Process Latent Variable model to align the cells according to the developmental trajectory. This way I could investigate which genes were driving the development, and characterise the different patterns of expression.
+
+With the latent variable strategy in mind, I designed an experiment to study a rare event of murine embryonic stem cells entering a state similar to very early embryos. The GPLVM can take advantage of the nonlinear expression patterns involved with this process. The results showed multiple activation events of genes as cells progress towards the rare state.
+
+An essential feature of cellular biology is that precursor cells can give rise to multiple types of progenitor cells through differentiation. In the immune system, naive T-helper cells differentiate to different sub-types depending on the infection. For an experiment where mice were infected by malaria, the T-helper cells develop into two cell types, Th1 and Tfh. I model this branching development using an Overlapping Mixture of Gaussian Processes, which let me identify both which cells belong to which branch, and learn which genes are involved with the different branches.
+
+Researchers have now started performing high-throughput experiments where spatial context of gene expression is recorded. Similar to how I identify temporal expression patterns, spatial expression patterns can be identified nonparametrically. To enable researchers to make use of this technique, I developed a very fast method to perform a statistical test for spatial dependence, and illustrate the result on multiple data sets.
+\end{abstract}

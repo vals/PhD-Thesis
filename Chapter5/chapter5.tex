@@ -1,0 +1,283 @@
+%*******************************************************************************
+%****************************** Fifth Chapter **********************************
+%*******************************************************************************
+
+\chapter{Detecting spatially dependent genes in spatial expression assays}
+
+\graphicspath{{Chapter5/Figs/}}
+
+Technological advances have enabled low-input RNA-sequencing, paving the way for assaying transcriptome variation in spatial contexts, including in tissue systems. While the generation of spatially resolved transcriptome maps is increasingly feasible, computational methods for analysing the resulting data are not established. Existing analysis strategies either ignore the spatial component of gene expression variation, or require discretization.
+
+To address this, we have developed \name{SpatialDE}, a computational framework for identifying and characterizing spatially variable genes. Our method generalises variable gene selection, as used in population- and single-cell studies, to spatial expression profiles. We apply \name{SpatialDE} to Spatial Transcriptomics and to data from single cells expression profiles using multiplexed In Situ Hybridisation (SeqFISH and MERFISH), demonstrating its general use. \name{SpatialDE} identifies genes with expression patterns that are associated with histology in breast cancer tissue, several of which have known disease implications and are not detected by variable gene selection. Additionally, our model can be used to classify genes with distinct spatial patterns, including periodic expression profiles, linear trends and general spatial variation. 
+
+
+\section{Results}
+
+Technological advances have helped to miniaturize and parallelize genomics, thereby enabling high-throughput transcriptome profiling from low quantities of starting material, including in single cells. Increased experimental throughput has also fostered new experimental designs, where in particular the spatial context of gene expression variation can now be directly assayed, which is critical for decoding complex tissues from multicellular organisms. The spatial context of gene expression is crucial in determining functions and phenotypes of cells \cite{Ledford2017-hq, Lee2017-om}. In many cases a gene’s expression is determined by cellular communication, and in other cases cells migrate to specific locations in tissue to perform their functions.
+
+Several experimental methods to measure gene expression levels in a spatial context have been established, which differ in resolution, accuracy and throughput. These include the computational assignment of transcriptome-profiles from dissociated cells to a spatial reference \cite{Achim2015-fe, Satija2015-lz}, parallel profiling of mRNA using barcodes on a grid of known spatial locations \cite{Junker2014-do, Chen2017-lg, Stahl2016-ym}, and methods based on multiplexed in situ hybridization \cite{Shah2016-bi, Moffitt2016-bi} or sequencing \cite{Ke2013-ek, Lee2014-ix, Lee2015-sz}.
+
+A first critical step in the analysis of the resulting datasets is to identify the genes that exhibit spatial variation across the tissue. However, existing approaches designed to identify highly variable genes \cite{Brennecke2013-vv, Vallejos2015-fh}, used in e.g. single-cell RNA-sequencing (scRNA-seq) studies, ignore the spatial location and hence do not measure spatial variability. Alternatively, researchers have applied ANOVA to test for differential expression between groups of cells, either derived using a priori defined (discrete) cell annotations, or based on clustering \cite{Achim2015-fe, Satija2015-lz, Stahl2016-ym, Shah2016-bi, Ke2013-ek}, with some clustering strategies incorporating spatial information \cite{Pettit2014-pa}. Importantly, such strategies fall short in detecting variation that is not well captured by discrete groups, including linear and nonlinear trends, periodic expression patterns and other complex patterns of expression variation. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{"Figure 1"}
+    \caption[Overview of \name{SpatialDE} for the identification of spatially variable genes]{\textbf{Overview of \name{SpatialDE} for the identification of spatially variable genes} (A)  In spatial gene expression studies, expression levels vary in ways that depend on spatial coordinates. \name{SpatialDE} defines spatial dependence for a given gene using a non-parametric approach, testing whether gene expression levels at different locations covary in a manner that depends on their relative location. (B) \name{SpatialDE} partitions the expression variation into a spatial component (using functional dependencies \( f((x_1, x_2)) \)), characterized by alternative spatial covariances, and observation noise (\( \Psi \)). Alternative spatial covariance models considered by \name{SpatialDE}: no spatial effect (null model), general spatial, periodic spatial patterns and linear trends. Example expression patterns with the covariances plotted below corresponding matrix. (C) Computational efficiency of \name{SpatialDE} compared to a \name{Stan} implementation of the same model. Caching operations and linear algebra speedups are used where possible, enabling genome-wide analyses with thousands of samples. Benchmarks performed on a late 2013 iMac with 3.2 GHz Intel Core i5 processor.}
+    \label{fig:spatialde}
+\end{figure}
+
+To address this, we here propose a computational approach termed \name{SpatialDE} for identifying and characterizing spatially variable genes (SV genes). Our method builds on Gaussian Process Regression, a class of models that is widely used in geostatistics, also known as Kriging \cite{Williams2006-kb}. For each gene, our model decomposes the expression variability into a spatial and non-spatial component (Figure \ref{fig:spatialde}A). Significant SV genes can then be identified by comparing this full model to a model that assumes no spatial dependency of expression variation (Figure \ref{fig:spatialde}B, Methods).
+
+In addition to identifying spatially variable genes, \name{SpatialDE} also allows for classifying the spatial patterns of individual genes, differentiating between linear trends, periodic expression profiles or general spatial dependencies (Figure \ref{fig:spatialde}B). By interpreting the fitted model parameters it is possible to identify the length scale (the expected number of changes in direction in a unit interval \cite{Williams2006-kb}) or the period length of spatial patterns for individual genes (Figure \ref{fig:spatialde}B). Finally, \name{SpatialDE} achieves unprecedented computational efficiency by leveraging computational tricks for efficient inference in linear mixed models \cite{Lippert2011-fm} and precomputing operations where possible (Methods, Figure \ref{fig:spatialde}C). Taken together, \name{SpatialDE} is a widely applicable tool for the initial analysis of spatial transcriptomics datasets.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.66\textwidth]{"Figure 2"}
+    \caption[Applications of \name{SpatialDE} to Spatial Transcriptomics and data generated using SeqFISH]{\textbf{Applications of \name{SpatialDE} to Spatial Transcriptomics and data generated using SeqFISH.} (A) Correlated image of breast cancer tissue from Spatial Transcriptomics \cite{Stahl2016-ym}. (B) Visualization of nine selected spatially variable genes (out of 115, FDR < 0.05). The black scale bar corresponds to 1 mm. For genes identified with periodic dependencies, the orange bar shows the fitted period length on the same scale. Analogously, the blue bar shows the fitted length scale for genes with general spatial trends. 2D plots show the relative expression level for genes across the tissue section coded in color. Stars next to gene names denote significance levels (* Q < 0.05 , ** Q < 0.01, *** Q < 0.001) of spatial variation. Insets in lower left show the posterior probability of these three function classes for each gene. (C) Proportion of variance (x-axis) explained by spatial variation (FSV) versus adj. P-value (y-axis, FDR adjusted) for 12,856 genes. Dashed line corresponds to the FDR = 0.05 significance level (N = 115 genes). Genes classified as periodically variable are shown in orange (N = 22), genes with a general spatial dependency in blue (N = 93). Disease-implicated genes annotated based on prior knowledge (\cite{Stahl2016-ym}) are indicated with red labels, and are significantly enriched in \name{SpatialDE} results (\( P = 10^{-11} \), Fisher exact test). Other representative genes selected by stratifying over function periods / length scales are annotated with black labels. Size of of points indicate certainty in the estimate of Fraction Spatial Variance (FSV), larger points have smaller standard deviation. The X symbol show the result of running \name{SpatialDE} on the estimated total RNA content per spot. (D) SeqFISH data from a region of mouse hippocampus from Shah et al \cite{Shah2016-bi}. Black scale bar correspond to 50 \( \mu \)m, Voronoi tessellation representative of tissue structure. (E) Expression patterns of six selected SV genes analogous to panel B (out of 32, FDR < 0.05). Shown are genes with linear (htr3a ), periodic (foxj1 ), and generally spatial models. Black arrows indicate distinct region of low expression of  Mog ,  Myl14  and  Ndnf. (F) Proportion of variance (x-axis) versus adj. P-value (y-axis, FDR adjusted) for 249 genes, as in (C). Genes with a linear dependency are highlighted in green.}
+    \label{fig:spatialresult}
+\end{figure}
+
+First, we applied our method to Spatial Transcriptomics (ST) data from breast cancer tissue \cite{Stahl2016-ym}. Briefly, ST gene expression levels are derived from thin tissue sections of frozen material, placed on an array with poly(dT) probes and spatially resolved DNA barcodes in a grid of “spots”. Following permeabilization, the mRNA is captured by the probes, and the spatial location can be recovered from sequenced barcodes. The resulting gene expression profiles can be analysed in context with hematoxylin and eosin (HE) stained microscopic images of the tissue (Figure \ref{fig:spatialresult}A).
+
+\name{SpatialDE} identified 115 SV genes (FDR < 0.05). Notably, seven highly ranking genes were also included in a set of 14 genes with known roles in the disease that were highlighted in the primary analysis of the data (Figure \ref{fig:spatialresult}C, red text). Significantly SV genes were enriched for collagens, which distinguish tissue substructure \cite{Seewaldt2012-lk} (Reactome term “Collagen formation”, P < 5 * 10-14 using gProfiler \cite{Reimand2016-nz}, Supp. Table 1). Additionally, we identified the autophagy related gene, TP53INP2, surrounding the fatty tissue (Q = 0.022, Figure \ref{fig:spatialresult}B, extended examples Figure \ref{fig:ss1}). Interestingly, the set of SV genes also included the cytokines CXCL9 (Q = 5.4 * 10-4) and CXCL13 (Q = 1.3 * 10-4), both of which are expressed in a visually distinct region (Figure \ref{fig:spatialresult}A, black arrow), together with the IL12 receptor subunit gene IL12RB1 (Q = 2.8 * 10-4), indicating a potential tumour related immune response in the tissue. Notably, neither of these genes (and N=29 others), were identified as differentially expressed when applying clustering in conjunction with an ANOVA test between the identified groups of cells (Figure \ref{fig:ss2}). Nor did they have high rank based on conventional Highly Variable Genes measures (such as the mean - CV2 relation \cite{Brennecke2013-vv} or mean - dropout rate relation \cite{Andrews2016-ky}); measures that do not take the spatial context into account (Figure \ref{fig:ss3}). Generally, we observed that variable genes detected by \name{SpatialDE} are complementary to existing methods, where in particular spatially variable genes with localized expression patterns, as indicated by small fitted length scales, or periodic patterns, are not detected by methods that ignore spatial contexts (Figure \ref{fig:ss2}E). Finally, we confirmed the statistical calibration and the robustness of \name{SpatialDE} using randomization experiments (Figure \ref{fig:ss4}).
+
+As a second application, we considered a study of mouse olfactory bulb \cite{Stahl2016-ym}, profiled using the same ST protocol. Again, \name{SpatialDE} identified SV genes with clear spatial sub-structure, consistent with the matched HE stained image (Supp. Fig. 5A-B). These included canonical marker genes highlighted in Stahl et al, such as PENK, DOC2G, and KCTD12, but also additional genes that define the granule cell layer (GCL) of the bulb. Genes in the latter set were classified as periodically variable with period lengths corresponding to the distance between the centers of the hemispheres (including KCNH3, NRGN, or MBP with 1.8 mm period length, Figure \ref{fig:ss5}). Other genes with periodic patterns, such as the vesicular glutamate transporter SLC17A7, were identified with shorter periods (1.1 mm), and inspection revealed regularly dispersed regions, potentially identifying a pattern of regions with higher neuron density \cite{Jahn2000-yw}. This suggests that periodic expression patterns in tissue contexts are a biological feature of interest to understand tissue biology. 
+
+Taken together, these results demonstrate that \name{SpatialDE} can be used to characterize clinically relevant features in spatial tissue samples in the absence of \textit{a priori} histological annotation.
+
+\name{SpatialDE} is not limited to sequencing technologies, and can be applied to any expression datatype with spatial and/or temporal resolution. To explore this, we applied the method to data generated using multiplexed is single molecule FISH (smFISH), a recent technological development that allows for quantifying gene expression with subcellular resolution for larger numbers of target genes in parallel. Briefly, probes are hybridized to RNA while carrying barcodes of fluorophores, which allows for quantifying gene expression of up to several thousands of probes \cite{Chen2015-rm} using high-content imaging.
+
+We applied \name{SpatialDE} to Multiplexed smFISH data of cells from mouse hippocampus, generated using SeqFISH \cite{Shah2016-bi}. This study considered 249 genes that were chosen to investigate the cell type composition along dorsal and ventral axes of the hippocampus (Figure \ref{fig:spatialresult}D). \name{SpatialDE} identified 32 SV genes (FDR < 0.05), with the three highest ranking genes, MOG (\( Q = 10^{-14} \)), MYL14, (\( Q = 10^{-14} \)) and NDNF (\( Q = 2 \cdot 10^{-12} \)) displaying a distinct region of lower expression (Figure \ref{fig:spatialresult}E, black arrows). Again, \name{SpatialDE} identified genes with different types of spatial variation, including linear trends (N=5) and periodic patterns (N=8, Figure \ref{fig:spatialresult}F, extended examples in Figure \ref{fig:ss6}).
+
+\name{SpatialDE} can also be used to test for spatial expression variation in cell culture systems, where spatial variation may not be expected a priori. We explored this, and considered data from another recent multiplexed smFISH dataset generated using MERFISH with 140 probes from a human osteosarcoma cell culture \cite{Moffitt2016-bi} (Figure \ref{fig:ss7}A-B). Interestingly, the model revealed that a substantial proportion of the genes assayed were spatially variable (N=92, 65\%, FDR < 0.05). This reconstitutes results from the primary analysis, where the authors noted spatially restricted populations of cells with higher proliferation rates. Indeed, six of the seven genes highlighted as differential between proliferation subpopulations were identified as SV genes (e.g. THBS1 and CENPF1, Figure \ref{fig:ss7}C). This result is also consistent with previous studies which observed that high confluence in cell culture, promoting cell-to-cell communication and crowding, leads to spatial dependency in gene expression \cite{Battich2015-qu}. We also considered negative control probes in the data, which were not detected as spatially variable, thereby confirming the statistical calibration of \name{SpatialDE} (Figure \ref{fig:ss7}D).
+
+Herein, we have presented a method for identifying spatially variable genes. The commoditization of high-throughput experiments, including spatially resolved RNA-seq, means that there will be a growing need for methods that account for this new dimension of expression variation, such as \name{SpatialDE}.
+
+We applied our model to data from multiple different protocols, from Spatial Transcriptomics to multiplexed single-molecule FISH, considering both tissue systems and cell lines. The extent of spatial variation we observed in cell lines may be surprising, a result that is consistent with recent studies that have reported coordinated expression changes across neighbouring cells \cite{Battich2015-qu}. The method is also applicable to temporal data from time-course experiments (Figure \ref{fig:ss8}), and it can be applied without modification to 3-dimensional data from e.g. in situ sequencing when such technologies mature \cite{Lee2014-ix, Lee2015-sz}.
+
+\name{SpatialDE} generalizes previous approaches for the detection of highly variable genes, most notably methods designed for conventional scRNA-seq \cite{Brennecke2013-vv}. Our model separates spatial variation from non-spatial effects, which may include biological and technical variability. Underlying this approach is the assumption that technical noise is independent across sampling positions, which circumvents the need to explicitly model technical sources of variation, which enables applications to virtually any protocol.
+
+Future extension of \name{SpatialDE} could be tailored towards specific platforms, for example to make use of spike-in standards or unique molecular identifiers, thereby explicitly estimating technical variation. Another area of future work are extensions for incorporating information about the tissue makeup or local differences in cell density. Our framework also opens up the possibility for future work to define spatial patterns that are common to groups of genes, using clustering combined with the spatial Gaussian Process framework \cite{Hensman2015-op}.
+
+\section{The \name{SpatialDE} model}
+
+\name{SpatialDE} builds on the Gaussian process framework, thereby assessing the evidence that the gene expression patterns of individual genes are explained by functions with different spatio-temporal dependencies.
+
+In the following we assume that $ \bfy = (y_1,\dots,y_N) $ corresponds to a vector of expression values at $N$ spatial locations $ \bfX = (\bfx_1,\dots,\bfx_N) $ for a given gene.  The coordinates of the spatial locations are typically two-dimensional, i.e. $ \bfx_i = (x_{i_1}, x_{i_2}) $, however the model is general and can also be applied to any dimensionality such as three-dimensional or uni-dimensional (e.g. time-series) data. 
+
+\subsection{Gaussian Processes regression}
+
+A Gaussian Process (GP) is a probability distribution over functions $ y = f(\bfx) $,
+\begin{align}
+ f \sim \GP(k\left(\bfx,\bfx' \given \btheta\right)). 
+\end{align}
+A Gaussian process model $ \GPM $ is defined by the covariance function $ k(\bfx,\bfx' \given \btheta) $, which parameterizes the dependency between any pair of function values based on their inputs $ \bfx $ and $ \bfx' $; and $ \btheta $ denotes a vector of additional hyperparameters of the covariance (see below). 
+
+Any finite representation of a GP for an observed dataset can be obtained by marginalizing over all unobserved function values, resulting in a finite realisation of joint Gaussian distribution: 
+\begin{align}
+\label{eq:GP}
+p(\bfy \given \GPM) =  \normal{\bfy}{\mu {\bf 1}, \sigma_s^2 \cdot \left ( \bSigma_{k(\bfx,\bfx'\given \btheta)} + \delta \cdot \unit \right )}.
+\end{align}
+Here, $ \mu \bf 1 $ account for mean effects (bias term) and the scaling parameter $ \sigma_s^2 $ determines the proportion of variance explained by the spatial covariance. The term $ \sigma_s^2 \delta \unit $ explains iid observation noise, i.e. variation in the data does not follow the spatial pattern.
+
+The covariance matrix is derived by evaluating the covariance function for all pairs of observed datums $ {\bSigma_{k(\bfx,\bfx'\given \btheta)}}_{i,j} $ = $ k(\bfx_i,\bfx_j \given \btheta)$, for which the parameters $\btheta$ can be determined using maximum likelihood (see Secion~\ref{sec:param_inference}).
+
+\begin{align}
+\label{eq:LML}
+\hat{\btheta} =& \argmax_{\btheta} LL(\GPM, \btheta) \\
+              =& \argmax_{\btheta} \log p(\bfy \given \GPM,\btheta), \nonumber
+\end{align}
+where $LL(\GPM, \btheta)$ denotes the log marginal likelihood.
+
+\subsection{Covariance functions}
+\label{sec:covariance_functions}
+To test and compare between alternative hypothesis of spatial variation of expression patterns, we asses GP model with different covariance functions.
+\begin{itemize}
+\item Null model \\
+$k_{\text{null}}(\bfx,\bfx')\propto 0$\\
+\item General spatial pattern (known as the \textit{RBF} or \textit{Gaussian kernel}) \\
+$k_{\text{spatial}}(\bfx,\bfx' \given \btheta) \propto e^{ {-\frac{1}{2L^2} | \bfx-\bfx' |^2}}$\\
+\item Linear trend \\
+$k_{\text{lin}}(\bfx,\bfx' \given \btheta) \propto \bfx{\bfx'}^{\T}$\\
+\item Periodic pattern (known as the \textit{cosine kernel}) \\
+$k_{\text{periodic}}(\bfx,\bfx' \given \btheta) \propto \cos({\frac{1}{p} | \bfx-\bfx' |})$
+\end{itemize}
+
+\subsubsection*{Interpretation of model parameters}
+
+As the scale is parameterized using $ \sigma_s^2 $ in Eq.~\ref{eq:GP}, the proportionality factors does not change the marginal likelihood. However, in order to be able to interpret the parameter $ \sigma_s^2 $ as the proportion of variance explained we use Gower's transformation to correct the $ \sigma_s^2 $ parameter for the structure in the covariance matrix $ \bSigma $~\cite{Kostem2013-gm}:
+\[
+g = \frac{\Tr (P \bSigma P)}{n - 1},
+\]
+where
+\[
+P = I - \frac{1}{n} {\bf 1} {\bf 1}^{\T}.
+\]
+
+This allows for defining the Fraction of Spatial Variance, $ \text{FSV} = \frac{\sigma^2_s \cdot g}{\sigma^2_s \cdot g + \sigma^2_s \cdot \delta} $, which corresponds to the proportion of varaince explained by the spatial variance component compared to the total variance.
+
+\subsection{Statistical significance and classification of spatially variable genes}
+
+\subsubsection*{P-values from hypothesis testing}
+
+Significant spatial variance component are tested via mode comparison: 
+\begin{align*}
+    p(\bfy \given \model_1) &=  \normal{\bfy}{\mu {\bf 1}, \sigma_s^2 \cdot \left ( \bSigma_{k(\bfx,\bfx'\given \btheta)} + \delta \cdot \unit \right )}, \\
+    p(\bfy \given \model_0) &=  \normal{\bfy}{\mu {\bf 1},  \sigma_s^2 \cdot \unit}.
+\end{align*}
+
+Here, $\model_1$ denotes the alternative model that includes both a spatial and non-spatial component and $\model_0$ denotes the null model, motting a spatial variance component.
+
+The parameters of both models are optimised using maximum likelihood (see Section~\ref{sec:param_inference}).
+Significance of the spatial variance component is then assessed using a likelihood ratio (LLR) test between the alternative and the null model. 
+P-values can be estimated in closed form, assuming that the LLR's under the null model are \( \chi^2 \) distributed with one degree of freedom.
+
+\begin{sloppypar}
+To correct for multiple testing, we use the FDR based strategy by~\cite{Storey2003-ap} yielding Q-values.  Unless stated otherwise, we report genes at Q-Value \( < 0.05 \) as significant spatially variable.
+\end{sloppypar}
+
+Calibration of the P-values was investigated through negative control probes in the MERFISH experiment. The fraction of significant negative control probes behave as expected with regards to the family-wise error rate (Figure \ref{fig:ss7}).
+
+\subsubsection*{Classification of spatial patterns using model comparison}
+
+In order to identify interpretable spatial trends, we can compare the spatial model to alternative models that make stronger assumptions about the spatial dependency. 
+Specifically, for significant spatially variable genes (e.g. Q-value \( < 0.05 \)), we compare GP models with alternative prior covariances: the general spatial model using an RBF kernel, a GP priors with periodic covariance functions, using the cosine kernel (See Section~\ref{sec:covariance_functions}), and a GP prior with linear covariance function.
+
+As these models differ in their number of parameters, we employ the Bayesian Information Criterion (\( BIC \)), which has been shown to be effective for model comparisons of alternative GP models~\cite{Lloyd2014-ky}. The BIC penalises the maximum log-likelihood by the number of effective parameters in the model, thereby accounting for differences in model complexity:
+\[
+BIC = \log (n) \cdot M - 2 \cdot \hat{LL}.
+\]
+Here, \( \hat{LL} \) denotes the log marginal likelihood (Eq.~\ref{eq:LML}), $ M $ corresponds to the number of observations and $n$ denotes the number of hyperparameters of a given model. Each gene is then classified into different spatial trends by selecting the GP model that minimises the \( BIC \).
+
+We also use the \( BIC \) to estimate posterior probabilities of specifi models. Briefly, the \( BIC \) is an estimate of \( -\log p( \bfx, \bfy | \mathcal{H}_i ) \), which allows for deriving an approximate form of the marginal likelihood of the model \( \mathcal{H}_i \),
+\[
+p( \mathcal{H}_i | \bfX, \bfy) = \frac{1}{Z} \cdot p(\bfX, \bfy | \mathcal{H}_i) \cdot p( \mathcal{H}_i ) = \frac{1}{Z} \cdot \int_{\theta} p( \bfX, \bfy | \mathcal{H}_i, \theta ) d \theta \approx -\frac{1}{Z} \cdot BIC_i, 
+\]
+where
+\[
+Z = \sum_i p(\bfX, \bfy | \mathcal{H}_i) \cdot p( \mathcal{H}_i ) \approx \sum_i -BIC_i.
+\]
+We consider the models \( \{ \mathcal{H}_{\text{spatial}}, \mathcal{H}_{\text{linear}}, \mathcal{H}_{\text{periodic}} \} \) described above (Section~\ref{sec:covariance_functions}), deriving posterior probabilities of these models given the data.
+
+
+\subsection{Parameter inference}
+\label{sec:param_inference}
+
+Maximum likelihood inference (Eq.~\ref{eq:LML}), requires determining $ \mu $, $ \sigma_s^2 $, $ \delta $ and, depending on the model, additional hyperparameters of the selected covariance function (e.g. the length-scale $l$, see Section~\ref{sec:covariance_functions}). The log likelihood is 
+\begin{align*}
+LL(\bfy, \bfX, \theta) =  -\frac{1}{2} \left( \right. &n \log (2 \pi) + \log (|\sigma_s^2 \cdot (\bSigma_\ell + \delta \cdot \unit) | ) + & \\
+& \left. (\bfy - \mu)^T (\sigma_s^2 \cdot (\bSigma_\ell + \delta \cdot \unit ) )^{-1}  (\bfy - \mu) \right) &
+\end{align*}
+
+Evaluation of the likelihood requires inverting the covariance matrix \( \bSigma_\ell \) which depend on the parameter \( \ell \), this makes gradient based optimisation of \( \ell \) a key bottleneck in inference. We comment on this later, but for now, assumes \( \ell \) is known. To circumvent inverting the entire matrix \( \sigma_s^2 \cdot (\bSigma_\ell + \delta \cdot \unit )  \),  we follow \cite{Lippert2011-fm} and factor the matrix by spectral decomposition:
+\begin{align*}
+   \sigma_s^2 \cdot (\bSigma_\ell + \delta \cdot \unit ) =
+   \sigma_s^2 \cdot (USU^T + \delta \cdot \unit ) =
+   \sigma^2_{s} \cdot U (S + \delta \cdot \unit) U^T
+\end{align*}
+
+\begin{sloppypar}
+Now if we write the log likelihood as a function of \( \delta, \sigma_s^2 \) and \( \mu \), we obtain
+\begin{align*}
+& LL(\delta, \sigma_s^2, \mu) = \\
+&= -\frac{1}{2}( n \log (2 \pi \sigma_s^2 ) + \log (| \bSigma_\ell + \delta \cdot \unit |) +  \frac{1}{\sigma_s^2} (\bfy - \mu)^T (\bSigma_\ell + \delta \cdot \unit)^{-1} (\bfy - \mu)) \\
+&= -\frac{1}{2}( n \log (2 \pi \sigma_s^2 ) + \log (|U(S+\delta I)U^T|) \frac{1}{\sigma_s^2} (\bfy - \mu)^T (U(S + \delta \cdot \unit)U^T)^{-1} (\bfy - \mu)) \\
+&= -\frac{1}{2}( n \log (2 \pi \sigma_s^2 ) + \log (|U||S + \delta \cdot \unit||U^T|) + \frac{1}{\sigma_s^2} (\bfy - \mu)^T U (S + \delta I)^{-1} U^T (\bfy - \mu)) \\
+&= -\frac{1}{2}( n \log (2 \pi \sigma_s^2 ) + \log (|S + \delta \cdot \unit|) + \frac{1}{\sigma_s^2} ((U^T\bfy) - (U^T1)\mu)^T (S + \delta \cdot \unit)^{-1} ( (U^T\bfy) - (U^T1) \mu)) \\
+&= -\frac{1}{2}(n \log (2 \pi \sigma_s^2) + \sum_{i=1}^n \log (S_{i,i} + \delta) + \frac{1}{\sigma_s^2} \sum_{i=1}^n \frac{([U^T\bfy]_i - [U^T1]_i \mu)^2}{S_{i,i} + \delta})
+\end{align*}
+\end{sloppypar}
+
+The key features used is that \( |U| = |U^T| = 1 \), and \( S + \delta \cdot \unit \) is diagonal, so both the determinant and inverse are trivial to compute. The expression \( U^T1 \) only depends on the coordinates \( X \) and can be precomputed for every gene.
+The expression \( U^T\bfy \) will need to be re-computed for each gene, however, it can be re-used for inference evaluations.
+
+We make use of the constraint that for the optimal \( \mu = \hat{\mu} \) we must have 
+\[
+\frac{\partial LL(\delta, \sigma_s^2, \mu)}{\partial \mu} = 0,
+\] and so
+\begin{align*}
+& & \frac{1}{\sigma_s^2}( (U^T1)^T (S + \delta \cdot \unit )^{-1} (U^T\bfy) - (U^T1)^T (S + \delta \cdot \unit)^{-1} (U^T1) \hat{\mu}) = 0 \\
+\Rightarrow & & \\
+& & (U^T1)^T (S + \delta \cdot \unit)^{-1} (U^T1) \hat{\mu} = (U^T1)^T (S + \delta \cdot \unit)^{-1} (U^T\bfy) \\
+\Rightarrow & & \\
+&\hat{\mu} &= ((U^T1)^T (S + \delta \cdot \unit)^{-1} (U^T1))^{-1} (U^T1)^T (S + \delta \cdot \unit)^{-1} (U^T\bfy) \\
+& &= \sfrac{\left( \sum_{i=1}^n \frac{1}{S_{i,i} + \delta} [U^T1]_i^T [U^T\bfy]_i \right)}{\left( \sum_{i=1}^n \frac{1}{S_{i,i} + \delta} [U^T1]_i^T [U^T1]_i \right)}.
+\end{align*}
+When data is given, this expression only depends on \( \delta \) and we write this as \( \hat{\mu}(\delta) \).
+
+The same procedure for \( \sigma_s^2 \) gives us
+\begin{align*}
+    \hat{\sigma}_s^2(\delta) = \frac{1}{n} \sum_{i=1}^n \frac{([U^T\bfy]_i - [U^T1]_i \hat{\mu}(\delta))^2}{S_{i,i} + \delta},
+\end{align*}
+which also depend only on \( \delta \). So the entire expression for the log likelihood can be written as
+\begin{align*}
+    LL(\delta) &= -\frac{1}{2}( n \log (2 \pi) + S_1(\delta) + n + n \log ( \frac{1}{n} S_2(\delta))), \\
+    S_1(\delta) &= \sum_{i=1}^n \log (S_{i, i} + \delta), \\
+    S_2(\delta) &= \sum_{i=1}^n \frac{([U^T\bfy]_i - [U^T1]_i \hat{\mu})^2}{S_{i,i} + \delta}.
+\end{align*}
+
+To optimise \( LL(\delta) \) with respect to \( \delta \)  we use gradient based optimisation with l-bfgs-b and numerically approximated gradient. Empirically, we observed that an analytically calculated gradient would require more floating point operations per iteration step with no gain in performance.
+
+To avoid gradient based optimization of the length scale \( \ell \), we precalculate a grid of covariance matrices \( \bSigma_\ell \) and factorise them. The number of grid points can be specified by the user, but our default settings put 10 grid points logratihmically spaced between half shortest and twice the longest distance observed in the data. We have found to give sufficient sensitivity. After factoring the \( \bSigma_\ell \)'s, the \( U \) and \( S \) matrices can be reused for each gene. We only need to do as many \( O(n^3) \) matrix inversions as we have grid points. Each gene under investigation will have a \( O(n^2) \) step for each grid point to calculate the \( U^T\bfy \) factor. All other calculations, including each optimisation iteration, will be \( O(n) \). Since our aim to investigate data where \( G >> 10 \), this greatly reduces computational burden, as illustrated in Figure 1C of the main text.
+
+\subsubsection*{Estimation of standard errors}
+
+The only optimised parameter in our model is \( \delta \), the uncertainty of the maximum likelihood estimate of this parameter is the inverse of \( \frac{\partial^2 LL(\delta)}{\partial \delta^2} \) evaluated at \( \hat{\delta} \). We use rules of uncertainty propagation to estimate uncertainty of \( \text{FSV} \) since this can be expressed as a function of \( \delta \),
+\[
+\text{FSV}(\delta) = \frac{\hat{\sigma}^2_s(\delta) \cdot g}{\hat{\sigma}^2_s(\delta) \cdot g + \delta \cdot \hat{\sigma}^2_s(\delta)},
+\]
+where \( g \) is the Gower factor for covariance matrix \( \bSigma_\ell \) for a given grid point. So, the standard error of \( \text{FSV} \) is
+\[
+s_{\text{FSV}}^2 = \left(\frac{\partial \text{FSV}(\delta)}{\partial \delta} \Bigr|_{\delta = \hat{\delta}}\right)^2 \cdot s_\delta^2,
+\]
+where
+\[
+s^2_\delta = \sfrac{1}{\left(\frac{\partial^2 LL(\delta)}{\partial \delta^2} \Bigr|_{\delta = \hat{\delta}}\right)^2}.
+\]
+
+To evaluate the two derivatives, we use finite difference approximation on the \( LL \) and \( \text{FSV} \) functions.
+
+\section{Data normalisation}
+
+The presented Gaussian process model is based on the assumption of normally distributed residual noise and independent observations across cells. To meet these requirements, we have identified two necessary normalisation steps.
+
+\textit{First}, both spatial transcriptomics and in-situ hybridisation data produces counts of transcripts. Spatial Transcriptomics uses Unique Molecular Identifiers (UMI's) to count amplified transcript tags from next generation sequencing reads, while smFISH counts fluorescent probes inside cell boundaries. By investigating the mean-variance relation for all genes in multiple data sets from all spatial technologies we note that the data empirically correspond to negative binomial (NB) noise.
+
+To stabilise the variance, we use the approximate Anscombe's transform for NB data on the observed counts \( \hat{\bfy}_g \), \( \bfy_g = \log(\hat{\bfy}_g + \frac{1}{\phi}) \), where \( \phi \) is the overdispersion parameter, so that \( \text{Var}(\bfy) = \mathbb{E}(\bfy) + \phi \cdot \mathbb{E}(\bfy)^2 \), and \( \phi \) is estimated by curve fitting across all genes in a study \cite{Anscombe1948-uw}.
+
+\textit{Second}, we note that in all the data we investigated, every gene's expression correlates with the total count in the cells. In particular, for MERFISH data the area of cells is provided, and we note that the total count correlates strongly with the cytoplasmic area.  This relation has previously been described by Paravan-Medhar et al.~\cite{Padovan-Merhar2015-ne}, who showed that cells compensate mRNA content in response to the cytoplasmic volume of a cell. The total count thus correspond to the size of cells.
+
+While there are many cases where cells grow for biologically interesting reasons, cell size assays are easier than gene expression assays, and here we focus on regulation of gene expression.  In particular, if the distribution of relative cell sizes show spatial dependencies, \emph{every gene} will be considered spatially variable.
+
+Consequently, we consider expression levels that are adjusted for variation in cell size, using linear regression to account for this dependence, regressing out the log total count from the Anscombe transformed expression values before fitting the spatial models.
+
+For context, we also perform the spatial variation test on the total count in each data set. In all data sets the variation is significant, with between 30\% and 80\% FSV (results marked as X's in figures and supplementary figures). In the frog development data, proxies for cell size (ERCC expression and number of genes detected) are over 95\% spatially variable.
+
+\section{Data sets and specific processing steps}
+The analysis presented in this study is based on a number of publicly available datasets. Some of these data were however not available in typical data repositories owing to their novel nature.
+
+\subsection{Spatial Transcriptomics data}
+
+\begin{sloppypar}
+The count tables from Stahl et al were downloaded from the website \url{http://www.spatialtranscriptomicsresearch.org/datasets/doi-10-1126science-aaf2403}, linked from the publication. For the breast cancer data, we used the file annotated as "Layer 2" with the corresponding HE image. For the mouse olfactory bulb, we used the file named "Replicate 11" with corresponding HE image. Images included in figures were cropped, down-scaled and converted to grey scale to conserve file sizes.
+\end{sloppypar}
+
+\subsection{SeqFISH data}
+
+We downloaded the expression table from the supplementary material of Shah et al, and extracted cell counts from the region annotated with number 43 in the 249 gene experiment (Table S8 in the original publication). The shape of the data suggested this corresponded to a region in the lower left part of the corresponding supplementary figure, informing our sketch in Fig. 2D (this was only relevant for illustration, and not used for analysis or results).
+
+\subsection{MERFISH data}
+
+From the website \url{http://zhuang.harvard.edu/merfish} we downloaded the file "data\_for\_release.zip" which contain data from Moffitt et al. We used the files in the folder called "Replicate 6", as these had the larges number of cells and highest confluency. Jeffrey Moffitt helped us understand the data format through personal communication.
+
+\subsection{Frog development RNA-seq data}
+
+We downloaded the TPM expression table for Clutch A from GEO accession GSE65785.
+
+\section{Computational Performance Benchmark}
+Data for 10,000 genes were simulated according to the \name{SpatialDE} model with various effect magnitudes for multiple sample sizes. For \name{SpatialDE}, the test was run on these data and timed according to wall clock. For the Stan implementation, 100 random genes were sampled for each sample size, and timing was extrapolated by multplying the time by 100. It should be noted that this problems is trivially parallelizable over the genes, and neither of the implementations make use of this fact. The benchmarks were performed on a Late 2013 iMac with a 3.2 GHz Intel Core i5 processor and 32 GB of DDR3 RAM, a typical consumer level PC.
+
+\section{Software availability}
+
+The primary implementation of \name{SpatialDE} is a Python 3 package, which can be installed from PyPI using pip. Development is public on Github\footnote{\url{https://github.com/Teichlab/SpatialDE}}. A Stan implementation is also provided in the same repository, as well as all analysis presented in this paper, and additional tutorials and notebooks illustrating how to use the package. All data used in our analysis is also available in preprocessed form the Github repository using git-lfs.
+

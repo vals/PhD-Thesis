@@ -1,0 +1,313 @@
+% ******************************************************************************
+% ****************************** Custom Margin *********************************
+
+% Add `custommargin' in the document class options to use this section
+% Set {innerside margin / outerside margin / topmargin / bottom margin}  and
+% other page dimensions
+\ifsetCustomMargin
+  \RequirePackage[left=34mm,right=50mm,top=32mm,bottom=60mm]{geometry}
+  \setFancyHdr % To apply fancy header after geometry package is loaded
+  \setlength{\headheight}{26pt} 
+\fi
+
+% *****************************************************************************
+% ******************* Fonts (like different typewriter fonts etc.)*************
+
+% Add `customfont' in the document class option to use this section
+
+\ifsetCustomFont
+  % Set your custom font here and use `customfont' in options. Leave empty to
+  % load computer modern font (default LaTeX font).
+  % \RequirePackage{helvet}
+  \RequirePackage{tgpagella}
+  \RequirePackage{gillius2}
+  
+\fi
+
+\newcommand*\name[1]{\textsf{#1}}
+
+% *****************************************************************************
+% **************************** Custom Packages ********************************
+
+% ************************* Algorithms and Pseudocode **************************
+
+%\usepackage{algpseudocode}
+
+
+% ********************Captions and Hyperreferencing / URL **********************
+
+% Captions: This makes captions of figures use a boldfaced small font.
+%\RequirePackage[small,bf]{caption}
+
+\usepackage{hyperref}
+
+\RequirePackage[labelsep=space,tableposition=top]{caption}
+\renewcommand{\figurename}{Fig.} %to support older versions of captions.sty
+\renewcommand{\captionfont}{\sffamily\small}
+
+\RequirePackage[footfont=Large,style=ruled,footposition=caption]{floatrow}
+
+\newcommand{\textunderscript}[1]{$_{\text{#1}}$}
+
+% \newcommand*\legend[1]{\small{\textsf{#1}}}
+
+
+% *************************** Graphics and figures *****************************
+
+%\usepackage{rotating}
+\usepackage{wrapfig}
+
+% Uncomment the following two lines to force Latex to place the figure.
+% Use [H] when including graphics. Note 'H' instead of 'h'
+\usepackage{float}
+\restylefloat{figure}
+
+% Subcaption package is also available in the sty folder you can use that by
+% uncommenting the following line
+% This is for people stuck with older versions of texlive
+% \usepackage{sty/caption/subcaption}
+% \usepackage{subcaption}
+
+
+% ********************************** Tables ************************************
+\usepackage{booktabs} % For professional looking tables
+\usepackage{multirow}
+
+%\usepackage{multicol}
+%\usepackage{longtable}
+\usepackage{tabularx}
+
+
+% ***************************** Math and SI Units ******************************
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{siunitx} % use this package module for SI units
+\usepackage{bm}
+
+\usepackage{xfrac}
+
+
+% ******************************* Line Spacing *********************************
+
+% Choose linespacing as appropriate. Default is one-half line spacing as per the
+% University guidelines
+
+% \doublespacing
+% \onehalfspacing
+% \singlespacing
+
+
+% ************************ Formatting / Footnote *******************************
+
+% Don't break enumeration (etc.) across pages in an ugly manner (default 10000)
+%\clubpenalty=500
+%\widowpenalty=500
+
+%\usepackage[perpage]{footmisc} %Range of footnote options
+
+
+% *****************************************************************************
+% *************************** Bibliography  and References ********************
+
+%\usepackage{cleveref} %Referencing without need to explicitly state fig /table
+
+% Add `custombib' in the document class option to use this section
+\ifuseCustomBib
+   \RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
+
+% If you would like to use biblatex for your reference management, as opposed to the default `natbibpackage` pass the option `custombib` in the document class. Comment out the previous line to make sure you don't load the natbib package. Uncomment the following lines and specify the location of references.bib file
+
+%\RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=nty, natbib=true]{biblatex}
+%\bibliography{References/references} %Location of references.bib only for biblatex
+
+\fi
+
+% changes the default name `Bibliography` -> `References'
+\renewcommand{\bibname}{References}
+
+
+% *****************************************************************************
+% *************** Changing the Visual Style of Chapter Headings ***************
+% This section on visual style is from https://github.com/cambridge/thesis
+
+% Uncomment the section below. Requires titlesec package.
+
+\RequirePackage{titlesec}
+
+\titleformat{\section}[hang]{\normalfont\rmfamily\tiny}{\thesection}{1em}{\sffamily\large}{}
+
+\titleformat{\subsection}[runin]{\normalfont\rmfamily\tiny}{\thesubsection}{1em}{\bfseries\sffamily\lsstyle\small}{}
+
+\newcommand{\PreContentTitleFormat}{\titleformat{\chapter}[display]{\scshape\Large}
+{\Large\filleft{\chaptertitlename} \Huge\thechapter}
+{1ex}{}
+[\vspace{1ex}\titlerule]}
+
+\newcommand{\ContentTitleFormat}{\titleformat{\chapter}[display]{\scshape\huge}
+{\Large\filleft{\chaptertitlename} \Huge\thechapter}{1ex}
+{\titlerule\vspace{1ex}\filright}
+[\vspace{1ex}\titlerule]}
+
+\newcommand{\PostContentTitleFormat}{\PreContentTitleFormat}
+
+\PreContentTitleFormat
+
+
+
+% ******************************************************************************
+% ************************* User Defined Commands ******************************
+% ******************************************************************************
+
+% *********** To change the name of Table of Contents / LOF and LOT ************
+
+%\renewcommand{\contentsname}{My Table of Contents}
+%\renewcommand{\listfigurename}{My List of Figures}
+%\renewcommand{\listtablename}{My List of Tables}
+
+
+% ********************** TOC depth and numbering depth *************************
+
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+
+
+% ******************************* Nomenclature *********************************
+
+% To change the name of the Nomenclature section, uncomment the following line
+
+%\renewcommand{\nomname}{Symbols}
+
+
+% ********************************* Appendix ***********************************
+
+% The default value of both \appendixtocname and \appendixpagename is `Appendices'. These names can all be changed via:
+
+%\renewcommand{\appendixtocname}{List of appendices}
+%\renewcommand{\appendixname}{Appndx}
+
+% ******************************** Draft Mode **********************************
+
+% Uncomment to disable figures in `draftmode'
+%\setkeys{Gin}{draft=true}  % set draft to false to enable figures in `draft'
+
+% These options are active only during the draft mode
+% Default text is "Draft"
+%\SetDraftText{DRAFT}
+
+% Default Watermark location is top. Location (top/bottom)
+%\SetDraftWMPosition{bottom}
+
+% Draft Version - default is v1.0
+%\SetDraftVersion{v1.1}
+
+% Draft Text grayscale value (should be between 0-black and 1-white)
+% Default value is 0.75
+%\SetDraftGrayScale{0.8}
+
+
+%% Todo notes functionality
+%% Uncomment the following lines to have todonotes.
+
+%\ifsetDraft
+%	\usepackage[colorinlistoftodos]{todonotes}
+%	\newcommand{\mynote}[1]{\todo[author=kks32,size=\small,inline,color=green!40]{#1}}
+%\else
+%	\newcommand{\mynote}[1]{}
+%	\newcommand{\listoftodos}{}
+%\fi
+
+% Example todo: \mynote{Hey! I have a note}
+
+
+
+%% Short-hand for bold font commands
+
+\newcommand{\unit}{{\bf I}}
+\newcommand{\boldzero}{{\bf 0}}
+
+\newcommand{\bfa}{{\bf a}}
+\newcommand{\bfb}{{\bf b}}
+\newcommand{\bfc}{{\bf c}}
+\newcommand{\bfd}{{\bf d}}
+\newcommand{\bfe}{{\bf e}}
+\newcommand{\bff}{{\bf f}}
+\newcommand{\bfg}{{\bf g}}
+\newcommand{\bfh}{{\bf h}}
+\newcommand{\bfi}{{\bf i}}
+\newcommand{\bfk}{{\bf k}}
+\newcommand{\bfl}{{\bf l}}
+\newcommand{\bfm}{{\bf m}}
+\newcommand{\bfp}{{\bf p}}
+\newcommand{\bfr}{{\bf r}}
+\newcommand{\bfs}{{\bf s}}
+\newcommand{\bft}{{\bf t}}
+\newcommand{\bfu}{{\bf u}}
+\newcommand{\bfv}{{\bf v}}
+\newcommand{\bfw}{{\bf w}}
+\newcommand{\bfx}{{\bf x}}
+\newcommand{\bfy}{{\bf y}}
+\newcommand{\bfz}{{\bf z}}
+
+\newcommand{\bfA}{{\bf A}}
+\newcommand{\bfB}{{\bf B}}
+\newcommand{\bfC}{{\bf C}}
+\newcommand{\bfD}{{\bf D}}
+\newcommand{\bfG}{{\bf G}}
+\newcommand{\bfH}{{\bf H}}
+\newcommand{\bfI}{{\bf I}}
+\newcommand{\bfJ}{{\bf J}}
+\newcommand{\bfK}{{\bf K}}
+\newcommand{\bfL}{{\bf L}}
+\newcommand{\bfM}{{\bf M}}
+\newcommand{\bfQ}{{\bf Q}}
+\newcommand{\bfR}{{\bf R}}
+\newcommand{\bfS}{{\bf S}}
+\newcommand{\bfF}{{\bf F}}
+\newcommand{\bfT}{{\bf T}}
+\newcommand{\bfU}{{\bf U}}
+\newcommand{\bfV}{{\bf V}}
+\newcommand{\bfW}{{\bf W}}
+\newcommand{\bfX}{{\bf X}}
+\newcommand{\bfY}{{\bf Y}}
+\newcommand{\bfZ}{{\bf Z}}
+
+\newcommand{\bDelta}{\mbox{\boldmath $\Delta$}}
+\newcommand{\bbeta}{\mbox{\boldmath $\beta$}}
+\newcommand{\bmu}{\mbox{\boldmath $\mu$}}
+\newcommand{\bnu}{\mbox{\boldmath $\nu$}}
+\newcommand{\balpha}{\mbox{\boldmath $\alpha$}}
+\newcommand{\bepsilon}{\mbox{\boldmath $\epsilon$}}
+\newcommand{\bgamma}{\mbox{\boldmath $\gamma$}}
+\newcommand{\bsigma}{\mbox{\boldmath $\sigma$}}
+\newcommand{\bSigma}{\mbox{\boldmath $\Sigma$}}
+\newcommand{\btau}{\mbox{\boldmath $\tau$}}
+\newcommand{\blambda}{\mbox{\boldmath $\lambda$}}
+\newcommand{\bLambda}{\mbox{\boldmath $\Lambda$}}
+\newcommand{\bpi}{\mbox{\boldmath $\pi$}}
+\newcommand{\bpsi}{\mbox{\boldmath $\psi$}}
+\newcommand{\bchi}{\mbox{\boldmath $\chi$}}
+\newcommand{\bxi}{\mbox{\boldmath $\xi$}}
+\newcommand{\bPsi}{\mbox{\boldmath $\Psi$}}
+\newcommand{\bphi}{\mbox{\boldmath $\phi$}}
+\newcommand{\bPhi}{\mbox{\boldmath $\Phi$}}
+
+\newcommand{\btheta}{\mbox{\boldmath $\theta$}}
+\newcommand{\bdelta}{\mbox{\boldmath $\delta$}}
+\newcommand{\bTheta}{\mbox{\boldmath $\Theta$}}
+\newcommand{\bOmega}{\mbox{\boldmath $\Omega$}}
+
+
+%% Short-hand for stats symbols
+
+\newcommand{\given}{\,|\,}
+\newcommand{\GP}{\mathcal{GP}}
+\newcommand{\normal}[2]{\mathcal{N}\left(#1 \,\middle | \, #2\right)}
+\newcommand{\model}{\mathcal{H}}
+\newcommand{\GPM}{\mathcal{H}_{\text{GP}}}
+\newcommand{\T}{{\rm T}}
+
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\Tr}{\mbox{Tr}}
+
