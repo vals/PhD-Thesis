@@ -43,7 +43,7 @@ Initially, we used Principal Components Analysis (PCA) to explore the overall tr
 
 The results from the PCA suggested that variation in PbTII transcriptomes could be used to reconstruct the transcriptional programs that are underlying the T\textsubscript{H}1 and T\textsubscript{FH} differentiation. To more explicitly model the temporal dynamics of this differentiation process, we developed \name{GPfates}, a temporal mixture model that builds on the Gaussian Process Latent Variable Model (GPLVM) \cite{Lawrence2006-it} and Overlapping Mixtures of Gaussian Processes (OMGP) \cite{Lazaro-Gredilla2012-ta}. Briefly, this approach is based on first reconstructing the differentiation trajectory from the observed data (“pseudotime,” Fig. \ref{fig:models}, A and B), thereby establishing an order for the cells. Although our model uses the sample time as prior information, the inferred orderings did not strictly adhere to the experimental time points (fig. \ref{fig:ms8}). For example, cells from day 4 after infection were mixed with some of the cells from days 3 and 7 at either end of the day 4 pseudotime distribution. This result is consistent with the idea that bulk assessments of cells at specific time points fail to account for the heterogeneity and differential kinetics of responses made by single cells. To assess the robustness of the established ordering, we repeated this analysis without supplying the experimental sampling times to the model, finding overall consistent results (Comp. Supp. Fig. 8).
 
-In a second step, GPfates uses the inferred temporal orders as input for a nonparametric time series mixture model [OMGP \cite{Lazaro-Gredilla2012-ta}]. This approach revealed two simultaneous trends emerging during pseudotime (Fig. \ref{fig:models}, C and D), which separated from each other, indicating that a developmental bifurcation occurred.
+In a second step, \name{GPfates} uses the inferred temporal orders as input for a nonparametric time series mixture model [OMGP \cite{Lazaro-Gredilla2012-ta}]. This approach revealed two simultaneous trends emerging during pseudotime (Fig. \ref{fig:models}, C and D), which separated from each other, indicating that a developmental bifurcation occurred.
 
 In a third step, GPfates uses a change point model (section 4.2 of Supplementary Computational Methods), thereby facilitating to annotate pseudotime after bifurcation. The cell fate split appeared to initiate among early day 4 post-infection cells (in pseudotime; Fig. \ref{fig:models}, C and D), an inference that was robust when using bootstrapped subsets of cells (section 6.2 of Supplementary Computational Methods).
 
@@ -329,7 +329,7 @@ To identify the region at which the likelihood decreases more rapidly, we fit a 
 \end{align*}
 This curve consists of two linear pieces, broken up at the point $ p $. When the curve is fitted, we consider the break-point $ p $ to be the point after which we can be confident that a bifurcation has occurred, see Fig \ref{fig:bifdetection}.
 
-\section{Limitations}
+\section{Limitations of the \name{GPfates} model}
 
 The models we have described here are implemented in the aim of describing a cellular trajectory and decomposing parallel trends. Using the Gaussian Process framework we can ask the question we want while at the same time considering information we know about our experimental data, such as collection time.
 
@@ -337,7 +337,7 @@ We have found this strategy powerful, but it is not perfect, and there are many 
 
 A more biologically appropriate view of the problem of cellular bifurcation would  potentially be a tree-based model, with an explicit branch time encoded in the model. The computational gain from the mixture model used here should not be overlooked though, an explicit branch point would require either sampling or global optimisation strategies for inference which is much slower than gradient based optimisation.
 
-Throughout we are using regular Gaussian likelihoods for our models, though we empirically know this is not completely appropriate. In particular due to the so called "drop-out" problem in scRNA-seq measurements, where there is an inflation of zero-values at low to intermediate expression levels \cite{Kharchenko2014-tj}.
+Throughout we are using regular Gaussian likelihoods for our models, though we empirically know this is not completely appropriate. In particular due to the so called ``drop-out'' problem in scRNA-seq measurements, where there is an inflation of zero-values at low to intermediate expression levels \cite{Kharchenko2014-tj}.
 
 The likelihood is also limited in that we assume expression values in the $ \log \left( \text{TPM} + 1 \right) $ unit have Gaussian noise in the absence of dropouts. While this seem to empirically hold true, perhaps a count based likelihood such as Poisson would be more appropriate for scRNA-seq data?
 
@@ -361,7 +361,7 @@ While pseudotime can be inferred directly from the expression matrix $ Y $, in m
 
 Another practical consideration is that single cell expression values can be quite noisy. This limits the time-scale at which we can expect to measure proper functional differences in expression levels. Due to this, we tend to put lower limits on the lengthscale $ l_\text{SE} $ of the squared exponential covariance function.
 
-\subsection{Integration of existing methods}
+\subsection{Integration of alternative methods}
 
 We have presented use of the GPfates method when pseudotime or low-dimensional representations have been based on the GPLVM. This is because the OMGP follows from this framework, and the statistical assumptions are consistent between the models.
 
@@ -451,7 +451,7 @@ It is possible that the optimal likelihood for K is not well defined when we hav
 For the 1-dimensional Bayesian GPLVM which we use to find the pseudotime of the data, we put priors on the cells based on their known time points. This is not strictly necessary, but helps to enhance interpretability as there is intrinsic invariance to the inferred values. If we do not use priors, qualitatively, the same trajectory is identified. Additionally, comparing the two versions of pseudotime against each other, we see that they correspond to a circular shift relative to each other. The covariance matrices inferred using either strategy have a very similar block structure (Frobenius norm ... of difference) indicating that 
 neighbor relations are consistent. Supp. Comp. Fig. \ref{fig:priors}.
 
-\subsection{Pseudotime uncertainty}
+\subsection{Assessment of pseudotime uncertainty}
 
 \begin{figure}
     \centering

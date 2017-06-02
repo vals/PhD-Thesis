@@ -6,30 +6,13 @@
 
 \graphicspath{{Chapter1/Figs/}}
 
-The ability to measure the transcriptome of single-cells has only been feasible for a few
-years, but is becoming an extremely popular assay. While many types of analysis and
-questions can be answered using single cell RNA-sequencing, of prime interest is the ability
-to investigate what cell types occur in nature. Unbiased and reproducible cataloging of
-distinct cell types require large numbers of cells to be sampled. Technological development
-and improvement of protocols has exponentially scaled the size of single cell RNA-seq
-studies, much faster than Moore’s Law. In this perspective we will illustrate the steps that
-made this growth happen, and what that has meant for our ability to define cell types.
+The ability to measure the transcriptome of single-cells has only been feasible for a few years, but is becoming an extremely popular assay. While many types of analysis and questions can be answered using single cell RNA-sequencing, of prime interest is the ability to investigate what cell types occur in nature. Unbiased and reproducible cataloging of distinct cell types require large numbers of cells to be sampled. Technological development and improvement of protocols has exponentially scaled the size of single cell RNA-seq studies, much faster than Moore’s Law. In this perspective we will illustrate the steps that made this growth happen, and what that has meant for our ability to define cell types.
 
 \section{Introduction}
 
-Cells are the fundamental units of life, and cell differentiation allows the generation of
-complex multicellular organisms. This variety of cells states is made possible because cells
-exhibit different identities that are determined by their own nature (cell-intrinsically, through
-their development) and nurture (environment). The molecular mechanisms that regulate cell
-state and function are of fundamental interest, as they reflect underlying phenotype, as well
-as informing on developmental origin and tissue context.
+Cells are the fundamental units of life, and cell differentiation allows the generation of complex multicellular organisms. This variety of cells states is made possible because cells exhibit different identities that are determined by their own nature (cell-intrinsically, through their development) and nurture (environment). The molecular mechanisms that regulate cell state and function are of fundamental interest, as they reflect underlying phenotype, as well as informing on developmental origin and tissue context.
 
-Regulation of cell state and function occurs significantly at the mRNA level, with transcription
-factors defining a cell’s transcriptional “program”. In light of this, the abundances of different
-RNAs within cells are representative of functionally relevant cellular states. The ability to
-measure RNA in cells ties together cell biology, in terms of cellular phenotypes, with
-molecular biology, in terms of regulation of function.
-Shortly after the advent of RNA sequencing as a biological tool \cite{Mortazavi2008-rq}, researchers started working on adapting the technology to single cell assays. Imaging-based assays such as in situ hybridization for RNA, or immunostaining for proteins had long revealed that population level averages were not representative of individual cell states \cite{Raj2008-wj}.
+Regulation of cell state and function occurs significantly at the mRNA level, with transcription factors defining a cell’s transcriptional “program”. In light of this, the abundances of different RNAs within cells are representative of functionally relevant cellular states. The ability to measure RNA in cells ties together cell biology, in terms of cellular phenotypes, with molecular biology, in terms of regulation of function. Shortly after the advent of RNA sequencing as a biological tool \cite{Mortazavi2008-rq}, researchers started working on adapting the technology to single cell assays. Imaging-based assays such as in situ hybridization for RNA, or immunostaining for proteins had long revealed that population level averages were not representative of individual cell states \cite{Raj2008-wj}.
 
 Over the last few years, many sensitive and accurate single-cell RNA-sequencing
 (scRNA-Seq) protocols have been introduced \cite{Svensson2017-pf}.
@@ -45,72 +28,27 @@ In this Perspective piece, we show that single cell transcriptome experiments ha
 
 \section{From tens to hundreds of cells}
 
-The increase in multiplexing of samples is driven by two factors: (i) reduction in the volume
-of reagents per sample and (ii) parallel processing of samples.
+The increase in multiplexing of samples is driven by two factors: (i) reduction in the volume of reagents per sample and (ii) parallel processing of samples.
 
-In the first single-cell RNA-seq study published in 2009 by Tang et al \cite{Tang2009-af}, a single 4-cell stage
-blastomere was manually isolated using a glass capillary. The entire RNA-sequencing
-procedure was performed on the cell individually. The motivation was to make the most of
-precious embryonic samples compared to microarray techniques. The original method by
-Tang et al requires multiple PCR tubes for each cell, and a gel purification step \cite{Sasagawa2013-ps, Tang2010-am}.
+In the first single-cell RNA-seq study published in 2009 by Tang et al \cite{Tang2009-af}, a single 4-cell stage blastomere was manually isolated using a glass capillary. The entire RNA-sequencing procedure was performed on the cell individually. The motivation was to make the most of precious embryonic samples compared to microarray techniques. The original method by Tang et al requires multiple PCR tubes for each cell, and a gel purification step \cite{Sasagawa2013-ps, Tang2010-am}.
 
-Since it was known that intrinsic transcriptional variation might cause measurement issues, a
-technique called STRT-Seq was developed and presented in a study of Islam et al \cite{Islam2011-yy} to
-multiplex up to 96 samples at once, in order to characterize the transcriptional landscape of
-MEFs and mESCs. At the time, the value of multiplexing strategies started being recognized
-as a means to allow higher throughput of sequencing experiments in general
- \cite{Kozarewa2011-we}. In the technique, the 96 cells are added to individual wells, where cell specific barcodes are added using the template-switching mechanism of reverse transcriptase during cDNA generation
-independently for each sample. The material from each well is then pooled together before it
-is amplified by PCR. From the results of Islam et al \cite{Islam2011-yy}, it was clear that while there was a great degree of intrinsic variation between cells of the same type, embryonic stem cells (mESC) could be distinguished from MEF cells based on the transcriptome through clustering, illustrating the notion of a transcriptional cell state.
+Since it was known that intrinsic transcriptional variation might cause measurement issues, a technique called STRT-Seq was developed and presented in a study of Islam et al \cite{Islam2011-yy} to multiplex up to 96 samples at once, in order to characterize the transcriptional landscape of MEFs and mESCs. At the time, the value of multiplexing strategies started being recognized as a means to allow higher throughput of sequencing experiments in general \cite{Kozarewa2011-we}. In this technique, the 96 cells are added to individual wells, where cell specific barcodes are added using the template-switching mechanism of reverse transcriptase during cDNA generation independently for each sample. The material from each well is then pooled together before it is amplified by PCR. From the results of Islam et al \cite{Islam2011-yy}, it was clear that while there was a great degree of intrinsic variation between cells of the same type, embryonic stem cells (mESC) could be distinguished from MEF cells based on the transcriptome through clustering, illustrating the notion of a transcriptional cell state.
 
-The ability to distinguish cell types by single cell transcriptomics was also demonstrated by
-Hashimshony et al \cite{Hashimshony2012-am}, where they introduced CEL-seq technique. As with STRT-seq, cells in
-individual wells are barcoded during cDNA synthesis and pooled. But rather than using PCR,
-the material is amplified by in vitro transcription (IVT).
+The ability to distinguish cell types by single cell transcriptomics was also demonstrated by Hashimshony et al \cite{Hashimshony2012-am}, where they introduced CEL-seq technique. As with STRT-seq, cells in individual wells are barcoded during cDNA synthesis and pooled. But rather than using PCR, the material is amplified by in vitro transcription (IVT).
 
-Illumina, Inc. introduced highly multiplexed procedures for Illumina sequencing using
-dual-index barcoding in the form of the transposase-based ‘tagmentation’ with the Nextera
-XT kits \cite{Illumina_Inc2012-mf}. This meant that multiplexing cells could be simplified by commercially available kits, allowing up to 192 samples per Illumina sequencing lane. The SMART-seq technique
-was introduced as a single-cell sequencing technology by Ramskold et al \cite{Ramskold2012-zc}, giving full length coverage using the SMART template switching technology. The data generated was more
-familiar to users of traditional RNA-sequencing, making bioinformatics processing easier.
-This method made use of the Nextera kit for multiplexing and library generation. The
-Smart-seq technique made scRNA-seq experiments widely accessible by becoming readily available as the SMARTer kit from Clontech \cite{Clontech_Laboratories_Inc2013-zf}. A drawback compared to STRT- and CEL-seq
-is that amplification and library generation must be generated for all the cells individually,
-adding labour to the process.
+Illumina, Inc. introduced highly multiplexed procedures for Illumina sequencing using dual-index barcoding in the form of the transposase-based ‘tagmentation’ with the Nextera XT kits \cite{Illumina_Inc2012-mf}. This meant that multiplexing cells could be simplified by commercially available kits, allowing up to 192 samples per Illumina sequencing lane. The SMART-seq technique was introduced as a single-cell sequencing technology by Ramskold et al \cite{Ramskold2012-zc}, giving full length coverage using the SMART template switching technology. The data generated was more familiar to users of traditional RNA-sequencing, making bioinformatics processing easier. This method made use of the Nextera kit for multiplexing and library generation. The Smart-seq technique made scRNA-seq experiments widely accessible by becoming readily available as the SMARTer kit from Clontech \cite{Clontech_Laboratories_Inc2013-zf}. A drawback compared to STRT- and CEL-seq is that amplification and library generation must be generated for all the cells individually, adding labour to the process.
 
-While readily available and easy to use (Smart-seq has a smaller number of experimental
-steps than STRT-Seq or CEL-Seq), the cost per volume of the SMARTer kit was prohibitive
-to scale up the number of samples to the numbers in the STRT-seq and CEL-seq
-applications. Indeed, none of the published studies using this technique in microwells
-processed more than 20 cells \cite{Ramskold2012-zc, Marinov2014-bf, Shalek2013-lw}. While it was noted that discrete cell states could be identified \cite{Shalek2013-lw}, it was clear that more statistical power from more samples would be helpful. Two parallel strategies emerged to tackle this: reducing the reaction volume per cell, and adaptation of cheaper reagents for a similar goal. The introduction of the Fluidigm C1 system improved the reagent cost, by letting the reaction occur in nanoliter chambers of an integrated fluidic circuit (IFC) \cite{Fluidigm_Corporation2013-vw}. The system also simplified
-cell isolation, as users can simply load a cell suspension into the system. Cells would be
-automatically captured in 96 chambers of the IFC, and processed material could later be
-transferred to microwell plates \cite{Wu2014-ot, Brennecke2013-vv}. Recently, a higher throughput version if the IFC allowing up to 800 cells to be captured was announced \cite{Fluidigm_Corporation2016-jl}. Reaching up to ~100 samples allowed researchers to estimate variance to and decompose it into biological and technical noise \cite{Brennecke2013-vv, Kim2015-mh}.
+While readily available and easy to use (Smart-seq has a smaller number of experimental steps than STRT-Seq or CEL-Seq), the cost per volume of the SMARTer kit was prohibitive to scale up the number of samples to the numbers in the STRT-seq and CEL-seq applications. Indeed, none of the published studies using this technique in microwells processed more than 20 cells \cite{Ramskold2012-zc, Marinov2014-bf, Shalek2013-lw}. While it was noted that discrete cell states could be identified \cite{Shalek2013-lw}, it was clear that more statistical power from more samples would be helpful. Two parallel strategies emerged to tackle this: reducing the reaction volume per cell, and adaptation of cheaper reagents for a similar goal. The introduction of the Fluidigm C1 system improved the reagent cost, by letting the reaction occur in nanoliter chambers of an integrated fluidic circuit (IFC) \cite{Fluidigm_Corporation2013-vw}. The system also simplified cell isolation, as users can simply load a cell suspension into the system. Cells would be automatically captured in 96 chambers of the IFC, and processed material could later be transferred to microwell plates \cite{Wu2014-ot, Brennecke2013-vv}. Recently, a higher throughput version if the IFC allowing up to 800 cells to be captured was announced \cite{Fluidigm_Corporation2016-jl}. Reaching up to ~100 samples allowed researchers to estimate variance to and decompose it into biological and technical noise \cite{Brennecke2013-vv, Kim2015-mh}.
 
-The Linnarsson group also modified their STRT-Seq protocol to be compatible with the C1
-IFCs, which in addition reduced the reagent volume per cell, reduced the labour of manually
-isolating cells \cite{Islam2014-dx}. This eventually enabled the group to survey and catalogue neuronal subtypes
-in mouse cortex by investigating 3,005 cells from 67 individual mice \cite{Zeisel2015-mk}, after the addition of
-robotic automation for library preparation. The large number of cells from multiple mice allowed them to develop BackSPIN, a stable algorithm to cluster cells into neuronal cell types.
+The Linnarsson group also modified their STRT-Seq protocol to be compatible with the C1 IFCs, which in addition reduced the reagent volume per cell, reduced the labour of manually isolating cells \cite{Islam2014-dx}. This eventually enabled the group to survey and catalogue neuronal subtypes in mouse cortex by investigating 3,005 cells from 67 individual mice \cite{Zeisel2015-mk}, after the addition of robotic automation for library preparation. The large number of cells from multiple mice allowed them to develop BackSPIN, a stable algorithm to cluster cells into neuronal cell types.
 
-The group of Rickard Sandberg released the Smart-seq2 protocol, a refined version of
-Smart-seq which used less expensive, off the shelf reagents \cite{Picelli2013-px, Picelli2014-hr}, which also allowed smaller volumes in individual wells. The microwell based Smart-seq2 protocol was more appropriate when cells could not be provided in a dense suspension, as is the case e.g. when studying early embryonic cells \cite{Deng2014-ud}.
+The group of Rickard Sandberg released the Smart-seq2 protocol, a refined version of Smart-seq which used less expensive, off the shelf reagents \cite{Picelli2013-px, Picelli2014-hr}, which also allowed smaller volumes in individual wells. The microwell based Smart-seq2 protocol was more appropriate when cells could not be provided in a dense suspension, as is the case e.g. when studying early embryonic cells \cite{Deng2014-ud}.
 
-Researchers also noted that some cell types had troubles with the capture efficiency of the
-C1 IFC chips (for example, in the study by Zeisel et al \cite{Zeisel2015-mk} the average successful cell capture
-rate was 41\%). With the lower reagent price per volume, the Smart-seq2 protocol gave an alternative with greater control, though at the cost of labour. The strategy of relying on off-the-shelf reagents and not needing the expensive IFC reduced the price per cell. The dominant cost factor for Smart-seq2 at this point was the reliance on the Nextera kit for barcoding. The cost per cell was further reduced by in-house production of Tn5, a variant of the active enzyme in Illumina’s Nextera XT tagmentation kit \cite{Picelli2014-ni}. The same Tn5 transposase was used by the Linnarsson lab to reduce the cost of the STRT-seq technology \cite{Islam2014-dx}.
+Researchers also noted that some cell types had troubles with the capture efficiency of the C1 IFC chips (for example, in the study by Zeisel et al \cite{Zeisel2015-mk} the average successful cell capture rate was 41\%). With the lower reagent price per volume, the Smart-seq2 protocol gave an alternative with greater control, though at the cost of labour. The strategy of relying on off-the-shelf reagents and not needing the expensive IFC reduced the price per cell. The dominant cost factor for Smart-seq2 at this point was the reliance on the Nextera kit for barcoding. The cost per cell was further reduced by in-house production of Tn5, a variant of the active enzyme in Illumina’s Nextera XT tagmentation kit \cite{Picelli2014-ni}. The same Tn5 transposase was used by the Linnarsson lab to reduce the cost of the STRT-seq technology \cite{Islam2014-dx}.
 
 \section{Surpassing thousands of cells}
 
-With well-calibrated flow cytometers, cells can quickly be isolated in individual wells of 96 or
-384 microwell plates. Once cells are available as a single cell suspension, researchers can
-use this strategy to populate large numbers of plates with their cells of interest, the
-bottleneck becoming the processing of the plates. With this in mind, Jaitin et al modified the
-CEL-seq protocol to be compatible with robotic automation in MARS-seq \cite{Jaitin2014-pk}. This allowed the
-Amit team to decrease the labour of processing plates filled with isolated cells, and scale up
-massively, investigating 4,000 cells in one study \cite{Jaitin2014-pk}. Several laboratories since have set up
-automation procedures for some standard protocol of choice \cite{Zeisel2015-mk, Soumillon2014-mf}, and the refined CEL-seq2 method \cite{Hashimshony2016-ul} was automated in form of the SORT-seq method \cite{Muraro2016-zt}. The large number of samples allowed the researchers to develop a probabilistic mixture model and assign cells to immune
-cell types without known markers \cite{Jaitin2014-pk}.
+With well-calibrated flow cytometers, cells can quickly be isolated in individual wells of 96 or 384 microwell plates. Once cells are available as a single cell suspension, researchers can use this strategy to populate large numbers of plates with their cells of interest, the bottleneck becoming the processing of the plates. With this in mind, Jaitin et al modified the CEL-seq protocol to be compatible with robotic automation in MARS-seq \cite{Jaitin2014-pk}. This allowed the Amit team to decrease the labour of processing plates filled with isolated cells, and scale up massively, investigating 4,000 cells in one study \cite{Jaitin2014-pk}. Several laboratories since have set up automation procedures for some standard protocol of choice \cite{Zeisel2015-mk, Soumillon2014-mf}, and the refined CEL-seq2 method \cite{Hashimshony2016-ul} was automated in form of the SORT-seq method \cite{Muraro2016-zt}. The large number of samples allowed the researchers to develop a probabilistic mixture model and assign cells to immune cell types without known markers \cite{Jaitin2014-pk}.
 
 In CEL-seq and derivative protocols \cite{Hashimshony2012-am, Jaitin2014-pk, Hashimshony2016-ul, Velten2015-ve}, it had been demonstrated that as long as you had isolated and barcoded the cDNA material, the following steps of amplification and library preparation could be done in a single unit. The throughput bottleneck was pinpointed to two major factors: isolation of cells, and the ability to generate enough multiplexing barcodes to investigate large numbers of cells in parallel. Methods had emerged to randomly capture and manipulate individual cells in nanoliter droplet emulsions \cite{Mazutis2013-rd}. The challenge of creating cDNA and barcode the material in the individual droplets was solved by Klein et al \cite{Klein2015-ti} and Macosko et al \cite{Macosko2015-jb} by delivering beads coated with barcoded sequences into the droplets in the inDrop and Drop-seq methods, respectively.
 
@@ -121,37 +59,23 @@ the order of 5-10\% \cite{Klein2015-ti, Macosko2015-jb}), and the barcode space 
 
 A benefit of the droplet microfluidics is that it is simple to manufacture the components. The plans and details for the Drop-seq system was made public online at \url{http://mccarrolllab.com/dropseq/}. This spreads the use of the technology, and has enabled researchers to customize it to their needs. Still, optimization and experience with microfluidics is needed for optimal results. The company 10x Genomics commercialised the material required (device and reagents) to perform the inDrop method, spreading the technology worldwide \cite{10x_Genomics_Inc2016-do}. In their implementation, up to 8 independent cell pools can be processed simultaneously, allowing the parallelisation of several experiments in a single run. The technology was demonstrated in a massive study of 250,000 cells \cite{Zheng2017-th}. Recently, Illumina and Bio-Rad also announced nanodroplet based single cell system \cite{Illumina_Inc2017-wj}.
 
-An alternative strategy for massively parallel cell isolation is to deposit beads into picoliter
-wells, and randomly load them with cells38–40 \cite{Christina_Fan2015-dy, Gierahn2017-xv, Bose2015-dt}. Beside decreasing the reaction volume, the picowell systems are easier to control, and more portable. This allows more rapid collection
-of fresh cells in e.g. clinical settings, further increasing the ability to make single cell observations.
+An alternative strategy for massively parallel cell isolation is to deposit beads into picoliter wells, and randomly load them with cells38–40 \cite{Christina_Fan2015-dy, Gierahn2017-xv, Bose2015-dt}. Beside decreasing the reaction volume, the picowell systems are easier to control, and more portable. This allows more rapid collection of fresh cells in e.g. clinical settings, further increasing the ability to make single cell observations.
 
-A related strategy by Vickovic et al \cite{Vickovic2016-or} consists of FACS sorting cells onto the surface of an
-array with attached barcoded Poly(dT) capture probes. The throughput is estimated to be 10,000 cells over two days. Since cells are not randomly isolated but actively placed, the efficiency per cell should be better depending on the flow sorter.
+A related strategy by Vickovic et al \cite{Vickovic2016-or} consists of FACS sorting cells onto the surface of an array with attached barcoded Poly(dT) capture probes. The throughput is estimated to be 10,000 cells over two days. Since cells are not randomly isolated but actively placed, the efficiency per cell should be better depending on the flow sorter.
 
 \section{On the horizon: hundreds of thousands to millions of cells}
 
-Further scaling of random isolation methods, through nanodroplets or picowells to analyse
-cells in parallel is limited by rate-limiting to avoid doublets of cells, as well as the number of
-synthesized barcodes. Two new methods hasve been demonstrated to overcome these
-issues, by making use of sequential in situ barcoding \cite{Rosenberg2017-jt, Cao2017-ux}.
+Further scaling of random isolation methods, through nanodroplets or picowells to analyse cells in parallel is limited by rate-limiting to avoid doublets of cells, as well as the number of synthesized barcodes. Two new methods hasve been demonstrated to overcome these issues, by making use of sequential in situ barcoding \cite{Rosenberg2017-jt, Cao2017-ux}.
 
-In the in situ barcoding approaches, cells are permeabilization and fixed with formaldehyde \cite{Rosenberg2017-jt}
-or methanol \cite{Cao2017-ux}. The fixed cells are then divided into small fractions of reactions where in the first round cDNA is generated from RNA, and all cells in a fraction gets a unique barcode. In subsequent steps, cells are pooled together, and re-divided into fraction where the new fractions get another barcode appended to the cDNA. The low probability of cells going together into the sequential fractions means each cell will get a unique sequence of
-barcodes, while the cells have actually never been isolated. In the study of Cao et al, this technique was applied to C. elegans which gave the researchers about 50 copies of each known cell type in the worm, providing a single-cell atlas of a whole animal \cite{Cao2017-ux}. Cell types could be identified in an unbiased manner by first creating a low-dimensional representation through, then applying the Density Peak clustering algorithm \cite{Rodriguez2014-mc}. The high copy number of the cell types allowed the low-dimensional representation to be well represented with distinct
-groups.
+In the in situ barcoding approaches, cells are permeabilization and fixed with formaldehyde \cite{Rosenberg2017-jt} or methanol \cite{Cao2017-ux}. The fixed cells are then divided into small fractions of reactions where in the first round cDNA is generated from RNA, and all cells in a fraction gets a unique barcode. In subsequent steps, cells are pooled together, and re-divided into fraction where the new fractions get another barcode appended to the cDNA. The low probability of cells going together into the sequential fractions means each cell will get a unique sequence of barcodes, while the cells have actually never been isolated. In the study of Cao et al, this technique was applied to C. elegans which gave the researchers about 50 copies of each known cell type in the worm, providing a single-cell atlas of a whole animal \cite{Cao2017-ux}. Cell types could be identified in an unbiased manner by first creating a low-dimensional representation through, then applying the Density Peak clustering algorithm \cite{Rodriguez2014-mc}. The high copy number of the cell types allowed the low-dimensional representation to be well represented with distinct groups.
 
 Currently, the major cost limitation is library preparation and cDNA sequencing. While it has been shown that to identify cell types and regulatory networks, relatively shallow sequencing suffice \cite{Heimberg2016-qw, Pollen2014-cs}, the sequencing cost is still prohibitive even at shallow depths when reaching hundreds of thousands of cells. Recent announcements promises slightly cheaper sequencing from higher throughput \cite{Illumina_Inc2017-zg}, some radical change in sequencing technology might be needed.
 
 Beyond sequencing, the limitation is obtaining cells. In some cases, cells might not be easy to isolate, and in many interesting cases, it is difficult to get cells into a single cell suspension. In line with this, two laboratories in parallel adapted the single-cell transcriptomics to nuclei isolation, allowing the work with tissues where harsh dissociation protocols will damage RNA integrity \cite{Habib2016-jm, Habib2017-jk, Lake2016-zb}. Moreover, stored material can be used in nuclear single-cell RNA analysis, as it is compatible with fixed cells. Recent work has shown that cells can be preserved prior to preparation for single cell RNA-sequencing, increasing the ability to gather usable material without reducing the complexity of the transcriptome \cite{Guillaumet-Adkins2017-po, Alles2017-vi}.
 
-A particularly illustrative example of the scaling which have happened over the year is from
-the Regev lab scaled 18 cells \cite{Shalek2014-gu} (microwell plates) to 2,000 cells \cite{Shalek2014-gu} (microfluidics) to 200,000 cells \cite{Dixit2016-qx} (nanodroplets) of the same cell type over the last 4 years. The field of transcriptomics have long been cursed by the so called ``large P small N problem'', where the number of observations (cells) is much smaller than the number of variables (genes). With hundreds of thousands of cells, each expressing up to 10,000 genes, this is no longer the case, and in the coming years we will see a lot of interesting results from this.
+A particularly illustrative example of the scaling which have happened over the year is from the Regev lab scaled 18 cells \cite{Shalek2014-gu} (microwell plates) to 2,000 cells \cite{Shalek2014-gu} (microfluidics) to 200,000 cells \cite{Dixit2016-qx} (nanodroplets) of the same cell type over the last 4 years. The field of transcriptomics have long been cursed by the so called ``large P small N problem'', where the number of observations (cells) is much smaller than the number of variables (genes). With hundreds of thousands of cells, each expressing up to 10,000 genes, this is no longer the case, and in the coming years we will see a lot of interesting results from this.
 
-Recently, single cell studies have started including artificial perturbations of the system, from
-which direct regulatory information can be gained using relatively simple linear models \cite{Dixit2016-qx, Jaitin2016-sj, Adamson2016-mt, Datlinger2017-aa}. It has been known that simple analysis methods with a lot of data perform better than complex methods with small amounts of data \cite{Halevy2009-uj}. A recent good example of this is in the work of Esteva et al, where a gold standard data set of 1,000 images was increased to one with 100,000,
-images, allowing the researchers to train a neural network which beat trained dermatologists
-in clinical classification of skin lesions \cite{Esteva2017-cw}. When studies reach millions of cells, even rare cell
-types will be identifiable without issue, and we will have an unbiased view on transcriptional diversity.
+Recently, single cell studies have started including artificial perturbations of the system, from which direct regulatory information can be gained using relatively simple linear models \cite{Dixit2016-qx, Jaitin2016-sj, Adamson2016-mt, Datlinger2017-aa}. It has been known that simple analysis methods with a lot of data perform better than complex methods with small amounts of data \cite{Halevy2009-uj}. A recent good example of this is in the work of Esteva et al, where a gold standard data set of 1,000 images was increased to one with 100,000, images, allowing the researchers to train a neural network which beat trained dermatologists in clinical classification of skin lesions \cite{Esteva2017-cw}. When studies reach millions of cells, even rare cell types will be identifiable without issue, and we will have an unbiased view on transcriptional diversity.
 
 \section{Retaining spatial context}
 
@@ -163,3 +87,17 @@ types will be identifiable without issue, and we will have an unbiased view on t
 \end{figure}
 
 The increasingly large sample sizes of single cells is one aspect of technological improvement. These improvements also allows retaining additional data with samples. In particular, many new technologoes allow the spatial location of cells in tissues to be preserved. This will allow researchers to investigate how cell communication affects transcriptional regulation. The technologies are only recently emerging (Figure \ref{fig:spatial}), and starting to get enough scale to be useful, but will be a very promising field in the future.
+
+\section{Biological insights gained}
+
+\subsection{pseudotime}
+
+\subsection{branching}
+
+\subsection{cell-cell}
+
+\subsection{development}
+
+\subsection{space}
+
+\section{Need for protocol comparison}
