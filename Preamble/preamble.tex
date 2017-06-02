@@ -115,7 +115,8 @@
 
 % Add `custombib' in the document class option to use this section
 \ifuseCustomBib
-   \RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
+   \RequirePackage[round, sort, authoryear]{natbib} % CustomBib
+   \renewcommand\cite{\citep}
 
 % If you would like to use biblatex for your reference management, as opposed to the default `natbibpackage` pass the option `custombib` in the document class. Comment out the previous line to make sure you don't load the natbib package. Uncomment the following lines and specify the location of references.bib file
 

@@ -4,6 +4,50 @@
 
 \graphicspath{{Appendix2/Figs/}}
 
+\section{Experimental methods}
+
+\subsection{Zebrafish strains and maintenance}
+
+The maintenance of wild-type (Tubingen Long Fin) and transgenic zebrafish Tg(cd41:GFP) lines were performed in accordance with EU regulations on lab- oratory animals, as previously described \cite{Bielczyk-Maczynska2014-hf}.
+
+\subsection{Single-cell sorting and whole transcriptome amplification}
+
+A single kidney from heterozygote Tg(cd41:EGFP) or wild-type fish was dissected and carefully passed through a strainer using the plunger of a 1 ml syringe. In the follow-up experiment, circulating GFP-positive cells were collected from the dissected heart of the same fish. Cells were collected in cold 13 PBS/5\% fetal bovine serum. The kidney of a non-transgenic line was used to set up the gating and exclude autofluorescent cells. Dead cells were excluded based on PI staining. Individual cells were sorted using a Becton Dickinson Influx sorter with 488- and 561-nm lasers \cite{Schulte2015-dh} and collected in a single well of a 96-well plate containing 2.3 ml of 0.2\% Triton X-100 supplemented with 1 U/ml SUPERase In RNase inhibitor (Ambion). At the same time, information about cell size and granularity and the level of the fluorescence were recorded. Whole transcriptome amplification and library preparation was performed using the Smart-seq2 protocol  \cite{Picelli2013-px, Picelli2014-hr}, with ERCC spike-in controls added at the same time as the oligo-dT and dNTP mixture. Twenty-five PCR cycles were performed during the amplification.
+
+\subsection{Cell cycle analysis}
+
+GFP-positive cells from Tg(cd41:EGFP) kidney suspension were sorted using a Mo-Flo XDP (Beckman Coulter) with 488-, 561-, and 640-nm lasers. Cells were centrifuged at 1,200 rpm for 10 min at 4 C, resuspended in 100 ml 13 PBS and fixed by adding 300 ml ethanol. Cells were fixed overnight at 4 C, washed twice in 13 PBS, and re-suspended in 500 ml PI solution (25 mg/ml PI, 0.1\% Triton X-100, 0.1\% sodium citrate). Cells were incubated for 3 hr with RNase A (Sigma) and analyzed by BD LSR Fortessa (Becton Dickinson). Data were analysed using FlowJo software.
+
+\subsection{Cytology}
+
+Sorted EGFP-positive cells were concentrated by cytocentrifugation at 350 rpm for 5 min onto SuperFrostPlus slides using a Shandon Cytospin 3 cytocentrifuge. Slides were fixed for 3 min in methanol and stained with May-Gru€nwald Giemsa (Sigma) as described elsewhere \cite{Stachura2009-gd}. Images were captured as described elsewhere \cite{Bielczyk-Maczynska2014-hf}.
+
+\subsection{Verification of RNA-Seq data with qPCR}
+
+GFP-positive cells from Tg(cd41:EGFP) and Tg(fli1:EGFP) kidney suspensions were sorted using a Mo-Flo XDP (Beckman Coulter), along with an equal num- ber of viable cells from the whole kidney, into 75 ml RLT buffer (QIAGEN) con- taining 1\% b-mercaptoethanol. mRNA was extracted using Oligo (dT)25 Dyna-beads (Ambion) and cDNA was prepared using SuperScript VILO (Invitrogen), according to the manufacturers’ instructions. qPCR reactions were performed using the 7900HT Real Time system (Life Technologies) with primers for vWf (F: CGGCAGCACATACACACATT and R: CGTTCCATCCACAGAGAGGT) and two housekeeping genes (eif1a F: GAGAAGTTCGAGAAGGAAGC and R: CGTAGTATTTGCTGGTCTCG, and b-actin F: CGAGCAGGAGATGGG AACC and R: CAACGGAAACGCTCATTGC). The DDCt method was used for data analysis.
+
+\subsection{Single-Cell RNA-Seq ata processing}
+
+Reads from RNA-seq were aligned to the zebrafish genome (Zv9.77) combined with sequences for eGFP and ERCC spike-ins as artificial chromosomes, using STAR (version 2.3;  \cite{Dobin2013-mi}. The Ensembl Genes annotation track from UCSC was used with the read\_distribution.py tool from the RSeQC tool suite \cite{Wang2012-ik} to generate quality control information. Gene expression was quantified using Salmon \cite{Patro2017-wf} with parameter -l IU using Zv9 cDNA sequences from Ensembl version 77 as transcript sequences, together with ERCC spike-in and eGFP sequences as artificial transcripts. Based on comparison with empty control wells, samples with less than 50,000 paired reads and 1,000 expressed genes were considered unfit and were excluded from further analysis (Figure S2).
+
+For the follow-up experiment, expression was quantified the same way. We used a different stock and concentration of ERCC spike-ins, which changed the scales of the QC values. For these samples, we excluded cells with less than 200,000 paired reads and less than 150 expressed genes (Figure S6).
+
+Downstream analysis was performed using Transcripts per million (TPM) values reported by Salmon. The TPM unit is a measure of relative abundance of a gene, which is stable across samples \cite{Li2011-op, Wagner2012-jn}. Before analysis expression for endogenous spike-ins were filtered out for each cell, and the TPM for each cell was rescaled to sum to a million. This gives us the interpretation that TPM of a gene will correspond to the concentration of mRNAs from a gene in a given cell.
+
+Unless stated otherwise, for all analyses, we filtered out genes expressed at a level higher than 1 TPM in only less than three cells, which leaves 20,556 genes.
+
+\subsection{Identifying processes and ordering cells by hidden factors}
+
+We used ICA \cite{Hyvarinen2000-vi} to identify four latent factors (hidden variables modeling the data), as implemented in scikit-learn (with parameter random\_state = 3,984 for the sake of reproducibility). The choice of four components was based on testing between one and ten components, and seeing diminishing returns on the Frobenius norm reconstruction error past four components. One latent factor explains a progression among EGFPlow cells; another factor explains a switch from EGFPlow cells toward the population of EGFPhigh cells. A third factor explains progression among EGFPhigh cells. The fourth factor identifies three outlier cells. We used the fluorescence levels of GFP to flip the orientation of the latent factors so that a higher factor value always corresponded to a higher GFP value. Because these factors are orthogonal, they are statistically independent. In other words, there are three distinct processes happening sequentially. We performed hierarchical Ward clustering \cite{Ward1963-hr} of the cells in the four-dimensional ICA space, and assigned the cells to six clusters. (For exact commands, see Notebook 1 in Data S2.) Based on which cluster the cells belonged to, and which factor explains the variability of the cells of that cluster, we ordered cells along this three-stage progression. This ranking of cells through the entire process was treated as pseudotime. (For exact commands, see Notebook 3 in Data S2.)
+
+As an alternative way to estimate a pseudotime, we applied a Bayesian Gaussian process latent variable model with a one-dimensional latent variable \cite{Titsias2010-hq}. Briefly, the Bayesian GPLVM will infer a nonlinear function from an unobserved latent space to an observed high-dimensional space, using inducing inputs that are variationally inferred, which helps smooth the data and speed up computation. In our case, the latent space is the one- dimensional pseudotime, and the non-linear function will be a mapping from pseudotime to gene expression values. We used the BayesianGPLVM implementation in the GPy package using a Radial Basis Function (RBF) kernel on the log-transformed TPM values, all other parameters default. Without any information about the EGFP expression, the BayesianGPLVM recovers our original ordering, up to orientation (Spearman correlation 0.97; Figure 2B) (Notebook 7 in Data S2).
+
+To depict the structure of the data in a friendly way, we performed t-distributed stochastic neighbor embedding (t-SNE) \cite{Van_der_Maaten2008-lh} of the four latent factors into two dimensions. The goal of the t-SNE algorithm is to attempt to preserve both global and local structures of higher dimensional data in two dimensions. It additionally tries to not crowd areas with too many points, making them hard to see. We set the perplexity parameter to 75 and used a fixed random seed to make sure the t-SNE plot would be reproducible (parameter random\_state = 254 in the scikit-learn implementation of t-SNE).
+
+We can depict the inferred pseudotime by regressing it into the two-dimensional tSNE space (Figure 2A) and can see how well the two methods of constructing pseudotime agrees.
+
+\section{Additional figures}
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{"SF1"}

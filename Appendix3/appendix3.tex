@@ -4,6 +4,77 @@
 
 \graphicspath{{Appendix3/Figs/}}
 
+\section{Experimental methods}
+
+\subsection{Experimental mice and infections}
+
+Wild-type and transgenic inbred mouse strains were housed and used in blood-stage Plasmodium infections, as described in Supplementary Materials and Methods.
+
+\subsection{Flow cytometry}
+
+Splenocytes were isolated and assessed by flow cytometry as described in Supplementary Materials and Methods.
+
+\subsection{Single-cell mRNA sequencing}
+
+Single-cell capture and processing, as well as quality control analysis of scRNA-seq data, were performed as described in Supplementary Materials and Methods.
+
+\subsection{Statistics}
+
+Statistical analyses were conducted using R, Python, or GraphPad Prism. The types of statistical tests and significance levels are described in respective figure legends.
+
+\subsection{Experimental mice, adoptive transfer and infections}
+
+\begin{sloppypar}
+C57BL/6, rag1-/-, and congenic PTprca mice were purchased from Australian Resource Center (Canning Vale) or bred in-house. PbTII, C57BL/6, rag1-/-, congenic PTprca (CD45.1), nzEGFP, lgals1-/- (Jackson Laboratory: Stock No: 006337), LysMCre (Jackson Laboratory Stock No: 004781), ROSA26iDTR (iDTR) (Jackson Laboratory Stock No: 007900) mice, and all crosses were maintained under specific pathogen-free conditions within animal facilities at the Wellcome Trust Genome Campus Research Support Facility (Cambridge, UK), registered with the UK Home Office, or at QIMR Berghofer Medical Research Institute (Brisbane, Australia). All mice were female and used at 8-12 weeks of age. All animal procedures were in accordance with the Animals (Scientific Procedures) Act 1986 and approved by the Animal Welfare and Ethical Review Body of the Wellcome Trust Genome Campus, or in accordance with Australian National Health and Medical Research Council guidelines and approved by the QIMR Berghofer Medical Research Institute Animal Ethics Committee (approval no. A02-633M).
+\end{sloppypar}
+
+Spleens from PbTII donor mice were aseptically removed and homogenized through a 100 \( \mu \)m strainer before erythrocytes lysis using RBC lysis buffer (eBioscience). CD4+ T cells were enriched using CD4 microbeads (Miltenyi Biotech) and stained with CellTrace™ Violet (Invitrogen). Cells were injected (106/200\( \mu \)l RPMI) via a lateral tail vein.
+
+PcAS parasites were used after one in vivo passage in WT C57BL/6 mice. Mice were infected with 105 pRBCs i.v. and blood parasitemia was monitored by Giemsa-stained thin blood smears obtained from tail bleeds.
+
+\subsection{Flow Cytometry}
+
+Single-cell suspensions were prepared by homogenizing spleens through 100 \( \mu \)m strainers and lysing erythrocytes using RBC lysis buffer (eBioscience). Prior to staining, Fc receptors were blocked using anti-CD16/32 antibody (BD Pharmingen or in-house). Intracellular staining was performed by first incubating cells in brefeldin-A (10 mg/ml) at 37oC for 3 hours. For IL-10/IFN\( \gamma \) staining, cells were also incubated with Ionomycin (500 ng/ml) and PMA (25 ng/ml). Staining was performed using the eBioscience FoxP3 intracellular kit. For DNA/RNA staining, Hoechst33342 (10\( \mu \)g/ml; Sigma) was added at 1/500 v/v to cell preparation 15 minutes prior to acquisition using a BD LSRFortessa IV (BD Bioscience). Cells were sorted using a MoFlo XDP (Beckman Coulter), a FACSAria II (Becton Dickinson) or an Influx (Becton Dickinson) instrument. Activated PbTII cells were sorted as CD4+TCR\( \beta \)+ and CD69+ and/or divided at least once as measured using the CellTraceTM Violet proliferation dye. Dendritic cells were sorted as CD11chiMHCIIhiTCR\( \beta \)-B220-. Naive dendritic cells were further sorted as CD8\( \alpha \)+CD11b- or CD8\( \alpha \)-CD11b+, and inflammatory monocytes as CD11bhiLy6ChiLy6GloTCR\( \beta \)-B220-.
+
+\subsection{Single-cell capture and processing}
+
+Single cell processing with the Fluidigm C1 system was performed using small–sized capture chips (for 5-10 \( \mu \)m cells). 1 \( \beta \)l of a 1:4000 dilution of External RNA Control Consortium (ERCC) spikeins (Ambion, Life Technologies) was included in the lysis buffer. For processing with the Smartseq2 protocol, the cells were sorted into 96-well plates containing lysis buffer. The lysis buffer consisted of Triton-X, RNase inhibitor, dNTPs, dT30 primer and ERCC spike-ins (Ambion, Life Technologies, final dilution 1:100 million). 24 cycles of cDNA amplification were performed. Libraries were prepared using Nextera XT DNA Sample Preparation Kit (Illumina), pooling up to 96 single cells. Pooled libraries were purified using AMPure XP beads (Beckman Coulter) and sequenced on an Illumina HiSeq 2500 instrument, using paired-end 100 or 125-base pair reads.
+
+\subsection{Processing and QC of scRNA-Seq data}
+
+Gene expression was quantified using Salmon, version 0.4.0. The parameter libType=IU, and a transcriptome index built on Ensembl version 78 mouse cDNA sequences. Sequences from the ERCC RNA spike-ins were included in the index, as well as 313 mouse-specific repeat sequences from RepBase. As quality control measures, we assessed the number of input read pairs, and the amount of mitochondrial gene content, considering cells with less than 100,000 reads or more than 35\% mitochondrial gene content as failed. For T cells, we additionally considered cells where number of genes was less than 100 + 0.008 * (mitochondrial gene content) as failed. For the data generated using a 96-well plate-based Smart-seq2 protocol, which does not permit visual inspection of the captured cells, we additionally excluded low-quality cells from which fewer than 2000 genes were detected, motivated by negative control wells. To verify that that the cells sorted in the wells were PbTII cells, we only selected cells from which both the transgenic TCR alpha and beta chains were detected (Supplementary Tables 2 and 3). For expression values, the Transcripts Per Millions (TPM's) estimated by Salmon included ERCC spike-ins. Thus, to obtain values representing only the endogenous RNAs, we removed ERCC's from the expression table and scaled the TPM's so they again summed to a million. We also globally removed genes from analysis where less than three cells expressed the gene at minimum 1 TPM, unless stated otherwise.
+
+\subsection{Determining T cell receptor expression}
+
+T cell receptor sequences were reconstructed from scRNAseq data using the TraCeR software as
+previously described \cite{Stubbington2016-dt}.
+
+\subsection{Annotation of cell-surface receptors, cytokines and transcription factors}
+
+\begin{sloppypar}
+Genes likely to encode transcription factors, cell-surface receptors or cytokines were found by combining information from KEGG (http://www.genome.jp/kegg/), the Gene Ontology Consortium (http://geneontology.org/, PANTHER (http://www.pantherdb.org/) along with the more specific databases detailed below.
+\end{sloppypar}
+
+\begin{sloppypar}
+Transcription factors were found by searching the Gene Ontology Consortium database using the following ontology term: GO:0003700 (sequence-specific DNA binding transcription factor activity); KEGG for ko03000 (Transcription Factors); PANTHER for PC00009 (DNA binding) AND PC00218 (Transcription Factors). The presence of genes in the following databases was also used as evidence for transcription factor activity: AnimalTFDB (http://www.bioguo.org/AnimalTFDB/index.php), DBD (http://www.transcriptionfactor.org), TFCat (http://www.tfcat.ca), TFClass (http://tfclass.bioinf.med.uni-goettingen.de/tfclass), UniProbe (http://the\_brain.bwh.harvard.edu/uniprobe) and TFcheckpoint (http://www.tfcheckpoint.org).
+\end{sloppypar}
+
+Cell-surface receptors were found by searching the Gene Ontology Consortium database using the following ontology terms GO:0004888 (transmembrane signaling receptor activity) OR GO:0008305 (integrin complex)) AND NOT (GO:0004984 (olfactory receptor activity) OR GO:0008527 (taste receptor activity); KEGG for ko04030 (G-Protein Coupled Receptors) OR 64 ko04050 (Cytokine Receptors) OR ko01020 (Enzyme-linked Receptors); PANTHER for PC00021 (G-Protein Coupled Receptors) OR PC00084 (Cytokine Receptors) OR PC00194 (Enzyme-linked Receptors). Annotation of genes as receptors in the ImmPort (https://immport.niaid.nih.gov/), GPCRDB (http://gpcrdb.org/) or IUPHAR (http://www.guidetopharmacology.org/) databases was also used as evidence for receptor functionality.
+
+Cytokines were found by searching the Gene Ontology Consortium database using the following ontology terms GO:0005125 (cytokine activity); KEGG for ko04052 (Cytokines); PANTHER for PC00083 (Cytokines). Annotation of genes as cytokines in ImmPort was also used in this case. Genes were scored according to the number of databases and search results in which they occurred. Scores were weighted according to the strength of evidence provided by each database such that functional annotations supported by manually reviewed experimental evidence were given a higher score than those that were solely computationally generated (Table)
+
+Genes were assigned as likely cell-surface receptors or cytokines if they had a cumulative score greater than or equal to 5 in that category. Genes were assigned as likely transcription factors if they had a cumulative score greater than or equal to 6 in that category.
+
+\subsection{\textit{In vivo} depletion}
+
+Cellular depletion in LysMCre x iDTR mice was performed by intraperitoneal injection of 10ng/g DT (Sigma-Aldrich) in 200\( \mu \)l 0.9\% saline (Baxter) at day 3 post-infection. Control mice were given 0.9\% saline only. For B cell depletion, anti-CD20 (Genentech) or isotype control antibody was administered in a single 0.25mg dose via i.p. injection in 200\( \mu \)l 0.9\% NaCl (Baxter), 7 days prior to infection.
+
+\subsection{Confocal microscopy}
+
+Confocal microscopy was performed on 10–20 \( \mu \)m frozen spleen sections. Briefly, splenic tissues were snap frozen in embedding optimal cutting temperature (OCT) medium (Sakura) and stored at -80oC until use. Sections were fixed in ice-cold acetone for 10 minutes prior to labeling with antibodies. DAPI was used to aid visualization of white pulp areas. Samples were imaged on a Zeiss 780-NLO laser-scanning confocal microscope (Carl Zeiss Microimaging) and data analyzed using Imaris image analysis software, version 8.1.2 (Bitplane). Cells were identified using the spots function in Imaris, with thresholds <10mM and intensities <150. All objects were manually inspected for accuracy before data were plotted and analyzed in GraphPad prism (version 6).
+
+\section{Additional figures}
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{"Fig S1 rev3"}

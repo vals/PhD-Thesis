@@ -3,6 +3,53 @@
 
 \graphicspath{{Appendix1/Figs/}}
 
+\section{Experimental methods}
+
+\subsection{Mouse embryonic-stem-cell culture}
+
+\begin{sloppypar}
+Wild-type E14 mouse ES cells (kindly provided by P. Liu, Wellcome Trust Sanger Institute) were cultured on gelatin-coated dishes with Knockout DMEM (10829; Gibco), 15\% fetal calf serum (FB-1001/500; batch tested from Labtech), 1× penicillin–streptomycin–glutamine (10378-016; Gibco), 1× MEM NEAA (11140-035; Gibco), 2-mercaptoethanol (31350-010; Gibco), and 1,000 U leukemia inhibitory factor (LIF; ESG1107). mESCs tested free of mycoplasma contamination were passaged every 2 or 3 d.
+\end{sloppypar}
+
+\subsection{SMARTer, Smart-seq2 and STRT-seq on C1}
+
+\begin{sloppypar}
+E14 mESCs were trypsinized to obtain a single-cell suspension and were passed through a 30-\( \mu \)m filter (CellTrics; 04-0042-2316). Cells were processed with a C1 Single Cell Auto Prep System (Fluidigm; 100-7000 and 100-6209), according to the manufacturer’s protocol (100-5950 B1). Briefly, we performed SMARTer, Smart-seq2, and STRT-seq each across three small C1 Open App IFCs (5–10 \( \mu \)m; 100-5759). The specific sample-preparation steps for the three protocols (SMARTer3,15–18, Smart-seq219, and STRT-aeq9,11,20,21) were downloaded from the Fluidigm Script Hub. Dissociated single cells were loaded and captured on C1 Open App IFCs, and this was followed by manual inspection to demarcate empty wells, doublets or debris-containing wells. Two different spike- in RNA control sets were used for batch-matched comparison of different protocols: 92 ERCC spike-ins (4456740; lot 1411014; Ambion) and 69 SIRV spike-ins (SKU025.03; E2 Spike-in RNA Variant Control Mixes; Lexogen) were mixed (0.5 \( \mu \)l 1:500-diluted ERCCs + 0.6 \( \mu \)l 1:500-diluted SIRVs) and added to respective lysis buffer master mixes for SMARTer (20 \( \mu \)l), Smart-seq2 (27 \( \mu \)l), and STRT-seq (20 \( \mu \)l). 9 \( \mu \)l of the respective lysis master mix was added to each Open App C1 IFC. The subsequent steps (cell lysis, cDNA synthesis by reverse transcription, and PCR reaction) were performed as described in the Fluidigm Script Hub.
+\end{sloppypar}
+
+\subsection{SMARTer and Smart-seq2 on C1}
+
+E14 mESCs were trypsinized to obtain a single-cell suspension and were passed through a 30-\( \mu \)m filter (CellTrics; 04-0042-2316). The single-cell suspension was processed with SMARTer and Smart-seq2 in parallel across two C1 Single Cell Auto Prep Systems (Fluidigm; 100-7000 and 100-6209), according to the manufacturer’s protocol (100-5950 B1). The Smart-seq2 protocol was downloaded from the Fluidigm Script Hub. The cells were loaded, captured on C1 Open App IFCs, and manually inspected. Both ERCC and SIRV spike-ins were mixed (0.5 \( \mu \)l 1:500-diluted ERCCs + 0.6 \( \mu \)l 1:500-diluted SIRVs) and added to the respective lysis-buffer master mixes for SMARTer (20 \( \mu \)l) and Smart-seq2 (27 \( \mu \)l). The subsequent steps (cell lysis, cDNA synthesis by reverse transcription, and PCR reaction) were performed as described in the Fluidigm Script Hub.
+
+\subsection{Spike-in degradation experiment using Smart-seq2 on plates}
+
+We used a new tube of spike-ins, ERCC (4456740; lot 1412014; Ambion) and SIRV (E2 mix; SKU025.03; lot 216651530; Lexogen), for this experiment. Briefly, 1:100 dilutions of ERCCs and SIRVs were mixed together to produce a spike-in master mix (1:200 final dilution; termed ‘×2 freeze-thaw’). The spike-in master mix was divided among three tubes: one incubated overnight at 37 °C (condition 1), one incubated overnight at room temperature (condition 2), and one incubated overnight at -80 °C. The following
+
+\subsection{Library preparation and sequencing}
+
+Representative cDNA from single cells across three C1 runs and Smart-seq2 (on plates) was assessed with High Sensitivity DNA chips for the Agilent Bioanalyzer (5067-4626 and 5067-4627; Agilent Technologies). Single-cell cDNA from SMARTer3,15–18 and Smart-seq2 C1 IFCs and Smart-seq2 (on plates) was tagmented and pooled to generate libraries by using an Illumina Nextera XT DNA sample-preparation kit (Illumina; FC-131-1096) with 96 dual-barcoded indices (Illumina; FC-131-1002). The library cleanup and sample pooling was performed with AMPure XP beads (Agencourt Biosciences; A63880). All protocols were as described in the Fluidigm protocol (100-5950), Fluidigm Script Hub, and Smart-seq2 protocol19. The STRT-seq libraries were generated and sequenced at the Karolinska Institutet as previously described9,20. The single-cell libraries from SMARTer and Smart-seq2 C1 IFCs and Smart-seq2 (on plates) were sequenced across 1 lane of a HiSeq V4 (Illumina) by using 75-bp/125-bp paired-end sequencing.
+
+\subsection{10× Genomics Chromium experiment}
+
+A Single Cell Gel Bead kit (120217), Single cell chip kit (120219) and Single cell library kit (120218) were used along with a 10× GemCode Single Cell Instrument, per the manufacturer’s specifications and manuals (document CG00011; revision B). Equal volumes of control brain RNA (3 \( \mu \)l; FirstChoice Human Brain Total RNA; AM7962) and ERCC spikes (3 \( \mu \)l 1:4 dilution; 4456653) were mixed to produce a ‘2× control RNA + ERCC’ master mix. We further diluted this mixture to ‘1× control RNA + ERCC’ with PCR-grade water. We generated two single-cell master-mix preparations with 3 \( \mu \)l of 2× control RNA + ERCC and 1× control RNA + ERCC instead of single-cell suspension (adjusted with 34.4 \( \mu \)l nuclease-free water). The remaining protocol was performed according to the manufacturer’s manual (document CG00011; revision B). Each 10× library was sequenced across a HiSeq2500 (2× lanes; rapid run), per Wellcome Trust Sanger Institute sequencing guidelines.
+
+
+\subsection{Data sources}
+
+Raw read data from published studies were down- loaded from either ENA or SRA, as listed in Supplementary Table 1. These included Gene Expression Omnibus acces- sion codes GSE53334 (ref. 22), GSE65785 (ref. 23), GSE67833 (ref. 24), GSE53386 (ref. 25), GSE71318 (ref. 26), GSE46980 (ref. 9), GSE60361 (ref. 20), GSE60768 (ref. 27), GSE54695 (ref. 11), GSE78779 (ref. 28), GSE54006 (ref. 21), GSE72857 (ref. 29), GSE63473 (ref. 30), and GSE65525 (ref. 31); European Genome- phenome Archive accession code EGAS00001001204 (ref. 32); European Nucleotide Archive accession codes ERP010108 (ref. 32), ERP005640 (ref. 15), ERP006670 (ref. 16), ERP010952 (ref. 33), and ERP013160 (ref. 32); Sequence Read Archive acces- sion codes SRP030617 (ref. 3), SRP041736 (ref. 17), SRP033209 (ref. 18), SRP055153 (ref. 34), SRP045422 (ref. 35), SRP047290 (ref. 36), SRP025171 (ref. 37), SRP050499 (ref. 38), and SRP073767 (ref. 39); and ArrayExpress accession codes E-MTAB-3346 (ref. 40) and E-MTAB-3624 (ref. 40).
+
+Information regarding the concentration and volume of the ERCC mix in each sample was gathered from the original publica- tions (also indicated in Supplementary Table 1) or through direct communication with authors in ambiguous cases.
+
+The expression table for mESC-STRT had nonstandard names annotating the ERCC spike-ins, and through personal communi- cation with the authors, we received a table for converting these to the names provided by Life Technologies. Additionally we were informed by the authors that the final spike-in dilution noted as 1:50,000 in Islam et al \cite{Islam2014-dx} had actually been 1:20,000.
+
+The concentrations of the ERCC solution in the dendritic- MARS table was ambiguous, because there were two different values in the GEO table and in the text of the paper. Communication with the authors clarified that these referred to different volumes. The volume and dilution described in the GEO table were used. Thirty samples were excluded because they were annotated as not having had ERCC spike-ins added to them.
+
+For the K562-SMART data, it was unclear which data sets had used spike-ins, and personal communication with the authors provided the names of the two batches which had spike-ins added.
+
+Notes on individual data sets are provided in Supplementary Table 1.
+
+\section{Additional figures}
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{"Supp Figure 1"}

@@ -1,3 +1,16 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+    "editor.wordWrap": "bounded",
+    "latex-workshop.latex.toolchain": [
+        {
+            "command": "latexmk",
+            "args": [
+//                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "thesis"
+            ]
+        }
+    ]
 }
