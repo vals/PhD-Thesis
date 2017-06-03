@@ -5,12 +5,13 @@
         {
             "command": "latexmk",
             "args": [
-//                "-synctex=1",
+                "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
                 "-pdf",
                 "thesis"
             ]
         }
-    ]
+    ],
+    "editor.wordWrapColumn": 80
 }

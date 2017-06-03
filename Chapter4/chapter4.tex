@@ -2,11 +2,17 @@
 %****************************** Fourth Chapter *********************************
 %*******************************************************************************
 
-\chapter{Temporal mixture modeling of \texorpdfstring{T\textsubscript{H}\textnormal{1} and T\textsubscript{FH}}{TH1 and TFH} bifurcation in malaria}
+\chapter{Temporal mixture modeling of \texorpdfstring{T\textsubscript{H}\textnormal{1} and T\textsubscript{FH}}{TH1 and TFH} bifurcation in malaria} \label{ch:malaria}
 
 \graphicspath{{Chapter4/Figs/}}
 
 Differentiation of na{i}ve CD4+ T cells into functionally distinct T helper (T\textsubscript{H}) subsets is crucial for the orchestration of immune responses. Because of extensive heterogeneity and multiple overlapping transcriptional programs in differentiating T cell populations, this process has remained a challenge for systematic dissection in vivo. By using single-cell transcriptomics and computational analysis with a temporal mixtures of Gaussian processes model, termed \name{GPfates}, we reconstructed the developmental trajectories of T\textsubscript{H}1 and T\textsubscript{FH} (T follicular helper) cells during blood-stage Plasmodium infection in mice. By tracking clonality using endogenous T cell receptor sequences, we first demonstrated that T\textsubscript{H}1/T\textsubscript{FH} bifurcation had occurred at both population and single-clone levels. Next, we identified genes whose expression was associated with T\textsubscript{H}1 or T\textsubscript{FH} fates and demonstrated a T cell–intrinsic role for Galectin-1 in supporting T\textsubscript{H}1 differentiation. We also revealed the close molecular relationship between T\textsubscript{H}1 and interleukin-10–producing Tr1 cells in this infection. T\textsubscript{H}1 and T\textsubscript{FH} fates emerged from a highly proliferative precursor that up-regulated aerobic glycolysis and accelerated cell cycling as cytokine expression began. Dynamic gene expression of chemokine receptors around bifurcation predicted roles for cell-cell interaction in driving T\textsubscript{H}1/T\textsubscript{FH} fates. In particular, we found that precursor TH cells were coached toward a T\textsubscript{H}1 but not a T\textsubscript{FH} fate by inflammatory monocytes. Thus, by integrating genomic and computational approaches, our study has provided two unique resources: a database, \url{www.PlasmoTH.org}, which facilitates discovery of novel factors controlling T\textsubscript{H}1/T\textsubscript{FH} fate commitment, and, more generally, GPfates, a modeling framework for characterizing cell differentiation toward multiple fates.
+
+The work in this chapter was published in \textit{Science Immunology} with the title \textit{Single-cell RNA-seq and computational analysis using temporal mixture modeling resolves TH1/TFH fate bifurcation in malaria} \cite{Lonnberg2017-cp}.
+
+\subsection*{Individual contributions}
+
+The study in this chapter was designed by Tapio Lonnberg and Kylie James together with Ashraful Haque. Lonnberg and James performed the experiments described in this chapter. Tapio Lonnberg performed the initial exploratory analysis, and Kylie James analysed the monocyte and dendritic cell data.
 
 \section{Introduction}
 
@@ -131,11 +137,9 @@ Activated CD4+ T cells may experience different microenvironments within seconda
 
 \section{Material and methods}
 
-In the upcoming sections we describe the experimental procedures for this study.
-
-\subsection{Study design}
-
 The goal of this study was to use scRNA-seq to capture the transcriptomes of individual splenic PbTII cells at various time points during the first week of a blood-stage PcAS infection. Multiple mice were used for most time points to test for possible batch effects, with an independent experimental repeat performed on a different scRNA-seq platform. scRNA-seq data were modelled using Gaussian processes, with statistical testing for significance of both genes and cells associated with the Gaussian processes.
+
+In depth details on the experimental design and methods are covered in \ref{sec:malaria-methods}. In the following section, we cover in depth the models used to infer pseudotime and study the cellular bifurcation.
 
 \section{The \name{GPfates} model}
 

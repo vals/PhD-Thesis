@@ -2,7 +2,7 @@
 %****************************** Second Chapter *********************************
 %*******************************************************************************
 
-\chapter{Technical performance of Single Cell RNA-Seq experiments}
+\chapter{Technical performance of Single Cell RNA-Seq experiments} \label{ch:power}
 
 \graphicspath{{Chapter2/Figs/}}
 
@@ -35,7 +35,7 @@ Our analysis was subject to limitations (described in depth in the Discussion). 
 
 \section{Results}
 
-Our analysis spanned 15 distinct experimental protocols encompassing 28 single-cell studies, including 17 studies that measured expression with full-length transcript coverage and 11 that used unique molecular identifiers (UMIs) for digital quantification (Supplementary Table 1 and Methods). We also carried out three different scRNA-seq protocols on the Fluidigm C1 platform by using batch-matched mouse embryonic stem cells (mESCs) with both ERCC and Spike-in RNA Variant (SIRV) spike-ins (Methods). SMARTer and Smart-seq2 were performed in duplicate, and single-cell tagged reverse transcription (STRT)-seq was performed once. We also generated a high-throughput droplet-based 10× Genomics Chromium data set on ERCC spike-ins and human brain total RNA. In total, our analysis covered 18,123 publicly available samples comprising \( 30 \times 10^9 \) sequencing reads.
+Our analysis spanned 15 distinct experimental protocols encompassing 28 single-cell studies, including 17 studies that measured expression with full-length transcript coverage and 11 that used unique molecular identifiers (UMIs) for digital quantification. We also carried out three different scRNA-seq protocols on the Fluidigm C1 platform by using batch-matched mouse embryonic stem cells (mESCs) with both ERCC and Spike-in RNA Variant (SIRV) spike-ins (Methods). SMARTer and Smart-seq2 were performed in duplicate, and single-cell tagged reverse transcription (STRT)-seq was performed once. We also generated a high-throughput droplet-based 10× Genomics Chromium data set on ERCC spike-ins and human brain total RNA. In total, our analysis covered 18,123 publicly available samples comprising \( 30 \times 10^9 \) sequencing reads.
 
 Using reported spike-in dilutions and volumes (Supplementary Table 1), we calculated the absolute number of spike-in RNA molecules at different abundance levels across individual cell samples, thus permitting all data sets to be compared on the same scale.
 
@@ -144,15 +144,11 @@ Our comparison also suggests that miniaturised scRNA-seq reaction volumes increa
 
 \section{Methods}
 
-We first describe experimental procedures, before moving to more details about the computational analysis performed for this chapter.
+Before moving on to the next chapter, we list key methodological notes about analysis in this study. More minute details and experimental methods are covered in Section \ref{sec:power-analysis-methods}.
 
-\subsection{RNA-seq data processing}
+\section{Fast and flexible UMI counting}
 
-For coverage-based data, relative abundances were quantified with \name{Salmon} \cite{Patro2017-wf} 0.6.0, with library type parameter --l IU and the optional flag --biasCorrect. The Salmon transcriptome indices were built by the addition of ERCC sequences to cDNA sequences from Ensembl. For samples with a mouse background, this was the Ensembl 83 cDNA annotation of GRCm38.p4. For samples with a human background, this was the cDNA annotation from Ensembl 78 of GRCh38, and for samples with a zebrafish background, this was the Ensembl 77 annotation of Zv9. Finally, for samples with a frog background, this was the Ensembl 84 annotation of JGI4.2.
-
-All coverage-based data sets were sequenced with Illumina paired-end sequencing with read lengths between 75 and 150 bp.
-
-To process all UMI-based data in a coherent manner, we developed a quantification strategy based on pseudomapping and counting evidence for transcript–UMI pairs.
+While analysis of coverage-based data has been optimised in general purpose copmutational tools (see Section \ref{sec:salmon}), tag counting protocols are usually processed ad-hoc in different laboratories. To process all UMI-based data in a coherent manner, we developed a quantification strategy based on pseudomapping and counting evidence for transcript–UMI pairs.
 
 The principle was to transfer information from a UMI–tag pair to a transcript–UMI pair according to which transcript the tag mapped to. Because UMI-based methods use only 3´- or 5´-end tags of cDNA, which may be as short as 25 bp, mapping of these tags is commonly ambiguous. Our strategy was to weight a UMI–tag pair according to the number of transcripts to which the tag mapped. After UMI–tag pairs were mapped with either RapMap \cite{Srivastava2016-nx} or Kallisto \cite{Bray2016-dh} in pseudobam mode, only transcript–UMI pairs with a user-specified minimum amount of evidence were counted (default 1) at either the gene or the transcript level. In the 10× Genomics Chromium data, we detected \( 70,000 \) and 45,000 droplets with respect to the samples. For the sake of computational memory efficiency, we uniformly sampled 2,000 droplets out of all detected droplets to count the UMI tags per droplet.
 
@@ -160,13 +156,15 @@ The principle was to transfer information from a UMI–tag pair to a transcript�
 
 We implemented the UMI counting strategy in a publicly available command-line tool, which we call ‘umis’. The tool is available at \url{https://github.com/vals/umis/} as well as in the Python Package Index and in Bioconda. Version 0.3.0, used for this work, is provided as Supplementary Software.
 
-\subsection{Analysis}
+\section{Statistical analysis}
 
 An ERCC spike-in was considered to be detected when the estimated TPM was greater than zero. For UMI-based data, a spike-in was detected when at least one copy of an ERCC molecule was inferred.
 
 The amount of input spike-in molecules for each spike, for each sample, in each experiment was calculated from the final concentration of ERCC spike-in mix in the sample.
 
 The calculation of the accuracy of an individual sample was determined with the Pearson correlation between input concentration of the spike-ins and the measured expression values. If fewer than eight spike-ins were observed, the accuracy was set to infinity, because we considered this level to be insufficient evidence to estimate the accuracy.
+
+\subsection{Model for sensitivity}
 
 For the logistic regression model of each sample’s detection limit, the probability of detecting a spike-in at a given input level was modelled by the logistic function:
 \[
@@ -187,6 +185,8 @@ However, as mentioned in the main text, the data fit the model much better when 
     \text{UMI}_i = E \cdot M_i^c + \varepsilon
 \]
 
+\subsection{Protocol comparison model accounting for sequencing depth}
+
 When we modelled the relationship between the read depth and performance metrics for individual protocols, we used a linear model with a quadratic term for read depth to capture diminishing returns on investment. The model considers the read-depth effect to be global and has a categorical performance parameter for each protocol:
 \[
 \text{metric}_i = a^2 \times \log_{10}(\text{reads}_i) + b \times \log_{10}(\text{reads}_i) +  \text{performance}_\text{protocol} + \varepsilon.
@@ -198,7 +198,6 @@ Here, the performance metric plateaus and saturates when
 
 The linear models were fitted and analyzed with the OLS regression function in the statsmodels Python package.
 
+\subsection{Modelling for spike-in degradation}
+
 In the spike-in degradation model, the degradation rate \( p \) and the cellular fraction F were inferred by a Bayesian approach with Stan \cite{Carpenter2016-zx} (R package rstan v 2.10.1). The model was specified as the following: the prior for \( p \) was the uniform distribution between 0 and 1, and \( F \) for each spike-in \( i \) had their priors defined as the normal distribution with a mean of 0.5 and an s.d. of 1. \( F_{i,j} \) was modeled by a normal distribution with mean \( F_i \cdot (1 - p)^j \), where \( j \) is the \( j \)-th freeze–thaw cycle, and s.d. {sigma} had the uniform distribution between 0 and 20 as a prior. The model posterior was sampled with 5,000 iteration steps, 1,000 warm-up steps and four chains.
-
-Confidence intervals with regard to accuracy and sensitivity for nonempty and empty wells were estimated by bootstrapping. Therefore, studies SRP055153, ERP010952 and SRP070989 were pooled, separating nonempty and empty wells. For each group, sample sizes of 20 were randomly picked with replacement, and the median of the bootstrapped samples was determined. This process was repeated with 1,000 iterations. Having sorted the bootstrapped estimates, we determined the median and the 2.5th and 97.5th percentiles of the distributions for nonempty and empty wells. All data necessary for our analysis are provided as Supplementary Table 2.
-

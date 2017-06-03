@@ -2,7 +2,7 @@
 %****************************** Third Chapter **********************************
 %*******************************************************************************
 
-\chapter{Single cell RNA-sequencing reveals a continuous spectrum of differentiation in haematopoietic cells}
+\chapter{Single cell RNA-sequencing reveals a continuous spectrum of differentiation in haematopoietic cells} \label{ch:zebrafish}
 
 \graphicspath{{Chapter3/Figs/}}
 
@@ -148,9 +148,17 @@ We used single-cell RNA-seq of zebrafish kidney cells to resolve the cellular hi
 
 Our study addresses some of the basic questions of regulation of differentiation, both at the molecular and cellular levels. In this study, we focused on zebrafish thrombocyte development; however, a similar approach could be used in other systems and cell types.
 
-\section{Experimental Procedures}
+\section{Experimental procedures and methods}
 
 Before describing the computational methods related to this study, we describe the experimental procedures.
+
+\section{Marker Gene Discovery}
+
+To discover marker genes for the clusters of cells, we trained a random forest model for each cluster versus the rest of the cells. We used the Gini feature importance scores for each gene to order genes by how well they can distinguish a cluster from the rest of the cells. We used the ExtraTreesClassifier  \cite{Geurts2006-qg} implementation in the Python machine learning package scikit-learn (Pedregosa et al., 2011), with the parameter n\_estimators = 100,000. (For the exact commands, see Notebook 2 in Data S2.)
+              
+\section{Classification of Ohnolog Gene Pairs}
+
+We obtained the list of duplicated genes arising from the teleost-specific genome duplication event from Howe et al., 2013  \cite{Howe2013-ul}. We filtered the list to only retain pairs of genes whose IDs were present in version 77 of Ensembl. For these genes, we binarized the expression to ‘‘expressed’’ or ‘‘not ex- pressed’’ in each cell based on whether the TPM was greater than 1. Using these binary values, for each Ohnolog pair we counted cells expressing either member of the pair, both members of the pair, or none of the members in the pair. Ohnolog pairs in which none of the members were expressed in more than 300 cells and were annotated as ‘‘Not expressed.’’ We defined a value ‘‘both\_min\_diff’’ as the difference between the smallest number of cells ex- pressing only one of the members in a pair, and the number of cells expressing both members of the pair. Ohnolog pairs with a ‘‘both\_min\_diff’’-value larger than 15 were annotated as ‘‘XOR Ohnologs.’’ To identify Ohnolog pairs in which only one member was used, we looked at the difference between the largest number of cells using one member compared to the largest number of cells using the other member. If this difference was larger than 60 cells, the Ohnolog pair was considered a ‘‘Single Ohnolog.’’ The remaining cells were dubbed ‘‘Mixed Ohnologs,’’ meaning cells with a mixture of both mem- bers of a pair. (See Notebook 5 in Data S2 for exact commands.)
 
 \section{The \name{Pseudotime} model}
 
@@ -227,19 +235,6 @@ The objective of \textit{Bayesian} GPLVM \cite{Titsias2010-hq}, is to find the p
 \[ q(t) = \prod_{n=1}^N \mathcal{N} (t_n | \mu_n, S_n ) \]
 is described in that paper, and Bayesian training of the model to maximise this lower bound. This is the method we use.
 
-\section{More methods}
-
-\subsection{Marker Gene Discovery}
-
-To discover marker genes for the clusters of cells, we trained a random forest model for each cluster versus the rest of the cells. We used the Gini feature importance scores for each gene to order genes by how well they can distinguish a cluster from the rest of the cells. We used the ExtraTreesClassifier  \cite{Geurts2006-qg} implementation in the Python machine learning package scikit-learn (Pedregosa et al., 2011), with the parameter n\_estimators = 100,000. (For the exact commands, see Notebook 2 in Data S2.)
-
-\subsection{Pseudotime Analysis}
+\subsection{Downstream pseudotime analysis}
 
 We treated the pseudotime progression order of the cells as a time series, and for each gene trained two Gaussian processes (GPs): one with a radial basis function (RBF) kernel (which can model change over time) and one with a con- stant kernel (which assumes that the expression of a gene does not change over time). After optimizing parameters for both models, we filtered the genes by the ratios of the likelihoods of the models. If the RBF kernel GP has a higher likelihood than the constant kernel GP, we can conclude that the gene in ques- tion has expression that is dynamic in time. Once we had identified genes that were pseudotime-dependent, we applied the mixtures of hierarchical Gaussian processes model to identify groupings of genes with similar pseudotime expression patterns  \cite{Hensman2015-op}. All functional enrichment analysis was performed with the gProfiler  \cite{Reimand2011-ht} web service with the standard gene list as background (see Notebook 4 in Data S2 for exact commands).
-              
-\subsection{Classification of Ohnolog Gene Pairs}
-
-We obtained the list of duplicated genes arising from the teleost-specific genome duplication event from Howe et al., 2013  \cite{Howe2013-ul}. We filtered the list to only retain pairs of genes whose IDs were present in version 77 of Ensembl. For these genes, we binarized the expression to ‘‘expressed’’ or ‘‘not ex- pressed’’ in each cell based on whether the TPM was greater than 1. Using these binary values, for each Ohnolog pair we counted cells expressing either member of the pair, both members of the pair, or none of the members in the pair. Ohnolog pairs in which none of the members were expressed in more than 300 cells and were annotated as ‘‘Not expressed.’’ We defined a value ‘‘both\_min\_diff’’ as the difference between the smallest number of cells ex- pressing only one of the members in a pair, and the number of cells expressing both members of the pair. Ohnolog pairs with a ‘‘both\_min\_diff’’-value larger than 15 were annotated as ‘‘XOR Ohnologs.’’ To identify Ohnolog pairs in which only one member was used, we looked at the difference between the largest number of cells using one member compared to the largest number of cells using the other member. If this difference was larger than 60 cells, the Ohnolog pair was considered a ‘‘Single Ohnolog.’’ The remaining cells were dubbed ‘‘Mixed Ohnologs,’’ meaning cells with a mixture of both mem- bers of a pair. (See Notebook 5 in Data S2 for exact commands.)
-
-All analysis scripts are provided as IPython notebooks in the supplemental information (Data S1, Sample Information) together with a table of detailed information of each sample (Data S2, Analysis Files).
-

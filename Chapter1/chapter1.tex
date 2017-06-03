@@ -2,7 +2,7 @@
 %*********************************** First Chapter *****************************
 %*******************************************************************************
 
-\chapter{Background to single-cell RNA-seq studies}  %Title of the First Chapter
+\chapter{The rise of single cell RNA-seq experiments}
 
 \graphicspath{{Chapter1/Figs/}}
 
@@ -88,16 +88,18 @@ Recently, single cell studies have started including artificial perturbations of
 
 The increasingly large sample sizes of single cells is one aspect of technological improvement. These improvements also allows retaining additional data with samples. In particular, many new technologoes allow the spatial location of cells in tissues to be preserved. This will allow researchers to investigate how cell communication affects transcriptional regulation. The technologies are only recently emerging (Figure \ref{fig:spatial}), and starting to get enough scale to be useful, but will be a very promising field in the future.
 
-\section{Biological insights gained}
+\section{Biological insights gained and structure of this thesis}
 
-\subsection{pseudotime}
+Studies of single-cell transcriptimes allow us to directly probe the immediate results of gene regulation, i.e. mRNA abundance. Unlike traditional traditional RNA-sequencing, where cellular heterogeneity is ignored.
 
-\subsection{branching}
+There can be multiple possible sources of cellular heterogeneity in a population. 1) Expression can be intrinsically heterogenouos. 2) A population can consist of multiple distinct cell types, expressing different genes. 3) An underlying process modulates expression of many genes, in a continuous fashion.
 
-\subsection{cell-cell}
+The latter point is the focus of this thesis. By measuring gene expression in development, differentiation, or other responses, we can learn both about resulting phenotpe and regulation of this. In many experiments cells are taken in many known time points, and analysis of the expression can assessed directly. To analyse general gene expression patterns, we need to use a non-parametric analysis framework. In Chapter \ref{ch:zebrafish} we discuss this.
 
-\subsection{development}
+Actively collecting cells requires a great amount of experimental resources, and ignores heterogeneity in development or response to stimuli. Since transcriptome data is extremely rich, the continuous differences between measured cells can be identified from the data alone. The task of identifying the process or trajectory has been codified in the field as \textit{Pseudotime}. In Chapter \ref{ch:zebrafish} we also cover how non-parametric models can also be used for this task, and applied to study blood development.
 
-\subsection{space}
+In Chapter \ref{ch:malaria}, we consider the problem of studying expression changes over time when cells are sampled from multiple unlabeled cell populations which act differently over time. We present a method to identify and deconvolve multiple simulatneuous expression patterns using the same model framework as in Chapter \ref{ch:zebrafish}.
 
-\section{Need for protocol comparison}
+Finally, in Chapter \ref{ch:spatial} we consider genes which depend on spatial coordinates, rather than a single time value. We then conclude the thesis by disscusing our conclusions, and give an outlook towards future work.
+
+We start however, in Chapter \ref{ch:power} by assessing the technical performance of various methods mentioned in this chapter. If we wish to gain biological insights from these data, we need to know how quantitative and sensitive the different techniques are. This also guides us in our choices of experimental design in the following chapters.

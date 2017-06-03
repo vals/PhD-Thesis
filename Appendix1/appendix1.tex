@@ -48,6 +48,16 @@ For the K562-SMART data, it was unclear which data sets had used spike-ins, and 
 
 Notes on individual data sets are provided in Supplementary Table 1.
 
+\subsection{RNA-seq data processing of coverage-based protocols} \label{sec:salmon}
+
+For coverage-based data, relative abundances were quantified with \name{Salmon} \cite{Patro2017-wf} 0.6.0, with library type parameter --l IU and the optional flag --biasCorrect. The Salmon transcriptome indices were built by the addition of ERCC sequences to cDNA sequences from Ensembl. For samples with a mouse background, this was the Ensembl 83 cDNA annotation of GRCm38.p4. For samples with a human background, this was the cDNA annotation from Ensembl 78 of GRCh38, and for samples with a zebrafish background, this was the Ensembl 77 annotation of Zv9. Finally, for samples with a frog background, this was the Ensembl 84 annotation of JGI4.2.
+
+All coverage-based data sets were sequenced with Illumina paired-end sequencing with read lengths between 75 and 150 bp.
+
+\subsection{Cellular RNA content bootstraps}
+
+Confidence intervals with regard to accuracy and sensitivity for nonempty and empty wells were estimated by bootstrapping. Therefore, studies SRP055153, ERP010952 and SRP070989 were pooled, separating nonempty and empty wells. For each group, sample sizes of 20 were randomly picked with replacement, and the median of the bootstrapped samples was determined. This process was repeated with 1,000 iterations. Having sorted the bootstrapped estimates, we determined the median and the 2.5th and 97.5th percentiles of the distributions for nonempty and empty wells. All data necessary for our analysis are provided as Supplementary Table 2.
+
 \section{Additional figures}
 
 \begin{figure}
