@@ -11,5 +11,6 @@
                 "%DOC%"
             ]
         }
-    ]
+    ],
+    "editor.wordWrapColumn": 80
 }
