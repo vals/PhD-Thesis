@@ -3,13 +3,12 @@
     "editor.wordWrap": "bounded",
     "latex-workshop.latex.toolchain": [
         {
-            "command": "latexmk",
+            "command": "pdflatex",
             "args": [
-//                "-synctex=1",
+                "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
-                "-pdf",
-                "thesis"
+                "%DOC%"
             ]
         }
     ]
