@@ -5,6 +5,8 @@
 
 \section{Experimental methods} \label{sec:power-analysis-methods}
 
+The wet-lab experiments for this study was performed by Kedar Natarajan, experimental details are provided above in full for completelness.
+
 \subsection{Mouse embryonic-stem-cell culture}
 
 \begin{sloppypar}
@@ -33,6 +35,7 @@ Representative cDNA from single cells across three C1 runs and Smart-seq2 (on pl
 
 A Single Cell Gel Bead kit (120217), Single cell chip kit (120219) and Single cell library kit (120218) were used along with a 10× GemCode Single Cell Instrument, per the manufacturer’s specifications and manuals (document CG00011; revision B). Equal volumes of control brain RNA (3 \( \mu \)l; FirstChoice Human Brain Total RNA; AM7962) and ERCC spikes (3 \( \mu \)l 1:4 dilution; 4456653) were mixed to produce a ‘2× control RNA + ERCC’ master mix. We further diluted this mixture to ‘1× control RNA + ERCC’ with PCR-grade water. We generated two single-cell master-mix preparations with 3 \( \mu \)l of 2× control RNA + ERCC and 1× control RNA + ERCC instead of single-cell suspension (adjusted with 34.4 \( \mu \)l nuclease-free water). The remaining protocol was performed according to the manufacturer’s manual (document CG00011; revision B). Each 10× library was sequenced across a HiSeq2500 (2× lanes; rapid run), per Wellcome Trust Sanger Institute sequencing guidelines.
 
+\section{Computational methods}
 
 \subsection{Data sources}
 
@@ -46,11 +49,11 @@ The concentrations of the ERCC solution in the dendritic- MARS table was ambiguo
 
 For the K562-SMART data, it was unclear which data sets had used spike-ins, and personal communication with the authors provided the names of the two batches which had spike-ins added.
 
-Notes on individual data sets are provided in Supplementary Table 1.
-
 \subsection{RNA-seq data processing of coverage-based protocols} \label{sec:salmon}
 
+\begin{sloppypar}
 For coverage-based data, relative abundances were quantified with \name{Salmon} \cite{Patro2017-wf} 0.6.0, with library type parameter --l IU and the optional flag --biasCorrect. The Salmon transcriptome indices were built by the addition of ERCC sequences to cDNA sequences from Ensembl. For samples with a mouse background, this was the Ensembl 83 cDNA annotation of GRCm38.p4. For samples with a human background, this was the cDNA annotation from Ensembl 78 of GRCh38, and for samples with a zebrafish background, this was the Ensembl 77 annotation of Zv9. Finally, for samples with a frog background, this was the Ensembl 84 annotation of JGI4.2.
+\end{sloppypar}
 
 All coverage-based data sets were sequenced with Illumina paired-end sequencing with read lengths between 75 and 150 bp.
 

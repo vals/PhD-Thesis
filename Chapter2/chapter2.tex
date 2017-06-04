@@ -31,13 +31,13 @@ We defined the sensitivity of a method as the minimum number of input RNA molecu
 
 The External RNA Controls Consortium (ERCC) \cite{External_RNA_Controls_Consortium2005-qi} spike-in standards consist of a mixture of 92 RNA species of varying length and GC content, which are present at 22 abundance levels spaced one fold change apart from one another (Figure \ref{fig:spikeins}). Such spike-ins have been used to assess the reproducibility of standard RNA-seq protocols \cite{Jiang2011-nc} and to assess the performance of differential expression tests on RNA-seq data  \cite{Munro2014-tu}. In the context of scRNA-seq, ERCC spike-ins were first used in a multiplexed linear amplification (CEL-seq) protocol \cite{Hashimshony2012-am}. Here, we exploited spike-ins as a unified framework to compare the technical sensitivity and accuracy of different scRNA-seq protocols across various platforms, independently of the biological cell type investigated (Figure \ref{fig:strategy}).
 
-Our analysis was subject to limitations (described in depth in the Discussion). We relied on accurate reporting of spike-in volumes and dilutions by the original authors, which we reconfirmed by personal communication in several cases. In addition, spike-in molecules may not truly reflect endogenous mRNA capture efficiency in scRNA-seq, owing to deviation from natural mRNA sequence features such as shorter poly(A) tails and the absence of mRNA-binding proteins. Nevertheless, our approach allows for comparison across the large number of protocols and platforms with published spike-in data, most of which have been replicated across at least two different cell types and different laboratories (Supplementary Table 1). This methodology decreases potential bias due to a specific cell type or study.
+Our analysis was subject to limitations (described in depth in the Discussion). We relied on accurate reporting of spike-in volumes and dilutions by the original authors, which we reconfirmed by personal communication in several cases. In addition, spike-in molecules may not truly reflect endogenous mRNA capture efficiency in scRNA-seq, owing to deviation from natural mRNA sequence features such as shorter poly(A) tails and the absence of mRNA-binding proteins. Nevertheless, our approach allows for comparison across the large number of protocols and platforms with published spike-in data, most of which have been replicated across at least two different cell types and different laboratories. This methodology decreases potential bias due to a specific cell type or study.
 
 \section{Results}
 
 Our analysis spanned 15 distinct experimental protocols encompassing 28 single-cell studies, including 17 studies that measured expression with full-length transcript coverage and 11 that used unique molecular identifiers (UMIs) for digital quantification. We also carried out three different scRNA-seq protocols on the Fluidigm C1 platform by using batch-matched mouse embryonic stem cells (mESCs) with both ERCC and Spike-in RNA Variant (SIRV) spike-ins (Methods). SMARTer and Smart-seq2 were performed in duplicate, and single-cell tagged reverse transcription (STRT)-seq was performed once. We also generated a high-throughput droplet-based 10× Genomics Chromium data set on ERCC spike-ins and human brain total RNA. In total, our analysis covered 18,123 publicly available samples comprising \( 30 \times 10^9 \) sequencing reads.
 
-Using reported spike-in dilutions and volumes (Supplementary Table 1), we calculated the absolute number of spike-in RNA molecules at different abundance levels across individual cell samples, thus permitting all data sets to be compared on the same scale.
+Using reported spike-in dilutions and volumes, we calculated the absolute number of spike-in RNA molecules at different abundance levels across individual cell samples, thus permitting all data sets to be compared on the same scale.
 
 \section{scRNA-seq quantification accuracy}
 
@@ -50,11 +50,11 @@ Using reported spike-in dilutions and volumes (Supplementary Table 1), we calcul
 
 To assess the quantification accuracy of different protocols, we computed the Pearson product-moment correlation coefficient \( R \) between log-transformed values of estimated ERCC RNA expression and input concentration for each individual cell or sample (Figure \ref{fig:performance}a).
 
-Conventional bulk-RNA sequencing is more accurate than scRNA-seq protocols. Remarkably, the accuracy of scRNA- seq protocols is still high, and individual samples rarely have a Pearson correlation less than 0.6. The lower accuracy and variable Pearson correlations for individual cells within some protocols (genome and transcriptome sequencing (G\&T-seq), CEL-seq, and massively parallel single-cell RNA-seq (MARS-seq)) may indicate variable success rates for these protocols.
+Conventional bulk-RNA sequencing is more accurate than scRNA-seq protocols. Remarkably, the accuracy of scRNA-seq protocols is still high, and individual samples rarely have a Pearson correlation less than 0.6. The lower accuracy and variable Pearson correlations for individual cells within some protocols (genome and transcriptome sequencing (G\&T-seq), CEL-seq, and massively parallel single-cell RNA-seq (MARS-seq)) may indicate variable success rates for these protocols.
 
 \section{scRNA-seq sensitivity}
 
-To investigate the technical sensitivity achieved for each sample and to quantify the inter-sample variability for each protocol, we devised a logistic regression model with detection of expression as the dependent variable. Our measure of sensitivity was the spike-in input level at which the probability of detection reached 50\% (Figure \ref{fig:strategy}B). Measuring the sensitivity of each sample individually avoided biases due to uneven batch sizes. This approach also avoided the need to use detected spike- in ratios at each abundance level, which would have resulted in poor resolution, because no more than seven spike-ins share one abundance level.
+To investigate the technical sensitivity achieved for each sample and to quantify the inter-sample variability for each protocol, we devised a logistic regression model with detection of expression as the dependent variable. Our measure of sensitivity was the spike-in input level at which the probability of detection reached 50\% (Figure \ref{fig:strategy}B). Measuring the sensitivity of each sample individually avoided biases due to uneven batch sizes. This approach also avoided the need to use detected spike-in ratios at each abundance level, which would have resulted in poor resolution, because no more than seven spike-ins share one abundance level.
 
 scRNA-seq protocols are more sensitive than bulk-RNA sequencing and can detect very low numbers of input molecules (Figure \ref{fig:performance}b). The sensitivity of scRNA-seq protocols varied over four orders of magnitude, and several protocols (SMARTer (C1), CEL-seq2 (C1), STRT-seq, and inDrop) have the potential to detect as little as single-digit input spike-in molecules. We observed high within-protocol variability in sensitivity, which may have been attributable to sequencing depth; as described below, we quantified this variability to rank the protocols.
 
@@ -76,7 +76,7 @@ Although the number of transcripts was not large, these data suggested that endo
 
 \section{Sensitivity is more dependent than accuracy on sequencing depth}
 
-The results of the per-sample accuracy and sensitivity analysis showed a large amount of within-protocol heterogeneity (Figure \ref{fig:performance}a,b). Seeking to explain performance by technical factors, we identified a relationship with sequencing depth per sample, a parameter that researchers can control to fit their budgets and needs. We used a linear model considering a global effect of sequencing depth, including diminishing returns (Online Methods). The model includes an individual corrected performance parameter for each protocol, thus allowing protocols to be ranked while accounting for the substantial technical factor of sequencing depth.
+The results of the per-sample accuracy and sensitivity analysis showed a large amount of within-protocol heterogeneity (Figure \ref{fig:performance}a,b). Seeking to explain performance by technical factors, we identified a relationship with sequencing depth per sample, a parameter that researchers can control to fit their budgets and needs. We used a linear model considering a global effect of sequencing depth, including diminishing returns. The model includes an individual corrected performance parameter for each protocol, thus allowing protocols to be ranked while accounting for the substantial technical factor of sequencing depth.
 
 \begin{figure}
     \centering
@@ -93,7 +93,7 @@ By contrast, we found that technical sensitivity is critically dependent on sequ
 
 On the basis of the model, we found that the sensitivity saturates at approximately 4.5 million reads per sample. The increase in read depth from 1 million reads to 4.5 million reads per sample results in marginally increased sensitivity, of less than one fold change. However, the increase from 100,000 reads to 1 million reads per sample results in increased sensitivity of an order of magnitude. Thus, we recommend considering 1 million reads per sample as a good target for saturated gene detection.
 
-Notably, not all studies need to saturate detection, especially in cases in which the genes of interest are highly expressed. It is equally important to note that sequencing depth is a technical feature, and the number of genes detected depends on the depth. Therefore, sequencing depth must be taken into account when per- forming and computationally analysing scRNA-seq data, even for compositional expression units such as transcripts per million (TPM).
+Notably, not all studies need to saturate detection, especially in cases in which the genes of interest are highly expressed. It is equally important to note that sequencing depth is a technical feature, and the number of genes detected depends on the depth. Therefore, sequencing depth must be taken into account when performing and computationally analysing scRNA-seq data, even for compositional expression units such as transcripts per million (TPM).
 
 \section{Degradation of spike-ins does not explain performance variation among experiments}
 
@@ -104,7 +104,7 @@ Notably, not all studies need to saturate detection, especially in cases in whic
     \label{fig:alternative-factors}
 \end{figure}
 
-Our performance analysis inherently assumed the gold-standard annotation of the spike-ins to be correct. However, owing to its labile nature, RNA can be degraded during the course of normal reagent handling. To quantify the effects of such degradation, we subjected spike-in molecules (both ERCCs and SIRVs) to repeated freeze–thaw cycles (Methods). Additionally, as a measure of complete or full degradation, we left the spike-ins either at room temperature or at 37 °C overnight. The freeze–thaw cycles emulated normal handling, and by comparing samples at different degradation levels, we observed a small overall effect on accuracy and sensitivity, which was similar to the variation within a protocol (Figure \ref{fig:alternative-factors}a).
+Our performance analysis inherently assumed the gold-standard annotation of the spike-ins to be correct. However, owing to its labile nature, RNA can be degraded during the course of normal reagent handling. To quantify the effects of such degradation, we subjected spike-in molecules (both ERCCs and SIRVs) to repeated freeze–thaw cycles (Methods). Additionally, as a measure of complete or full degradation, we left the spike-ins either at room temperature or at 37°C overnight. The freeze–thaw cycles emulated normal handling, and by comparing samples at different degradation levels, we observed a small overall effect on accuracy and sensitivity, which was similar to the variation within a protocol (Figure \ref{fig:alternative-factors}a).
 
 Spike-in degradation directly impinges on the effective spike-in dilution in a sample and is a central factor for calculating the technical sensitivity. We observed that normal handling accounted for molecule-limit differences within an order of magnitude, even when spike-ins were subjected to as many as six freeze–thaw cycles. The sensitivity metric for samples subjected to conditions as extreme as overnight degradation (room temperature or 37°C), compared with other samples, had a difference of two orders of magnitude, which was similar to the difference between protocols (Figure \ref{fig:alternative-factors}a).
 
@@ -118,13 +118,13 @@ This experiment provided quantitative evidence that mRNA splice-form variation c
 
 \section{Endogenous mRNA amount does not affect performance metrics with spike-ins}
 
-cDNA is generated from both endogenous mRNA and spike-in RNA during library preparation; thus, spike-ins are less likely to be sampled if the amount of mRNA is high. To verify that discrepancies in endogenous mRNA levels (due to, for example, cell-type differences) do not affect performance metrics, we investigated published data in which information on empty (spike-in RNA alone) and nonempty (mRNA and spike-ins present) samples have been reported for the same batch of cells. We compared accuracy and sensitivity between empty and nonempty samples from three studies and found equivalent results, thus confirming that endogenous mRNA content does not affect performance metrics (Figure \ref{fig:alternative-factors}c). We quantified the equivalence through 95\% confidence interval (CI)-based equivalence analysis \cite{Walker2011-qi} (Online Methods). We found that the empty median CI was 100\% contained within the nonempty median CI for accuracy and was 84\% contained for sensitivity.
+cDNA is generated from both endogenous mRNA and spike-in RNA during library preparation; thus, spike-ins are less likely to be sampled if the amount of mRNA is high. To verify that discrepancies in endogenous mRNA levels (due to, for example, cell-type differences) do not affect performance metrics, we investigated published data in which information on empty (spike-in RNA alone) and nonempty (mRNA and spike-ins present) samples have been reported for the same batch of cells. We compared accuracy and sensitivity between empty and nonempty samples from three studies and found equivalent results, thus confirming that endogenous mRNA content does not affect performance metrics (Figure \ref{fig:alternative-factors}c). We quantified the equivalence through 95\% confidence interval (CI)-based equivalence analysis \cite{Walker2011-qi}. We found that the empty median CI was 100\% contained within the nonempty median CI for accuracy and was 84\% contained for sensitivity.
 
 \section{Effects of freeze–thaw cycles on spike-in abundance}
 
 To quantify RNA-degradation rates in our freeze–thaw experiment, we added single mESCs to individual wells and performed the Smart-seq2 protocol. We compared the spike-in content to the endogenous mRNA content within each well and related the results to the number of freeze–thaw cycles.
 
-We made a predictive Bayesian model of mRNA degradation (Online Methods) with a degradation-rate parameter \( p \). Sampling from the posterior distribution of \( p \) when applying the model to ERCC spike-ins, we found a degradation rate of 19 ± 0.7\% per freeze–thaw cycle (mean ± 95\% CI, Figure \ref{fig:traceplot}; posterior predictions in Figure \ref{fig:alternative-factors}d). We also applied the mRNA degradation model to SIRVs and found a similar degradation rate of 18.5 ± 0.1\%. However, the SIRV measurements were more noisy, probably because of mapping uncertainty (described in Discussion). Overall, our data approximated a 20\% degradation rate of spike-ins in each freeze–thaw cycle during normal sample handling.
+We made a predictive Bayesian model of mRNA degradation with a degradation-rate parameter \( p \). Sampling from the posterior distribution of \( p \) when applying the model to ERCC spike-ins, we found a degradation rate of 19 ± 0.7\% per freeze–thaw cycle (mean ± 95\% CI, Figure \ref{fig:traceplot}; posterior predictions in Figure \ref{fig:alternative-factors}d). We also applied the mRNA degradation model to SIRVs and found a similar degradation rate of 18.5 ± 0.1\%. However, the SIRV measurements were more noisy, probably because of mapping uncertainty (described in Discussion). Overall, our data approximated a 20\% degradation rate of spike-ins in each freeze–thaw cycle during normal sample handling.
 
 Although we did not observe a large variation in molecular detection limit or accuracy due to normal handling, the relative abundance of spike-ins in a sample was strongly affected by freeze–thaw cycles. Hence, the inference of total mRNA in cells when spike-ins are used might prove problematic. Because we also found that the degradation rate was conserved between ERCC and SIRV spike-ins, the approximately 20\% degradation rate per freeze–thaw cycle may hold true for RNA in general.
 
@@ -134,7 +134,7 @@ A previous study has shown \cite{SEQCMAQC-III_Consortium2014-uk} that ERCC read 
 
 Our comparison of spike-in values and smFISH values, a gold standard for absolute mRNA quantification, suggested that endogenous RNA is detected more efficiently than spike-ins by approximately one order of magnitude. Therefore, it is important to highlight that the ‘spike-in molecular-detection limit’ may underestimate the detection limit for endogenous RNA and should be used only as a relative sensitivity measure to rank protocols. The global ranking of protocol sensitivity remains relevant, and accuracy is unaffected by these issues, because all ERCC spike-ins within a sample are equally affected.
 
-A perfect comparison would implement each protocol in multiple laboratories by using a single stock of reagents and mRNA dilution ladders as standards. Having multiple scientists carry out each protocol would allow for the effects of skill to be excluded. A control ladder of mRNA would eliminate issues arising from differences between synthetic spike-ins and mRNA. Whereas the majority of the protocols that we investigated here have been reproduced by at least two different laboratories (Supplementary Table 1), we cannot completely rule out the effects of technical proficiency on protocol performance.
+A perfect comparison would implement each protocol in multiple laboratories by using a single stock of reagents and mRNA dilution ladders as standards. Having multiple scientists carry out each protocol would allow for the effects of skill to be excluded. A control ladder of mRNA would eliminate issues arising from differences between synthetic spike-ins and mRNA. Whereas the majority of the protocols that we investigated here have been reproduced by at least two different laboratories, we cannot completely rule out the effects of technical proficiency on protocol performance.
 
 We showed that handling and batch variation in ERCC dilutions led to smaller variations in performance than those observed among protocols (Figure \ref{fig:alternative-factors}a). Nevertheless, in certain published experiments, spike-ins may have been greatly degraded and consequently may have affected our performance metrics. In addition to these caveats, it is important to note that our assessment was performed on currently available data and does not necessarily reflect the full potential or suitability of a given protocol.
 
@@ -154,7 +154,7 @@ The principle was to transfer information from a UMI–tag pair to a transcript�
 
 \subsection{Code availability}
 
-We implemented the UMI counting strategy in a publicly available command-line tool, which we call ‘umis’. The tool is available at \url{https://github.com/vals/umis/} as well as in the Python Package Index and in Bioconda. Version 0.3.0, used for this work, is provided as Supplementary Software.
+We implemented the UMI counting strategy in a publicly available command-line tool, which we call ``\name{umis}''. The tool is available at \url{https://github.com/vals/umis/} as well as in the Python Package Index and in Bioconda.
 
 \section{Statistical analysis}
 
@@ -168,7 +168,7 @@ The calculation of the accuracy of an individual sample was determined with the 
 
 For the logistic regression model of each sample’s detection limit, the probability of detecting a spike-in at a given input level was modelled by the logistic function:
 \[
-    p(\text{detected}_i)= -(a \cdot \log(M_i) + b) + \varepsilon
+    \text{logit}(p(\text{detected}_i)) = -(a \cdot \log(M_i) + b)
 \]
 
 We used the LogisticRegression class from the linear\_model module of the machine-learning package scikit-learn. The fit was performed with the liblinear solver and the optional argument fit\_intercept = True. The logistic regression analysis was limited to samples with at least eight spike-ins detected. The detection limit was chosen as the molecular abundance at which the logistic regression model passes 50\% detection probability:
@@ -178,26 +178,35 @@ We used the LogisticRegression class from the linear\_model module of the machin
 
 To investigate the UMI efficiency of UMI-based protocols, we used a linear model in which the only parameter was the efficiency:
 \[
-    \text{UMI}_i = E \cdot M_i + \varepsilon
+    \text{UMI}_i = E \cdot M_i + \varepsilon,
 \]
-However, as mentioned in the main text, the data fit the model much better when there is a non-one exponent parameter on the number of input molecules:
+with \( \varepsilon \sim \mathcal{N}(0, \sigma^2) \). However, as mentioned in the main text, the data fit the model much better when there is a non-one exponent parameter on the number of input molecules:
 \[
     \text{UMI}_i = E \cdot M_i^c + \varepsilon
 \]
 
 \subsection{Protocol comparison model accounting for sequencing depth}
 
+\begin{sloppypar}
 When we modelled the relationship between the read depth and performance metrics for individual protocols, we used a linear model with a quadratic term for read depth to capture diminishing returns on investment. The model considers the read-depth effect to be global and has a categorical performance parameter for each protocol:
 \[
-\text{metric}_i = a^2 \times \log_{10}(\text{reads}_i) + b \times \log_{10}(\text{reads}_i) +  \text{performance}_\text{protocol} + \varepsilon.
+    \text{metric}_i = a^2 \times \log_{10}(\text{reads}_i) + b \times \log_{10}(\text{reads}_i) +  \text{performance}_\text{protocol} + \varepsilon.
 \]
 Here, the performance metric plateaus and saturates when
 \[
-\log_{10} (\text{reads}) = - \frac{b}{2a}.
+    \log_{10} (\text{reads}) = - \frac{b}{2a}.
 \]
+\end{sloppypar}
 
 The linear models were fitted and analyzed with the OLS regression function in the statsmodels Python package.
 
 \subsection{Modelling for spike-in degradation}
 
-In the spike-in degradation model, the degradation rate \( p \) and the cellular fraction F were inferred by a Bayesian approach with Stan \cite{Carpenter2016-zx} (R package rstan v 2.10.1). The model was specified as the following: the prior for \( p \) was the uniform distribution between 0 and 1, and \( F \) for each spike-in \( i \) had their priors defined as the normal distribution with a mean of 0.5 and an s.d. of 1. \( F_{i,j} \) was modeled by a normal distribution with mean \( F_i \cdot (1 - p)^j \), where \( j \) is the \( j \)-th freeze–thaw cycle, and s.d. {sigma} had the uniform distribution between 0 and 20 as a prior. The model posterior was sampled with 5,000 iteration steps, 1,000 warm-up steps and four chains.
+In the spike-in degradation model, the degradation rate \( p \) and the cellular fraction F were inferred by a Bayesian approach with Stan \cite{Carpenter2016-zx} (R package rstan v 2.10.1). The model was specified as the following: the prior for \( p \) was the uniform distribution between 0 and 1, and \( F \) for each spike-in \( i \) had their priors defined as the normal distribution with a mean of 0.5 and an s.d. of 1. \( F_{i,j} \) was modeled by a normal distribution with mean \( F_i \cdot (1 - p)^j \), where \( j \) is the \( j \)-th freeze–thaw cycle, and s.d. \( \sigma \) had the uniform distribution between 0 and 20 as a prior.
+\begin{align*}
+    F_{i,j} & \sim F_{i, 0} \cdot (1 - p)^j + \mathcal{N}(0, \sigma^2 ) \\
+    F_{i, j}, F_{i, 0} & \sim \mathcal{N}(0.5, 1.) \\
+    p & \sim U(0, 1) \\
+    \sigma & \sim U(0, 20)
+\end{align*}
+The model posterior was sampled with 5,000 iteration steps, 1,000 warm-up steps and four chains.
