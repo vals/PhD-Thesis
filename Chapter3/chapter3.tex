@@ -156,11 +156,11 @@ Before describing the computational methods related to this study, we describe t
 
 \section{Marker Gene Discovery}
 
-To discover marker genes for the clusters of cells, we trained a random forest model for each cluster versus the rest of the cells. We used the Gini feature importance scores for each gene to order genes by how well they can distinguish a cluster from the rest of the cells. We used the ExtraTreesClassifier  \cite{Geurts2006-qg} implementation in the Python machine learning package scikit-learn (Pedregosa et al., 2011), with the parameter n\_estimators = 100,000. (For the exact commands, see Notebook 2 in Data S2.)
+To discover marker genes for the clusters of cells, we trained a random forest model for each cluster versus the rest of the cells. We used the Gini feature importance scores for each gene to order genes by how well they can distinguish a cluster from the rest of the cells. We used the ExtraTreesClassifier  \cite{Geurts2006-qg} implementation in the Python machine learning package scikit-learn (Pedregosa et al., 2011), with the parameter n\_estimators = 100,000.
               
 \section{Classification of Ohnolog Gene Pairs}
 
-We obtained the list of duplicated genes arising from the teleost-specific genome duplication event from Howe et al., 2013  \cite{Howe2013-ul}. We filtered the list to only retain pairs of genes whose IDs were present in version 77 of Ensembl. For these genes, we binarized the expression to ‘‘expressed’’ or ‘‘not ex- pressed’’ in each cell based on whether the TPM was greater than 1. Using these binary values, for each Ohnolog pair we counted cells expressing either member of the pair, both members of the pair, or none of the members in the pair. Ohnolog pairs in which none of the members were expressed in more than 300 cells and were annotated as ‘‘Not expressed.’’ We defined a value ‘‘both\_min\_diff’’ as the difference between the smallest number of cells ex- pressing only one of the members in a pair, and the number of cells expressing both members of the pair. Ohnolog pairs with a ‘‘both\_min\_diff’’-value larger than 15 were annotated as ‘‘XOR Ohnologs.’’ To identify Ohnolog pairs in which only one member was used, we looked at the difference between the largest number of cells using one member compared to the largest number of cells using the other member. If this difference was larger than 60 cells, the Ohnolog pair was considered a ‘‘Single Ohnolog.’’ The remaining cells were dubbed ‘‘Mixed Ohnologs,’’ meaning cells with a mixture of both mem- bers of a pair. (See Notebook 5 in Data S2 for exact commands.)
+We obtained the list of duplicated genes arising from the teleost-specific genome duplication event from Howe et al., 2013  \cite{Howe2013-ul}. We filtered the list to only retain pairs of genes whose IDs were present in version 77 of Ensembl. For these genes, we binarized the expression to ‘‘expressed’’ or ‘‘not ex- pressed’’ in each cell based on whether the TPM was greater than 1. Using these binary values, for each Ohnolog pair we counted cells expressing either member of the pair, both members of the pair, or none of the members in the pair. Ohnolog pairs in which none of the members were expressed in more than 300 cells and were annotated as ‘‘Not expressed.’’ We defined a value ‘‘both\_min\_diff’’ as the difference between the smallest number of cells ex- pressing only one of the members in a pair, and the number of cells expressing both members of the pair. Ohnolog pairs with a ‘‘both\_min\_diff’’-value larger than 15 were annotated as ‘‘XOR Ohnologs.’’ To identify Ohnolog pairs in which only one member was used, we looked at the difference between the largest number of cells using one member compared to the largest number of cells using the other member. If this difference was larger than 60 cells, the Ohnolog pair was considered a ‘‘Single Ohnolog.’’ The remaining cells were dubbed ‘‘Mixed Ohnologs,’’ meaning cells with a mixture of both mem- bers of a pair.
 
 \section{The \name{Pseudotime} model}
 
@@ -243,8 +243,23 @@ After a \name{pseudotime} has been found, data can be processed as you would ana
 
 \subsection{Identifying dynamic genes}
 
-We treated the pseudotime progression order of the cells as a time series, and for each gene trained two Gaussian processes (GPs): one with a radial basis function (RBF) kernel (which can model change over time) and one with a con- stant kernel (which assumes that the expression of a gene does not change over time). After optimizing parameters for both models, we filtered the genes by the ratios of the likelihoods of the models. If the RBF kernel GP has a higher likelihood than the constant kernel GP, we can conclude that the gene in ques- tion has expression that is dynamic in time.
+We treated the pseudotime progression order of the cells as a time series, and for each gene trained two Gaussian processes (GPs): one with a radial basis function (RBF) kernel (which can model change over time) and one with a con- stant kernel (which assumes that the expression of a gene does not change over time). After optimizing parameters for both models, we filtered the genes by the ratios of the likelihoods of the models. If the RBF kernel GP has a higher likelihood than the constant kernel GP, we can conclude that the gene in question has expression that is dynamic in time.
 
 \subsection{Clustering genes in to expression trends}
 
-Once we had identified genes that were pseudotime-dependent, we applied the mixtures of hierarchical Gaussian processes model to identify groupings of genes with similar pseudotime expression patterns  \cite{Hensman2015-op}. All functional enrichment analysis was performed with the gProfiler  \cite{Reimand2011-ht} web service with the standard gene list as background (see Notebook 4 in Data S2 for exact commands).
+Once we had identified genes that were pseudotime-dependent, we applied the mixtures of hierarchical Gaussian processes model to identify groupings of genes with similar pseudotime expression patterns as described in \cite{Hensman2015-op}. In this setting, we assume the data is generated by
+\[
+    y_g = f_{c, g} ( g_c(t) ) + \varepsilon,
+\]
+where all \(  f_{c, g} \) and \( g_c \) are Gassuain process distributed:
+\begin{align*}
+    g_c(t) & \sim \mathcal{GP}(0, k_g(t_1, t_2)), \\
+    f_{c, g}(t) & \sim \mathcal{GP}(g_c(t), k_f(t_1, t_2)).
+\end{align*}
+ This model uses the structure of the data which can be expressed in terms of the covariance function
+\[
+    k((t_1, c_1), (t_2, c_2)) = k_f(t_1, t_2) + [c_1 = c_2] \cdot k_c(t_1, t_2),
+\]
+(using the Iverson bracket notation for indicators). The cluster assignments \( c \) are not known, and need to be learned. We use the implementation from \cite{Hensman2015-op} for this.
+
+ All functional enrichment analysis was performed with the gProfiler \cite{Reimand2011-ht} web service with the standard gene list as background.
