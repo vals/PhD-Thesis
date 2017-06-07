@@ -3,8 +3,9 @@
     "editor.wordWrap": "bounded",
     "latex-workshop.latex.toolchain": [
         {
-            "command": "pdflatex",
+            "command": "latexmk",
             "args": [
+                "-pdf",
                 "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",

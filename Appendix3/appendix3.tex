@@ -75,6 +75,54 @@ Cellular depletion in LysMCre x iDTR mice was performed by intraperitoneal injec
 
 Confocal microscopy was performed on 10–20 \( \mu \)m frozen spleen sections. Briefly, splenic tissues were snap frozen in embedding optimal cutting temperature (OCT) medium (Sakura) and stored at -80oC until use. Sections were fixed in ice-cold acetone for 10 minutes prior to labeling with antibodies. DAPI was used to aid visualization of white pulp areas. Samples were imaged on a Zeiss 780-NLO laser-scanning confocal microscope (Carl Zeiss Microimaging) and data analyzed using Imaris image analysis software, version 8.1.2 (Bitplane). Cells were identified using the spots function in Imaris, with thresholds <10mM and intensities <150. All objects were manually inspected for accuracy before data were plotted and analyzed in GraphPad prism (version 6).
 
+\section{Computational methods}
+
+
+\subsection{Software availability}
+
+We have made a software package for using the \name{GPfates} method, which is available at \url{https://github.com/Teichlab/GPfates}. It provides guidance and sensible defaults for the kind of analysis we have described here. It makes extensive use of the \verb|GPy|\footnote{\url{https://github.com/SheffieldML/GPy}} package, and the \verb|GPclust|\footnote{\url{https://github.com/SheffieldML/GPclust}} package, where we implemented the non-parametric OMGP model.
+
+
+\subsection{Practical use of \name{GPfates}}
+
+The basis principle of \name{GPfates} is the combination of pseudotime and mixture modelling.
+
+Input to the GPLVM is an expression table consisting of log scaled relative abundance values Transcripts Per Million, TPM, with a value of 1 added to handle cases where expression is 0. As relative abundance follow a log-normal distribution, the Gaussian likelihood used for Gaussian Process regression should be appropriate.
+
+In practice, the pseudotime should represent the biological process of interest. If this process is clear, the expression data should be usable without pre-processing. In single cell time course experiments where the process of interest is less immediate, a strategy highlighted in \cite{Trapnell2014-cn} is to select the gene set used could be to rank the genes by an ANOVA test over the time points, and select a larger number of significant genes.
+
+Similarly, the low-dimensional representation of the transcriptomic cell state should represent the biological response of interest. It can be beneficial to select the parts of the representation which correspond to this. For example, in the analysis of CD4+ T cell time course, we use the second GPLVM latent variable as a representation of T cell response, and model this factor by the OMGP.
+
+While pseudotime can be inferred directly from the expression matrix $ Y $, in many cases it helps interpretation to perform an intermediate step of dimensionality reduction. This process could also be beneficial if the data has a very complex structure.
+
+Another practical consideration is that single cell expression values can be quite noisy. This limits the time-scale at which we can expect to measure proper functional differences in expression levels. Due to this, we tend to put lower limits on the lengthscale $ l_\text{SE} $ of the squared exponential covariance function.
+
+\subsection{Preprocessing public RNA-seq data}
+
+We removed ERCCs from our expression data table and re-scaled the expression values to TPM. Furthermore, we eliminate cells containing NA's in the frog data.
+
+Some of the used methods require a start or root cell. Therefore, We randomly picked a cell from an early collection time point: \texttt{1771-026-187-E6} (malaria), \texttt{SRP033209\_E14.5\_rep\_1\_cell\_24} (lung), \texttt{2013600} (pgc) and \texttt{1795679} (frog).
+
+\subsection{Wishbone}
+
+The analysis with Wishbone version 0.4.1 was performed according to the tutorial using default or suggested parameters \cite{Setty2016-ie}. We ran t-SNE with \texttt{n\_components = 5} and \texttt{perplexity = 30}. To run wishbone the start cells were chosen as  stated above with \texttt{k=15} or \texttt{k=50} for frog data, \texttt{components\_list=[1,2]} and \texttt{num\_waypoints = 150}.
+
+\subsection{Monocle}
+
+The Monocle analysis was performed with version 2.1.0 of the Monocle package, following the steps outlined in the original vignette \cite{Trapnell2014-cn}. In brief, the analysis was  performed using the size normalized data (TPM) including all genes expressed in $ \geq $ 50 cells with default parameters. The genes used for the ordering of cells were defined by carrying out a differential expression analysis of the time points using the \texttt{differentialGeneTest} in the \texttt{Monocle} package. Following the original vignette, genes with q-value $<$ 0.01 were selected. To reduce the dimension the \texttt{max\_components} option was set to 2 and the \texttt{DDRTree} methods was used.
+
+\subsection{Diffusion Pseudotime (DPT)}
+
+DPT analysis was done using the R package version \texttt{0.6.0} and an additional package called \texttt{destiny} (version \texttt{1.3.4}) ({\it 21}). In order to calculate the transition matrix DPT uses a Gaussian kernel with parameter \texttt{sigma}. The optimal \texttt{sigma} was chosen by  using the function \texttt{find.sigmas()} of the \texttt{destiny} package. Given the transition matrix and root cell \texttt{dpt()} was executed with \texttt{branching=TRUE}.
+
+\subsection{SCUBA}
+
+In order to run SCUBA we used the python package \texttt{PySCUBA} version  \texttt{0.1.1}\footnote{https://github.com/GGiecold/PySCUBA} which provides a graphical user interface \cite{Marco2014-rf}. Selecting the RNA-seq data set including temporal information we ran SCUBA with  \texttt{cluster\_mode = PCA2} and \texttt{pseudotime\_mode = 0}.
+
+\subsection{Mpath}
+
+We performed analyses with Mpath using the package version \texttt{1.0} \cite{Chen2016-ar}. Prior to the analysis, a quality check includes a removal of genes having TPM values $ < $ 1 in more than 95 percent of cells in each group. In order to find the number of optimal clusters the parameters \texttt{diversity\_cut} and \texttt{size\_cut} were set as suggested to 0.6 and 0.05, respectively, when calling the function \texttt{landmark\_designation()}. Inspecting the resulting plots, the number of optimal clusters were chosen as 10 (malaria), 19 (lung) and 24 (pgc). Mpath failed to run on the frog data set. Using the landmark clusters we constructed the weighted neighborhood graph and trimmed it using the minimal spanning tree method. 
+
 \section{Additional figures}
 
 \begin{figure}
