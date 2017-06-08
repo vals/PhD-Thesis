@@ -6,8 +6,8 @@
             "command": "latexmk",
             "args": [
                 "-pdf",
-                "-synctex=1",
-                "-interaction=nonstopmode",
+                "-view=none",
+                "-interaction=batchmode",
                 "-file-line-error",
                 "%DOC%"
             ]

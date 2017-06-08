@@ -4,4 +4,26 @@
 
 \chapter{Concluding remarks}
 
-I have to write a lot here. Sigh.
+The field of single cell RNA sequencing is starting to mature. In the beginning it was unclear how representative the measurements were, and it was not known how technical noise affects the measurements. The most striking result of our initial assessment of the single cell protocols was that the measurements are quantitaive, easily on a single cell level recapitulating known input levels.
+
+As a consequence, we were comfortable studying systems of continuous, changing, expression levels. Where systems have classically been studied in terms of discrete cell populations, we found a continuum.
+
+This also allowed us to investigate the response to malaria infection in mice, similarly seeing how cells gradually acquire distinct roles.
+
+Prior work on continuous trends of RNA expression during cell development or differentiation was limited, which led us to consider non-parametric regression methods. This has enabled us to find very general temporal patterns of gene expression.
+
+The general nature of these models can however also be a problem. While we can identify genes which does something ``interesting", folowup questions such as ``when is it activatd?", ``how quickly does it go down", ``when does it peak?" etc are not possible to answer in other ways than by heuristic downstream analysis.
+
+Questions such as the ones listed above are typical, along with a number of other standard comments from wet lab researchers and other people unfamiliar with non-parametric analysis. The nature of these questions could provide insight into the expected behavior of temporal expressioin functions. Recent studies have proposed sigmoidal functions, impulse functions, and periodic functions as biologically meaningful behavior. In our work, Chapter \ref{ch:zebrafish} and \cite{Eckersley-Maslin2016-cz} are consistent with the idea of sigmoidal functions. However, in Chapter \ref{ch:malaria} a substantial fraction of interesting and important genes follow transient expression, related to the proliferative status of the cells, consistent with impulse-like functions.
+
+In those cases however, time was learned from the data using the latent variable model. This might bias the resolution and uncertainty of the timescale for the cells, since the GPLVM only considers a single length scale for all genes. In our re-analysis of a high resolution whole-transcriptome time course, top interesting genes follow functions which are extremely hard to pin down a parametric form for, with remarkably low observation noise (Figure \ref{fig:ss8}).
+
+Results from clustering time courses as in Chapter \ref{ch:zebrafish}, or from inspection of significantly time dependent genes might allow us to restrict the general temporal trends.
+
+Another reason to move to parametric models is the growth of data. Gaussian process models are highly data efficient, and perform well with relatively few observations. With larger data, simpler models could potentially be used.
+
+The ability to analyse underlying, unmeasured, trajectories in the data has proven both powerful and popular with the entire field. Since the conceptual introduction, 
+
+It will likely not be feasilble to use latent variable models as the data grows sustantially, learning latent functions which in stead summarize the data will be more powerful. Such functions should be able to take the transcriptome readout ofa cell, and predict what part of trajectory it came from. Lacking a ground truth reference for time, this could be done with autoencoding strategies: train a model which predicts time, jointly with a model which predict the transcriptome from time.
+
+Gaussian process regression is suitible for the latter part, allowing extremely flexible non-linear functions from time to expression. It is however known that gaussian processes perform poorly with large numbers of predictors, and so the encoding model would need a different strategy. In image analysis deep neural networks are a popular choice for these problems, but it might be the case that simpler parametric functions suffice.
