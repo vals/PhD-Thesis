@@ -66,7 +66,7 @@ If \( E \) is the UMI (counting) efficiency, the underlying assumption is that t
 
 However, this measure might not be as appropriate as it appears. If we extend the model to \( U = E \times M^c \), the best fit should yield values of the molecular exponent \( c \) close to 1, if the underlying UMI counting assumption is correct. Instead, we found that the best fit was systematically lower than 1, with a mode of approximately 0.8 (Figure \ref{fig:umi-efficiency}c). This finding suggested a saturation of UMI counts as a function of input molecules and may be partially (but not fully) explained by differences in UMI length among the different protocols (Figure \ref{fig:umi-efficiency}d). For example, UMIs with a length of 4 bp are able to count up to only 256 unique molecules and had a molecular exponent of 0.6, on average. However, even in protocols with UMIs of 10 bp (which are able to count over 1 million unique molecules), the molecular exponent was 0.8 per sample, on average, and rarely reached 1. In conclusion, whereas UMIs should provide a way of removing amplification biases, the assumed absolute quantification does not appear to hold true perfectly.
 
-\section{Endogenous transcripts are more efficiently captured than a ERCC spike-ins}
+\section{Endogenous transcripts are more efficiently captured than ERCC spike-ins}
 
 It is unclear to what extent sensitivity and accuracy calculations apply to endogenous mRNA when exogenous spike-ins are used. On the one hand, ERCC spike-ins have shorter poly(A) tails than those of typical mRNAs from mammalian cells \cite{Viphakone2008-kh}, thus making them more difficult to capture by poly(T) priming. On the other hand, endogenous mRNAs may have intricate secondary structure and may be bound to proteins, thus potentially decreasing the efficiency of reverse transcription.
 
@@ -74,7 +74,7 @@ To investigate the relationship between endogenous and spike-in measurements, we
 
 Although the number of transcripts was not large, these data suggested that endogenous RNA is much more efficiently captured and amplified than ERCC spike-in molecules and that our sensitivity measures are likely to be underestimates. The accuracy metric was based on relative abundance and was not affected by underestimated capture. This difference in efficiency is important to consider if absolute molecule counts are to be inferred on the basis of ERCC spike-ins.
 
-\section{Sensitivity is more dependent than accuracy on sequencing depth}
+\section{Sensitivity is more dependent on sequencing depth than accuracy is}
 
 The results of the per-sample accuracy and sensitivity analysis showed a large amount of within-protocol heterogeneity (Figure \ref{fig:performance}a,b). Seeking to explain performance by technical factors, we identified a relationship with sequencing depth per sample, a parameter that researchers can control to fit their budgets and needs. We used a linear model considering a global effect of sequencing depth, including diminishing returns. The model includes an individual corrected performance parameter for each protocol, thus allowing protocols to be ranked while accounting for the substantial technical factor of sequencing depth.
 
@@ -108,7 +108,7 @@ Our performance analysis inherently assumed the gold-standard annotation of the 
 
 Spike-in degradation directly impinges on the effective spike-in dilution in a sample and is a central factor for calculating the technical sensitivity. We observed that normal handling accounted for molecule-limit differences within an order of magnitude, even when spike-ins were subjected to as many as six freeze–thaw cycles. The sensitivity metric for samples subjected to conditions as extreme as overnight degradation (room temperature or 37°C), compared with other samples, had a difference of two orders of magnitude, which was similar to the difference between protocols (Figure \ref{fig:alternative-factors}a).
 
-\section{SIRV spike-ins recapitulate accuracy results with ERCC spike-ins}
+\section{SIRV spike-ins recapitulate the accuracy results from ERCC spike-ins}
 
 All the studies described above used ERCC spike-ins, which have bacterial sequence composition. To ensure the general applicability of our conclusions, we also analysed the SIRV spike-in mix, consisting of 69 artificial transcripts that mimic the splicing patterns of seven human genes and allow for RNA-isoform assessment. The SIRV mix E2 contains these isoforms across four abundance levels. Because SIRVs span only four abundance levels, they are not compatible with sensitivity analysis; hence, we focused on accuracy. To compare accuracy by using ERCC and SIRV standards, we performed two matched scRNA-seq comparisons (Smart-seq2, SMARTer, and STRT-seq on a C1 system), using mESCs with both spike-ins (Figure \ref{fig:alternative-factors}b).
 
@@ -116,7 +116,7 @@ We observed that the accuracy was systematically lower when SIRVs were used. Thi
 
 This experiment provided quantitative evidence that mRNA splice-form variation can be inferred at the single-cell level when the appropriate protocol is used. Comparing the protocols, we found that the accuracy calculated when SIRVs were used recapitulated the accuracy when ERCCs were used, thus indicating that spike-in batch variability does not generally explain differences among protocols.
 
-\section{Endogenous mRNA amount does not affect performance metrics with spike-ins}
+\section{The amount of endogenous mRNA does not affect performance metrics based on spike-ins}
 
 cDNA is generated from both endogenous mRNA and spike-in RNA during library preparation; thus, spike-ins are less likely to be sampled if the amount of mRNA is high. To verify that discrepancies in endogenous mRNA levels (due to, for example, cell-type differences) do not affect performance metrics, we investigated published data in which information on empty (spike-in RNA alone) and nonempty (mRNA and spike-ins present) samples have been reported for the same batch of cells. We compared accuracy and sensitivity between empty and nonempty samples from three studies and found equivalent results, thus confirming that endogenous mRNA content does not affect performance metrics (Figure \ref{fig:alternative-factors}c). We quantified the equivalence through 95\% confidence interval (CI)-based equivalence analysis \cite{Walker2011-qi}. We found that the empty median CI was 100\% contained within the nonempty median CI for accuracy and was 84\% contained for sensitivity.
 
@@ -200,7 +200,7 @@ Here, the performance metric plateaus and saturates when
 
 The linear models were fitted and analyzed with the OLS regression function in the statsmodels Python package.
 
-\subsection{Modelling for spike-in degradation}
+\subsection{Modelling of spike-in degradation} 
 
 In the spike-in degradation model, the degradation rate \( p \) and the cellular fraction F were inferred by a Bayesian approach with Stan \cite{Carpenter2016-zx} (R package rstan v 2.10.1). The model was specified as the following: the prior for \( p \) was the uniform distribution between 0 and 1, and \( F \) for each spike-in \( i \) had their priors defined as the normal distribution with a mean of 0.5 and an s.d. of 1. \( F_{i,j} \) was modeled by a normal distribution with mean \( F_i \cdot (1 - p)^j \), where \( j \) is the \( j \)-th freeze–thaw cycle, and s.d. \( \sigma \) had the uniform distribution between 0 and 20 as a prior.
 \begin{align*}
