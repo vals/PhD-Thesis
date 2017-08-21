@@ -110,7 +110,7 @@ By day 4 after infection, PbTII cells had gone through several rounds of cell di
    \label{fig:temporal}
 \end{figure}
 
-To elucidate how PbTII cells transitioned from the proliferative precursor state to T\textsubscript{H}1 and T\textsubscript{FH} fates, we sought to resolve the hierarchy of gene expression before and during cell fate bifurcation. In addition to genes directly following the bifurcation trend, we reasoned that expression of genes encoding key decision-making molecules is likely to be dynamic and peak before the bifurcation. First, to identify these, we selected those genes displaying interesting nonlinear trends in their expression patterns over pseudotime by Gaussian Process regression. This was achieved via a D statistic (model likelihood ratio), where each gene’s expression pat- tern over pseudotime was tested for variation unexplained by random noise \cite{Macaulay2016-zd}. On the basis of the D statistic (\( > 50.0 \), Fig. \ref{fig:temporal}C), we identified 2061 dynamic genes (Fig. \ref{fig:temporal}A). Second, we ordered these genes according to their peak expression time to provide a temporal overview (Fig. \ref{fig:temporal}A) and noted that a substantial fraction peaked around bifurcation. These included the T\textsubscript{H}1-driving genes Tbx21, Il2ra, and Il2rb, supporting our initial hypothesis. Moreover, cells around bifurcation also transcribed the highest number of genes compared with cells at all other points in pseudotime (Fig. \ref{fig:temporal}B).
+To elucidate how PbTII cells transitioned from the proliferative precursor state to T\textsubscript{H}1 and T\textsubscript{FH} fates, we sought to resolve the hierarchy of gene expression before and during cell fate bifurcation. In addition to genes directly following the bifurcation trend, we reasoned that expression of genes encoding key decision-making molecules is likely to be dynamic and peak before the bifurcation. First, to identify these, we selected those genes displaying interesting nonlinear trends in their expression patterns over pseudotime by Gaussian Process regression. This was achieved via a D statistic (model likelihood ratio), where each gene’s expression pattern over pseudotime was tested for variation unexplained by random noise \cite{Macaulay2016-zd}. On the basis of the D statistic (\( > 50.0 \), Fig. \ref{fig:temporal}C), we identified 2061 dynamic genes (Fig. \ref{fig:temporal}A). Second, we ordered these genes according to their peak expression time to provide a temporal overview (Fig. \ref{fig:temporal}A) and noted that a substantial fraction peaked around bifurcation. These included the T\textsubscript{H}1-driving genes Tbx21, Il2ra, and Il2rb, supporting our initial hypothesis. Moreover, cells around bifurcation also transcribed the highest number of genes compared with cells at all other points in pseudotime (Fig. \ref{fig:temporal}B).
 
 This model also infers the length-scale of the dynamic model, namely, the degree of fast-acting behavior over pseudotime (Fig. \ref{fig:temporal}C). Using this additional feature, we noted roughly equivalent dynamics for Tbx21, Il2ra, and Il2rb. Furthermore, we noted similar dynamics, though with slightly later peak times, for the chemokine receptors Cxcr5 and Cxcr3. Closer examination of all chemokine receptor genes also revealed peak expression around bifurcation for Ccr4 but not others (fig. \ref{fig:ms17}). Given that Cxcr5 and Cxcr3 have been associated with T\textsubscript{FH} and T\textsubscript{H}1 cells, respectively \cite{Groom2012-az, Breitfeld2000-yk, Schaerli2000-hl}, and because they exhibited similar dynamics, we hypothesised that these were competing receptors that directly influenced T\textsubscript{H}1/T\textsubscript{FH} fate (Fig. \ref{fig:temporal}D). Assessment of Cxcr3/Cxcr5 coexpression around bifurcation revealed a substantial portion of cells expressing both receptors (fig. \ref{fig:ms18}). Thus, our examination of gene expression dynamics revealed large numbers of genes being expressed and peaking around bifurcation, including not only those associated with clonal expansion but also numerous sequentially expressed transcription factors and receptors with potential to influence T\textsubscript{H} fate.
 
@@ -118,11 +118,15 @@ This model also infers the length-scale of the dynamic model, namely, the degree
 
 Given similar dynamics and peak expression times for Cxcr3 and Cxcr5, and peak expression around bifurcation for Ccr4 (fig. \ref{fig:ms17}), we reasoned that cell-cell interactions via these receptors controlled T\textsubscript{H}1/ T\textsubscript{FH} fate. Hence, we considered cell types that could control T\textsubscript{H} fate, specifically around bifurcation. Because B cells supported a T\textsubscript{FH} fate (fig. \ref{fig:ms19}), we hypothesized that coordinated action by myeloid cells provided competing signals to support a T\textsubscript{H}1 fate.
 
-\begin{figure}
+\begin{figure}[b!]
     \centering
-    \includegraphics[width=0.6\textwidth]{"Fig6"}
-    \caption[Myeloid cells influence T\textsubscript{H} bifurcation in uncommitted PbTII cells]{\textbf{Myeloid cells influence T\textsubscript{H} bifurcation in uncommitted PbTII cells.} (A to C) Splenic CD8\( \alpha \)+ and CD11b+ CD8\( \alpha \)- cDCs from a naive mouse, mixed cDCs from an infected mouse, and (D to F) Ly6C\textsuperscript{hi} monocytes from naïve and infected mice were analyzed by scRNA-seq, with mRNA reads filtered by minimum expression of 100 TPM in at least two cells. (A and D) PCA showing clustering of (A) cDCs or (D) monocytes. (B and E) Fold change and confidence for differentially expressed genes (19) between infected and naive (B) cDCs or (E) monocytes; genes were filtered on expression in >10 cells; genes satisfying q < 0.05 are colored per function. (C and F) Differentially expressed genes (q < 0.05) in (C) cDCs and (F) monocytes, between naive and infected mice: Cells and genes are ordered according to PC score and loading, respectively. Common genes between heat maps are annotated in (F). (G) Representative FACS histograms and proportions of splenic CD8\( \alpha \)+ cDCs, CD8\( \alpha \)- cDCs, and Ly6C\textsuperscript{hi} monocytes expressing CXCL9 in naive and infected mice; data show individual mice with line at mean and are representative of two independent experiments (n = 4 mice per time point per experiment). (H) PbTII cells were transferred into LysMCre × iDTR mice 1 day before infection. At 3 days after infection, mice were treated with diphtheria toxin (DT) or saline. Proportions of T\textsubscript{H}1 (T-bethi IFN\( \gamma \)+) and T\textsubscript{FH} (CXCR5+) PbTII cells at 7 days after infection; data pooled from three independent experiments (n = 5 to 6 per experiment). ****P < 0.0001, Mann-Whitney U test; NS, not significant. (I) Summary model proposes that chemokine interactions between nonbifurcated PbTII cells and myeloid cells support a T\textsubscript{H}1 fate, whereas B cells support a T\textsubscript{FH} fate.}
+    \includegraphics[width=0.9\textwidth]{"Fig6"}
+    \caption[Myeloid cells influence T\textsubscript{H} bifurcation in uncommitted PbTII cells]{(Caption on next page)}
     \label{fig:monocytes}
+\end{figure}
+\addtocounter{figure}{-1}
+\begin{figure} [t!]
+      \caption[Myeloid cells influence T\textsubscript{H} bifurcation in uncommitted PbTII cells]{\textbf{Myeloid cells influence T\textsubscript{H} bifurcation in uncommitted PbTII cells.} (A to C) Splenic CD8\( \alpha \)+ and CD11b+ CD8\( \alpha \)- cDCs from a naive mouse, mixed cDCs from an infected mouse, and (D to F) Ly6C\textsuperscript{hi} monocytes from naïve and infected mice were analyzed by scRNA-seq, with mRNA reads filtered by minimum expression of 100 TPM in at least two cells. (A and D) PCA showing clustering of (A) cDCs or (D) monocytes. (B and E) Fold change and confidence for differentially expressed genes (19) between infected and naive (B) cDCs or (E) monocytes; genes were filtered on expression in >10 cells; genes satisfying q < 0.05 are colored per function. (C and F) Differentially expressed genes (q < 0.05) in (C) cDCs and (F) monocytes, between naive and infected mice: Cells and genes are ordered according to PC score and loading, respectively. Common genes between heat maps are annotated in (F). (G) Representative FACS histograms and proportions of splenic CD8\( \alpha \)+ cDCs, CD8\( \alpha \)- cDCs, and Ly6C\textsuperscript{hi} monocytes expressing CXCL9 in naive and infected mice; data show individual mice with line at mean and are representative of two independent experiments (n = 4 mice per time point per experiment). (H) PbTII cells were transferred into LysMCre × iDTR mice 1 day before infection. At 3 days after infection, mice were treated with diphtheria toxin (DT) or saline. Proportions of T\textsubscript{H}1 (T-bethi IFN\( \gamma \)+) and T\textsubscript{FH} (CXCR5+) PbTII cells at 7 days after infection; data pooled from three independent experiments (n = 5 to 6 per experiment). ****P < 0.0001, Mann-Whitney U test; NS, not significant. (I) Summary model proposes that chemokine interactions between nonbifurcated PbTII cells and myeloid cells support a T\textsubscript{H}1 fate, whereas B cells support a T\textsubscript{FH} fate.}
 \end{figure}
 
 To study this, we examined splenic cDCs and inflammatory monocytes before PbTII bifurcation. We sorted CD8+ and CD11b+ cDCs and Ly6C\textsuperscript{hi} monocytes from naive and infected mice (fig. \ref{fig:ms20}) and performed scRNA-seq. PCA of cDCs distinguished the two naive cell types along PC2 (Fig. \ref{fig:monocytes}A and fig. \ref{fig:ms21}) with an efficiency consistent with recent data \cite{Jaitin2014-pk} and further highlighted a number of expected and previously unknown cDC subset-specific genes (fig. \ref{fig:ms22}). We next compared naive cDCs with those from infection (Fig. \ref{fig:monocytes}A and fig. \ref{fig:ms21}) and separated these along PC6 (Fig. \ref{fig:monocytes}A). Analysis of differential gene expression in cDCs due to infection identified 30 genes, 29 of which were up-regulated (Fig. \ref{fig:monocytes}B), including transcription factors Stat1 and Irf1 and CXCR3-attractant chemokines Cxcl9 and Cxcl10.
@@ -135,7 +139,7 @@ As Cxcl9, Cxcl10, Cxcl11, Ccl2, Ccl3, and Ccl5 signal through Cxcr3 or Ccr4, whi
 
 \section{Discussion}
 
-By capturing single CD4 T cell transcriptomes during an experimental malaria infection and computationally reconstructing the course of events, we have resolved the bifurcation of naive CD4+ T cells into T\textsubscript{H}1 and T\textsubscript{FH} cells at a molecular level. \name{GPfates} modeling of scRNA-seq data is not limited to immune cells or single bifurcation events. This model can also be combined with existing computational workflows, including alternative methods to estimate pseudotemporal dynamics (see section 6.2 of Supplementary Computational Methods) \cite{Trapnell2014-cn, Bendall2014-kg}. The \name{GPfates} approach permits analysis of cellular differentiation toward two fates (Comp. Supp. Fig. 11) and, in principle, toward multiple fates (Comp. Supp. Fig. 12). However, \name{GPfates} exhibits some limitations. Most notably, the ability to identify and pinpoint bifurcation events is linked to changes in the transcriptome that reflect these cellular decisions. In particular, because scRNA-seq profiles are subject to high levels of noise, this means that changes will only be detectable with some lag time (Supplementary Computational Methods). The processed expression data and the \name{GPfates} model presented in this study can be accessed at \url{www.plasmoTH.org}, where users can visualise their genes of interest.
+By capturing single CD4 T cell transcriptomes during an experimental malaria infection and computationally reconstructing the course of events, we have resolved the bifurcation of naive CD4+ T cells into T\textsubscript{H}1 and T\textsubscript{FH} cells at a molecular level. \name{GPfates} modeling of scRNA-seq data is not limited to immune cells or single bifurcation events. This model can also be combined with existing computational workflows, including alternative methods to estimate pseudotemporal dynamics (see section \ref{sec:integration}) \cite{Trapnell2014-cn, Bendall2014-kg}. The \name{GPfates} approach permits analysis of cellular differentiation toward two fates (Comp. Supp. Fig. 11) and, in principle, toward multiple fates (Comp. Supp. Fig. 12). However, \name{GPfates} exhibits some limitations. Most notably, the ability to identify and pinpoint bifurcation events is linked to changes in the transcriptome that reflect these cellular decisions. In particular, because scRNA-seq profiles are subject to high levels of noise, this means that changes will only be detectable with some lag time (Supplementary Computational Methods). The processed expression data and the \name{GPfates} model presented in this study can be accessed at \url{www.plasmoTH.org}, where users can visualise their genes of interest.
 
 Our data provide a framework for revealing molecular insights into the early stages of T\textsubscript{H} cell differentiation and describe the sequence of transcriptional events before and after the bifurcation of T\textsubscript{H}1 and T\textsubscript{FH} fates. Transcriptomic profiling previously suggested developmental similarities between T\textsubscript{FH} and T\textsubscript{H}1 cells \cite{Liu2012-vw}. However, highly immunogenic viral or bacterial infections induced CD4+ T cells to segregate into Bcl6+ (T\textsubscript{FH}) or Blimp-1+ (T\textsubscript{H}1) subpopulations within 2 days \cite{Choi2011-ym, Pepper2011-mm}. In our parasitic model, single CD4+ T cell transcriptomes remained remarkably similar until 4 days of infection. Although it is difficult to directly compare infection models, we speculate that \textit{Plasmodium} infection in mice may not drive T\textsubscript{H} bifurcation as early as observed with highly immunogenic viruses or bacteria, particularly given evidence of immunosuppression \cite{Haque2014-sq}.
 
@@ -156,7 +160,7 @@ and \ref{sec:validation} include additional validation experiments using simulat
 
 \section{Pseudotime inference} \label{sec:m-pseudotime}
 
-Description of pseudotime methodology as it relates to the Gaussian process framework is described in detailed in Section \ref{sec:pseudotime-model}. Here, we extend this further.
+Description of pseudotime methodology as it relates to the Gaussian process framework is described in detail in Section \ref{sec:pseudotime-model}. Here, we extend this further.
 
 \subsection{Pseudotime inference by Bayesian GPLVM with \textit{per}-cell prior}
 
@@ -164,11 +168,13 @@ In the notation of Section \ref{sec:pseudotime-model} The joint probability of t
 \[ p(Y, t) = p(Y | t) \cdot p(t), \]
 where $ p(Y | t) $ is defined in equation \ref{eq:multigp_posterior}, and the prior $ p(t) $ is such that for cell $ n $,
 \[ p(t_n) = \mathcal{N}(0, 1). \]
-Following \cite{Reid2016-ww}, we can also consider the prior $ p(t) $ to be informed about the experimental ordering of collection times of the cells, putting the mean of $ t_n $ to correspond to the time point of cell $ n $. When we use our Malaria time course as and example, we can put the prior on $ t $ so that
+Following \cite{Reid2016-ww}, we can also consider the prior $ p(t) $ to be informed about the experimental ordering of collection times of the cells, putting the mean of $ t_n $ to correspond to the time point of cell $ n $. When we use our Malaria time course as an example, we can put the prior on $ t $ so that
 $$ p(t_n) = \mathcal{N}(\text{day}_n, \sigma_\text{prior}^2), $$
 where $ \text{day}_n \in \{1, 2, 3, 4, 5 \} $ correspond to the collection order of those cells. The parameter $ \sigma_\text{prior}^2 $ alters the strength of the prior.
 
-For a simple and fast implementation of \textit{per}-cell priors, in practice we use a prior on the variation parameters $ \mu_n $ rather than the latent $ t_n $. Rather than a lower bound of the marginal likelihood the Bayesian GPLVM will optimize the lower bound marginal maximum \textit{a posteriori} probability (MAP).
+For a simple and fast implementation of \textit{per}-cell priors, in practice we use a prior on the variational parameterisation. When performing variational inference we have 
+\[ q(t_n) = \mathcal{N}(\mu_n, \sigma_n) \]
+and the goal is to minimise the Kullback-Leibler divergence between \( p(t | Y) \) and \( q(t) \). We put a prior on the variational parameters $ \mu_n $. Rather than a lower bound of the marginal likelihood the Bayesian GPLVM will optimize the lower bound marginal maximum \textit{a posteriori} probability (MAP).
 
 \subsection{Dimensionality reduction}
 
@@ -230,7 +236,7 @@ Following the stick-breaking formulation,
 \[ p(Z | V) = \prod_{i=1}^N \prod_{c=1}^{\infty} \pi_c(V)^{z_{i,c}}, \]
 where $ \pi_c(V) = v_c \prod_{j=1}^{c - 1} (1 - v_j) $.
 
-The assignments between observations $ X $ and the latent functions $ F $ is given by a binary $ N \times C $ matrix $ Z $. The assignments to latent functions are considered as additional variational parameters. Let $ \bm{\phi} $ be an $ N \times C $ matrix where $ \bphi_{nc} $ is the approximate posterior probability of assigning the $ n $th observation to the $ c $th latent function. The $ \bm{\phi} $ parameters are inferred by collapsed variational inference as described in ({\it 54}). Overall, the likelihood of the model is
+The assignments between observations $ X $ and the latent functions $ F $ is given by a binary $ N \times C $ matrix $ Z $. The assignments to latent functions are considered as additional variational parameters. Let $ \bm{\phi} $ be an $ N \times C $ matrix where $ \bphi_{nc} $ is the approximate posterior probability of assigning the $ n $th observation to the $ c $th latent function. The $ \bm{\phi} $ parameters are inferred by collapsed variational inference as described in \cite{Hensman2012-kr}. Overall, the likelihood of the model is
 \[
 p(X | F, Z) = \prod_{n=1}^N \prod_{c=1}^{\infty} \mathcal{N}(x_n | f_c, \bm{K}_c )^{z_{n, c}}.
 \]
@@ -301,11 +307,11 @@ $ \frac{1}{\phi_{i, c}} $ on element $ (i, i) $ for all $ i $.
 
 After using our modeling strategy to learn key parameters, several analysis tasks can be solved. Here we list some some tasks we have investigated using the results.
 
-\subsection{Ranking genes by bifurcation?}
+\subsection{Ranking genes by bifurcation}
 
 Once the OMGP model has been fitted, it can be used to investigate individual genes in terms of their bifurcating trajectory.
 
-The log-likelihood of the OMGP model depends on the covariance matrices $ \mathbf{K}_t = \{ \bm{K}^c_t, c=1, \ldots, C\} $, the variational mixture parameter matrix $ \bphi $, and the $ N $ observations $ (t, X) $. Let us assume that we have mixture parameters $ \bphi_{b} $ which have been found to distinguish a bifurcating trend based on some $ X $ response variables. We can now keep the fitted parameters and evaluate the marginal likelihood of a model where the response variables $ X $ are replaced by gene expression values $ y_g $. We call this new model $ \mathcal{H}_\text{bifurcating} $. We wish to find genes which fit this bifurcating model better than a model where there is no bifurcation. To this end, we make a third model $ \mathcal{H}_\text{not bifurcating} $ identical to the previous one, except we replace $ \bphi_{b} $ with ambiguous assignments $ \bphi_a $. To asses whether a given gene $ g $ is better described by the \textit{bifurcating} or the \textit{not bifurcating} model, we evaluate the Bayes factor:
+The log-likelihood of the OMGP model depends on the covariance matrices $ \mathbf{K}_t = \{ \bm{K}^c_t, c=1, \ldots, C\} $, the variational mixture parameter matrix $ \bphi $, and the $ N $ observations $ (t, X) $. Let us assume that we have mixture parameters $ \bphi_{b} $ which have been found to distinguish a bifurcating trend based on some $ X $ response variables. We can now keep the fitted parameters and evaluate the marginal likelihood of a model where the response variables $ X $ are replaced by gene expression values $ y_g $. We call this new model $ \mathcal{H}_\text{bifurcating} $. We wish to find genes which fit this bifurcating model better than a model where there is no bifurcation. To this end, we make a third model $ \mathcal{H}_\text{not bifurcating} $ identical to the previous one, except we replace $ \bphi_{b} $ with ambiguous assignments $ \bphi_a $ (where probability is \( \frac{1}{C} \) for every data point). To asses whether a given gene $ g $ is better described by the \textit{bifurcating} or the \textit{not bifurcating} model, we evaluate the Bayes factor:
 $$
 BF_{g} = \log p(y_g | \mathcal{H}_\text{bifurcating}) - \log p(y_g | \mathcal{H}_\text{not bifurcating}).
 $$
@@ -317,7 +323,7 @@ As a proxy for \textit{effect size} of bifurcation, we consider how well the exp
 
 \subsection{Inferring the bifurcation time point} \label{sec:breakpoint}
 
-It is possible to qualitatively appreciate from the GP assignment probability ($ \bphi_c $ ) for each trajectory ($ f_c(t) $) of the OMGP model, which cells are \textit{ambiguous}  and which cells are \textit{exclusive} to individual GP's. In the case of two trends, ambiguous cells have assignment probability ($ \bphi $) close to 0.5. A model where the data can be described by two trends, but not by one, will have a higher likelihood. Similarly, if only a \textit{region} of the $ \bphi $ parameters over time are replaced by ambiguous cell assignment values, the new model will have a lower likelihood.
+It is possible to qualitatively appreciate from the GP assignment probability ($ \bphi_c $ ) for each trajectory ($ f_c(t) $) of the OMGP model, which cells are \textit{ambiguous}  and which cells are \textit{exclusive} to individual GP's. In the case of two trends, ambiguous cells have assignment probability ($ \bphi $) close to \( \frac{1}{2} \). A model where the data can be described by two trends, but not by one, will have a higher likelihood. Similarly, if only a \textit{region} of the $ \bphi $ parameters over time are replaced by ambiguous cell assignment values, the new model will have a lower likelihood.
 
 For the sake of clarity, we make the assumption that the OMGP will begin as ambiguous, and then become less ambiguous over time, splitting into two trends, in this special case. To investigate these cases, we pick a time-point $ t_b $ in an OMGP, then replace all $ \bphi $ values prior to $ t_b $ with 0.5. We define this new $ \bphi $ as $ \bphi_{> t_b} $:
 \begin{align*}
@@ -328,7 +334,7 @@ Now we can evaluate the model likelihood for this particular $ t_b $ and define
 \[ \mathcal{L}_{t_b} = \mathcal{L}_{KL} (\phi_{> t_b}, \mathbf{K}_t, \sigma^2 | X, T ). \]
 This procedure is repeated for multiple $ t $’s over the predictor variable of the OMGP model. In our implementation, we consider 30 evenly spaced bins by default, which has given enough resolution for the data investigated (though the number of bins can easily be changed).
 
-The likelihood has to decrease by definition. However, after the bifurcation the decrease is much more pronounced. We use a break-point heuristic to detect this elbow, which is indicative of the bifurcation time.
+The likelihood has to decrease by definition. However, after the true bifurcation the decrease is much more pronounced. We use a break-point heuristic to detect this elbow, which is indicative of the bifurcation time.
 
 \begin{figure}
     \centering
@@ -362,7 +368,7 @@ When performing pseudotime inference, in this work we are using priors on the va
 
 \section{Implementation and combination with existing workflows} \label{sec:combination}
 
-\subsection{Integration of alternative methods}
+\subsection{Integration of alternative methods} \label{sec:integration}
 
 We have presented the use of the \name{GPfates} method when pseudotime or low-dimensional representations have been based on the GPLVM. This is because the OMGP follows from this framework, and the statistical assumptions are consistent between the models.
 
@@ -383,7 +389,7 @@ Another dimensionality reduction technique which has been used for single cell R
     \label{fig:compatibility}
 \end{figure}
 
-As a demonstration, we generated a toy data set with three branches and extracted the pseudotime using both the Monocle method and the Wanderlust method. We then fitted an OMGP with $ C = 3 $ on the output. The results can be seen in Fig \ref{fig:compatibility}, which illustrates the correct identification of the branching processes for either input.
+As a demonstration, we generated a toy data set with three branches and extracted the pseudotime using both the Monocle method and the Wanderlust method. We then fitted an OMGP model with $ C = 3 $ on the output. The results can be seen in Fig \ref{fig:compatibility}, which illustrates the correct identification of the branching processes for either input.
 
 \section{Assessment of \name{GPfates} on simulated and real data} \label{sec:assessment}
 
@@ -424,7 +430,7 @@ We consider the risk that the identified bifurcation point in the CD4+ T cell da
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{"num-trends-rasterized"}
-    \caption[Detecting the number of branches]{\textbf{Detecting the number of branches.} Attempts detecting number of trends with OMGP. Simulated data with expected numbers of trends where fitted with OMGP, where the \( C \) cutoff was set to a range of values.}
+    \caption[Detecting the number of branches]{\textbf{Detecting the number of branches.} Attempts detecting number of trends with OMGP. Simulated data with expected numbers of trends (1 to 4 from top to second from bmottom) were fitted with OMGP, where the \( C \) cutoff was set to a range of values (rightmost column). Point clouds were drawn by hand and randomized. Malaria time course data added in final row for reference.}
     \label{fig:numtrends}
 \end{figure}
 
@@ -454,7 +460,7 @@ For the 1-dimensional Bayesian GPLVM, which we use to find the pseudotime of the
     \label{fig:pseudotime-certainty}
 \end{figure}
 
-As pointed out in ({\it 57}), we can use the posterior distribution of pseudotime from the Bayesian GPLVM to assess how meaningful the ordering is. By investigating the confidence intervals of the pseudotime for each cell compared to neighboring cells, we see that the ordering is quite meaningful (few cells overlap in confidence interval). (Figure. \ref{fig:pseudotime-certainty})
+As pointed out in \cite{Campbell2015-du}, we can use the posterior distribution of pseudotime from the Bayesian GPLVM to assess how meaningful the ordering is. By investigating the confidence intervals of the pseudotime for each cell compared to neighboring cells, we see that the ordering is quite meaningful (few cells overlap in confidence interval). (Figure. \ref{fig:pseudotime-certainty})
 
 We also investigated how the confidence of the pseudotime depends on the number of cells observed. As the number of observed cells increases, the distribution of variance per cell decreases towards zero. (Figure. \ref{fig:pseudotime-certainty})
 
