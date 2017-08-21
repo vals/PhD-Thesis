@@ -250,7 +250,7 @@ To evaluate the two derivatives, we use finite difference approximation on the \
 
 The presented Gaussian process model is based on the assumption of normally distributed residual noise and independent observations across cells. To meet these requirements, we have identified two necessary normalisation steps.
 
-\textit{First}, both spatial transcriptomics and in-situ hybridisation data produces counts of transcripts. Spatial Transcriptomics uses Unique Molecular Identifiers (UMI's) to count amplified transcript tags from next generation sequencing reads, while smFISH counts fluorescent probes inside cell boundaries. By investigating the mean-variance relation for all genes in multiple data sets from all spatial technologies we note that the data empirically correspond to negative binomial (NB) noise.
+\textit{First}, both spatial transcriptomics and in-situ hybridisation data produces counts of transcripts. Spatial Transcriptomics uses Unique Molecular Identifiers (UMI's) to count amplified transcript tags from next generation sequencing reads, while smFISH counts fluorescent probes inside cell boundaries. By investigating the mean-variance relation for all genes in multiple data sets from all spatial technologies we note that the data empirically correspond to negative binomial (NB) noise. 
 
 To stabilise the variance, we use the approximate Anscombe's transform for NB data on the observed counts \( \hat{\bfy}_g \), \( \bfy_g = \log(\hat{\bfy}_g + \frac{1}{\phi}) \), where \( \phi \) is the overdispersion parameter, so that \( \text{Var}(\bfy) = \mathbb{E}(\bfy) + \phi \cdot \mathbb{E}(\bfy)^2 \), and \( \phi \) is estimated by curve fitting across all genes in a study \cite{Anscombe1948-uw}.
 

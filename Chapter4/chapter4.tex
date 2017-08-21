@@ -446,7 +446,7 @@ It is possible that the optimal likelihood for \( C \) is not well defined when 
     \centering
     \includegraphics[width=\textwidth]{"fig-priors"}
     \caption[Comparison of pseudotime with and without per-cell priors]{\textbf{Comparison of pseudotime with and without per-cell priors.} The upper left shows the fit of the pseudotime predicted into the 2D GPLVM with and without priors. Below are the corresponding inferred covariance matrices. The right plot shows the relations between the two versions of pseudotime, clearly indicating that they have an approximate one-to-one mapping.}
-    \label{fig:priors}
+    \label{fig:priors} 
 \end{figure}
 
 For the 1-dimensional Bayesian GPLVM, which we use to find the pseudotime of the data, we put priors on the cells based on their known time points. This is not strictly necessary, but helps to enhance interpretability as there is intrinsic invariance to the inferred values. If we do not use priors, qualitatively, the same trajectory is identified. Additionally, comparing the two versions of pseudotime against each other, we see that they correspond to a circular shift relative to each other. The covariance matrices inferred using either strategy have a very similar block structure (also by low Frobenius norm of difference) indicating that neighbor relations are consistent (Figure. \ref{fig:priors}).
