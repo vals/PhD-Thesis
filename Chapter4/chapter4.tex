@@ -174,11 +174,11 @@ where $ \text{day}_n \in \{1, 2, 3, 4, 5 \} $ correspond to the collection order
 
 For a simple and fast implementation of \textit{per}-cell priors, in practice we use a prior on the variational parameterisation. When performing variational inference we have 
 \[ q(t_n) = \mathcal{N}(\mu_n, \sigma_n) \]
-and the goal is to minimise the Kullback-Leibler divergence between \( p(t | Y) \) and \( q(t) \). We put a prior on the variational parameters $ \mu_n $. Rather than a lower bound of the marginal likelihood the Bayesian GPLVM will optimize the lower bound marginal maximum \textit{a posteriori} probability (MAP).
+and the goal is to minimise the Kullback-Leibler divergence between \( p(t | Y) \) and \( q(t) \). We put a prior on the variational parameters $ \mu_n $. Rather than a lower bound of the marginal likelihood of the Bayesian GPLVM will optimize the lower bound marginal maximum \textit{a posteriori} probability (MAP).
 
 \subsection{Dimensionality reduction}
 
-In many cases it is useful to work on a reduced representation of cellular expression profiles. For example, when modelling transcriptomic data, fitting a model to a low-dimensional representation can be preferable to fitting it to expression profiles of thousands of genes. Formally, the objective of \textit{dimensionality reduction} is to find some $ M $-dimensional representation of the $ G $-dimensional expression measurements, where $ M << G $. Typically $ M $ is 2 or 3, which aides visual interpretation. Analogous to the pseudotime inference, these latent cell states can also be inferred using the GPLVM. Say $ X $ is an $ M \times N $ matrix so that each cell $ n $ correspond to an $ M $-dimensional vector,
+In many cases it is useful to work on a reduced representation of cellular expression profiles. For example, when modelling transcriptomic data, fitting a model to a low-dimensional representation can be preferable to fitting it to expression profiles of thousands of genes. Formally, the objective of \textit{dimensionality reduction} is to find some $ M $-dimensional representation of the $ G $-dimensional expression measurements, where $ M << G $. Typically $ M $ is 2 or 3, which aides visual interpretation. Analogous to the pseudotime inference, these latent cell states can also be inferred using the GPLVM. Say $ X $ is an $ M \times N $ matrix so that each cell $ n $ corresponds to an $ M $-dimensional vector,
 \[ X_n = (x^1_n, \ldots, x^M_n). \]
 We want to model the expression matrix $ Y $ so that
 \[ [y_g]_n = f^g(x^1_n, \ldots, x^M_n) + \varepsilon = f^g(X_n) + \varepsilon. \]
