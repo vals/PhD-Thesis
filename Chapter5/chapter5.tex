@@ -250,11 +250,18 @@ To evaluate the two derivatives, we use finite difference approximation on the \
 
 The presented Gaussian process model is based on the assumption of normally distributed residual noise and independent observations across cells. To meet these requirements, we have identified two necessary normalisation steps.
 
-\textit{First}, both spatial transcriptomics and in-situ hybridisation data produces counts of transcripts. Spatial Transcriptomics uses Unique Molecular Identifiers (UMI's) to count amplified transcript tags from next generation sequencing reads, while smFISH counts fluorescent probes inside cell boundaries. By investigating the mean-variance relation for all genes in multiple data sets from all spatial technologies we note that the data empirically correspond to negative binomial (NB) noise. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\textwidth]{"anscombe-figure"}
+    \caption[Variance stabilization of negative binomial counts]{\textbf{Variance stabilization of negative binomial counts.} (\textbf{A}) Mean \textit{vs} variance relation of genes in the different spatial technologies. Compared to Poisson noise, variance is higher than expected, and is consistent with negative binomial noise with a fixed overdispersion parameter per dataset. (\textbf{B}) The same figure after applying the approximate Anscombe transform for negative binomial data. At moderate to high counts variance no longer depend on the mean. Note that (\textbf{A}) is on a log-log scale while (\textbf{B}) is not.}
+    \label{fig:anscombe}
+\end{figure}
 
-To stabilise the variance, we use the approximate Anscombe's transform for NB data on the observed counts \( \hat{\bfy}_g \), \( \bfy_g = \log(\hat{\bfy}_g + \frac{1}{\phi}) \), where \( \phi \) is the overdispersion parameter, so that \( \text{Var}(\bfy) = \mathbb{E}(\bfy) + \phi \cdot \mathbb{E}(\bfy)^2 \), and \( \phi \) is estimated by curve fitting across all genes in a study \cite{Anscombe1948-uw}.
+\textit{First}, both spatial transcriptomics and in-situ hybridisation data produces counts of transcripts. Spatial Transcriptomics uses Unique Molecular Identifiers (UMI's) to count amplified transcript tags from next generation sequencing reads, while smFISH counts fluorescent probes inside cell boundaries. By investigating the mean-variance relation for all genes in multiple data sets from all spatial technologies we note that the data empirically correspond to negative binomial (NB) noise (Figure \ref{fig:anscombe}A).
 
-\textit{Second}, we note that in all the data we investigated, every gene's expression correlates with the total count in the cells. In particular, for MERFISH data the area of cells is provided, and we note that the total count correlates strongly with the cytoplasmic area.  This relation has previously been described by Paravan-Medhar et al.~\cite{Padovan-Merhar2015-ne}, who showed that cells compensate mRNA content in response to the cytoplasmic volume of a cell. The total count thus corresponds to the size of cells.
+To stabilise the variance, we use the approximate Anscombe's transform for NB data on the observed counts \( \hat{\bfy}_g \), \( \bfy_g = \log(\hat{\bfy}_g + \frac{1}{\phi}) \), where \( \phi \) is the overdispersion parameter, so that \( \text{Var}(\bfy) = \mathbb{E}(\bfy) + \phi \cdot \mathbb{E}(\bfy)^2 \), and \( \phi \) is estimated by curve fitting across all genes in a study \cite{Anscombe1948-uw} (Figure \ref{fig:anscombe}B).
+
+\textit{Second}, we note that in all the data we investigated, every gene's expression correlates with the total count in the cells. In particular, for MERFISH data the area of cells is provided, and we note that the total count correlates strongly with the cytoplasmic area.  This relation has previously been described by \citet{Padovan-Merhar2015-ne}, who showed that cells compensate mRNA content in response to the cytoplasmic volume of a cell. The total count thus corresponds to the size of cells.
 
 While there are many cases where cells grow for biologically interesting reasons, cell size assays are easier than gene expression assays, and here we focus on regulation of gene expression.  In particular, if the distribution of relative cell sizes show spatial dependencies, \emph{every gene} will be considered spatially variable.
 
